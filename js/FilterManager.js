@@ -390,7 +390,7 @@ class FilterManager {
     } else if (this.activeLabels.length === 1) {
       this.labelBtn.textContent = this.activeLabels[0];
     } else {
-      this.labelBtn.textContent = `${this.activeLabels.length} Labels`;
+      this.labelBtn.textContent = `${this.activeLabels.length} Products`;
     }
   }
 

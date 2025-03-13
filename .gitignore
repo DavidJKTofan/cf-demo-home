@@ -29,3 +29,7 @@ yarn-error.log*
 
 # dotenv environment variables file
 .env
+
+# Auto-Generating Product Pages
+demos/generate_landing_pages.py
+demos/template.html
