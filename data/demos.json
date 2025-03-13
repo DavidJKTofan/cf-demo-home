@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Workers KV Demo",
+    "description": "See how Cloudflare Workers KV provides low-latency global storage for your applications.",
+    "url": "https://example.com/workers-kv-demo",
+    "category": "Developer Platform",
+    "labels": ["R2"]
+  },
+  {
+    "id": 2,
+    "title": "WAF Protection Demo",
+    "description": "Explore how Cloudflare WAF protects your applications from common vulnerabilities.",
+    "url": "https://example.com/waf-demo",
+    "category": "Application Security",
+    "labels": ["WAF", "Bot Management"]
+  },
+  {
+    "id": 3,
+    "title": "Zero Trust Access Demo",
+    "description": "See Zero Trust access controls in action to protect internal applications.",
+    "url": "https://example.com/zero-trust-demo",
+    "category": "Cloudflare One (SASE & Zero Trust)",
+    "labels": ["Access", "Cloudflare Tunnel"]
+  },
+  {
+    "id": 4,
+    "title": "DNS Security Demo",
+    "description": "Learn how Cloudflare DNS services can protect your domain from threats.",
+    "url": "https://example.com/dns-demo",
+    "category": "Network Services",
+    "labels": ["DNSSEC"]
+  },
+  {
+    "id": 5,
+    "title": "Image Optimization Demo",
+    "description": "See how Cloudflare optimizes images for faster delivery and better user experience.",
+    "url": "https://example.com/images-demo",
+    "category": "Application Performance",
+    "labels": ["Images"]
+  },
+  {
+    "id": 6,
+    "title": "CAPTCHA Alternative Demo",
+    "description": "Experience Cloudflare Turnstile, the privacy-friendly CAPTCHA alternative.",
+    "url": "https://example.com/turnstile-demo",
+    "category": "Application Security",
+    "labels": ["Turnstile"]
+  },
+  {
+    "id": 7,
+    "title": "Data Localization Demo",
+    "description": "See how Cloudflare helps maintain compliance with regional data regulations.",
+    "url": "https://example.com/data-localization-demo",
+    "category": "Platform",
+    "labels": ["Data Localization Suite"]
+  },
+  {
+    "id": 8,
+    "title": "Waiting Room Demo",
+    "description": "Explore how Cloudflare manages surges in website traffic with virtual waiting rooms.",
+    "url": "https://example.com/waiting-room-demo",
+    "category": "Application Performance",
+    "labels": ["Waiting Room"]
+  },
+  {
+    "id": 9,
+    "title": "Gateway Demo",
+    "description": "See how Cloudflare Gateway secures your organization's Internet traffic.",
+    "url": "https://example.com/gateway-demo",
+    "category": "Cloudflare One (SASE & Zero Trust)",
+    "labels": ["Gateway"]
+  },
+  {
+    "id": 10,
+    "title": "AI Platform Demo",
+    "description": "Explore Cloudflare's AI platform capabilities to build and deploy AI-powered applications.",
+    "url": "https://example.com/ai-demo",
+    "category": "Artificial Intelligence (AI)",
+    "labels": ["R2"]
+  }
+]
