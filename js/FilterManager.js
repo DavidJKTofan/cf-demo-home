@@ -386,7 +386,7 @@ class FilterManager {
    */
   updateLabelFilterText() {
     if (this.activeLabels.length === 0) {
-      this.labelBtn.textContent = "Filter by Label";
+      this.labelBtn.textContent = "Filter by Product";
     } else if (this.activeLabels.length === 1) {
       this.labelBtn.textContent = this.activeLabels[0];
     } else {
