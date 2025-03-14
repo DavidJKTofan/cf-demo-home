@@ -666,29 +666,31 @@ class FilterManager {
    * @param {HTMLElement} button - Button element
    */
   _positionDropdown(dropdown, button) {
-    const buttonRect = button.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    
-    // Reset dropdown position
+    // Reset any previous inline styles
     dropdown.style.maxHeight = '';
     dropdown.style.top = '';
     dropdown.style.bottom = '';
-
-    // Calculate available space above and below
-    const spaceAbove = buttonRect.top;
-    const spaceBelow = viewportHeight - buttonRect.bottom;
     
-    // Set maximum height based on available space
-    const maxHeight = Math.max(200, Math.min(spaceBelow - 10, 400));
-    dropdown.style.maxHeight = `${maxHeight}px`;
-
-    // Position dropdown below button by default
-    dropdown.style.top = `${buttonRect.bottom + window.scrollY}px`;
+    const buttonRect = button.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    
+    // Calculate available space
+    const spaceBelow = viewportHeight - buttonRect.bottom;
+    const spaceAbove = buttonRect.top;
+    
+    // Set fixed width to match button
     dropdown.style.width = `${buttonRect.width}px`;
-
-    // If not enough space below, position above
-    if (spaceBelow < 200 && spaceAbove > spaceBelow) {
-      dropdown.style.bottom = `${viewportHeight - buttonRect.top + window.scrollY}px`;
+    
+    // Position dropdown
+    if (spaceBelow >= 300 || spaceBelow > spaceAbove) {
+      // Position below
+      dropdown.style.top = `${buttonRect.height + 4}px`;
+      dropdown.style.maxHeight = `${Math.min(spaceBelow - 10, 300)}px`;
+      dropdown.style.bottom = 'auto';
+    } else {
+      // Position above
+      dropdown.style.bottom = `${buttonRect.height + 4}px`;
+      dropdown.style.maxHeight = `${Math.min(spaceAbove - 10, 300)}px`;
       dropdown.style.top = 'auto';
     }
   }

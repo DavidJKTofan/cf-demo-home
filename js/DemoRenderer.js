@@ -185,6 +185,20 @@ class DemoRenderer {
     // Add transition for animation
     card.style.transition = "opacity 0.3s ease, transform 0.3s ease";
 
+    // Set fixed dimensions before adding content
+    card.style.height = '250px'; // Match CSS min-height
+    card.style.opacity = '0';
+    
+    // Add content after setting dimensions
+    card.appendChild(contentContainer);
+    card.appendChild(copyLinkBtn);
+    
+    // Fade in smoothly
+    requestAnimationFrame(() => {
+      card.style.opacity = '1';
+      card.style.transition = 'opacity 0.3s ease';
+    });
+
     // Observe the card if we have an observer
     if (this.observer) {
       this.observer.observe(card);
@@ -204,9 +218,27 @@ class DemoRenderer {
    * @param {number} count - Number of skeleton cards to show
    */
   showLoading(count = 6) {
-    if (this.container) {
-      addSkeletonCards(this.container.id, count);
+    if (!this.container) return;
+    
+    // Clear existing content
+    this.container.innerHTML = "";
+    
+    // Add skeleton cards in a container with fixed dimensions
+    const gridContainer = document.createElement('div');
+    gridContainer.style.display = 'grid';
+    gridContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(300px, 1fr))';
+    gridContainer.style.gap = '1.5rem';
+    gridContainer.style.minHeight = '400px'; // Match CSS min-height
+    
+    for (let i = 0; i < count; i++) {
+      const skeletonCard = createElement('div', {
+        className: 'skeleton-card',
+        style: 'opacity: 0.7; transition: opacity 0.3s'
+      });
+      gridContainer.appendChild(skeletonCard);
     }
+    
+    this.container.appendChild(gridContainer);
   }
 
   /**

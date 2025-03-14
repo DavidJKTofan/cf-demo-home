@@ -30,12 +30,15 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
+  min-height: 120px;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -75,6 +78,7 @@ h1 {
 .filter-dropdown {
   position: relative;
   min-width: 200px;
+  height: 40px;
 }
 
 .dropdown-btn {
@@ -104,8 +108,16 @@ h1 {
 }
 
 .dropdown-content {
-  display: none;
   position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  transform-origin: top;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  display: none;
   background-color: var(--card-color);
   min-width: 200px;
   border: 1px solid var(--border-color);
@@ -118,7 +130,8 @@ h1 {
 }
 
 .dropdown-content.show {
-  display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 .checkbox-item {
@@ -169,6 +182,8 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  min-height: 400px;
+  position: relative;
 }
 
 .demo-card {
@@ -185,6 +200,8 @@ h1 {
   color: var(--text-color);
   border: 1px solid var(--border-color);
   position: relative;
+  aspect-ratio: 3/2;
+  min-height: 250px;
 }
 
 .demo-card:hover {
@@ -314,11 +331,19 @@ h1 {
 }
 
 .loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 0;
 }
 
 .spinner {
@@ -355,6 +380,9 @@ h1 {
   display: flex;
   flex-direction: column;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  aspect-ratio: 3/2;
+  min-height: 250px;
+  opacity: 0.7;
 }
 
 .skeleton-content {
@@ -618,4 +646,11 @@ footer {
   border-color: var(--primary-color);
   color: var(--primary-color);
   font-weight: 500;
+}
+
+/* Image aspect ratio preservation */
+.demo-image {
+  aspect-ratio: 16/9;
+  width: 100%;
+  background: var(--background-color);
 }
