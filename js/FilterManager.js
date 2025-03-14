@@ -188,37 +188,28 @@ class FilterManager {
     this.updateCategoryFilterText();
     this.updateLabelFilterText();
 
-    // Enhance checkbox items with better keyboard navigation
+    // Add menu container with improved scrolling and positioning
+    this.categoryContent.classList.add('dropdown-menu');
+    this.labelContent.classList.add('dropdown-menu');
+
+    // Enhance checkbox items with better interaction
     const checkboxItems = this.categoryContent.querySelectorAll('.checkbox-item');
     checkboxItems.forEach((item, index) => {
       item.setAttribute('data-index', index);
       
-      // Add keyboard navigation
-      item.addEventListener('keydown', (e) => {
-        switch(e.key) {
-          case 'ArrowDown':
-            e.preventDefault();
-            this._focusNextItem(checkboxItems, index);
-            break;
-          case 'ArrowUp':
-            e.preventDefault();
-            this._focusPreviousItem(checkboxItems, index);
-            break;
-          case 'Home':
-            e.preventDefault();
-            checkboxItems[0].focus();
-            break;
-          case 'End':
-            e.preventDefault();
-            checkboxItems[checkboxItems.length - 1].focus();
-            break;
-        }
+      // Add hover effect class
+      item.addEventListener('mouseenter', () => {
+        item.classList.add('checkbox-item-hover');
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        item.classList.remove('checkbox-item-hover');
       });
     });
 
-    // Add animation classes for smoother transitions
-    this.categoryContent.classList.add('dropdown-animate');
-    this.labelContent.classList.add('dropdown-animate');
+    // Add scroll indicators if content overflows
+    this._addScrollIndicators(this.categoryContent);
+    this._addScrollIndicators(this.labelContent);
   }
 
   /**
@@ -308,6 +299,9 @@ class FilterManager {
         const firstItem = this.categoryContent.querySelector('.checkbox-item');
         if (firstItem) firstItem.focus();
       }, 100);
+
+      // Position dropdown relative to button
+      this._positionDropdown(this.categoryContent, this.categoryBtn);
     }
   }
 
@@ -322,6 +316,11 @@ class FilterManager {
     // Close other dropdown if open
     this.categoryContent.classList.remove("show");
     this.categoryBtn.setAttribute("aria-expanded", "false");
+
+    if (isExpanded) {
+      // Position dropdown relative to button
+      this._positionDropdown(this.labelContent, this.labelBtn);
+    }
   }
 
   /**
@@ -581,5 +580,68 @@ class FilterManager {
     dropdown.addEventListener('transitionend', () => {
       if (show) dropdown.style.height = 'auto';
     }, { once: true });
+  }
+
+  /**
+   * Add scroll indicators to dropdown menus
+   * @private
+   * @param {HTMLElement} dropdown - Dropdown element
+   */
+  _addScrollIndicators(dropdown) {
+    const scrollIndicatorTop = createElement('div', {
+      className: 'scroll-indicator scroll-indicator-top',
+      innerHTML: '▲'
+    });
+    
+    const scrollIndicatorBottom = createElement('div', {
+      className: 'scroll-indicator scroll-indicator-bottom',
+      innerHTML: '▼'
+    });
+
+    dropdown.insertBefore(scrollIndicatorTop, dropdown.firstChild);
+    dropdown.appendChild(scrollIndicatorBottom);
+
+    // Show/hide indicators based on scroll position
+    dropdown.addEventListener('scroll', () => {
+      const {scrollTop, scrollHeight, clientHeight} = dropdown;
+      
+      scrollIndicatorTop.classList.toggle('visible', scrollTop > 10);
+      scrollIndicatorBottom.classList.toggle('visible', 
+        scrollTop < scrollHeight - clientHeight - 10);
+    });
+  }
+
+  /**
+   * Position dropdown menu relative to its button
+   * @private
+   * @param {HTMLElement} dropdown - Dropdown element
+   * @param {HTMLElement} button - Button element
+   */
+  _positionDropdown(dropdown, button) {
+    const buttonRect = button.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    
+    // Reset dropdown position
+    dropdown.style.maxHeight = '';
+    dropdown.style.top = '';
+    dropdown.style.bottom = '';
+
+    // Calculate available space above and below
+    const spaceAbove = buttonRect.top;
+    const spaceBelow = viewportHeight - buttonRect.bottom;
+    
+    // Set maximum height based on available space
+    const maxHeight = Math.max(200, Math.min(spaceBelow - 10, 400));
+    dropdown.style.maxHeight = `${maxHeight}px`;
+
+    // Position dropdown below button by default
+    dropdown.style.top = `${buttonRect.bottom + window.scrollY}px`;
+    dropdown.style.width = `${buttonRect.width}px`;
+
+    // If not enough space below, position above
+    if (spaceBelow < 200 && spaceAbove > spaceBelow) {
+      dropdown.style.bottom = `${viewportHeight - buttonRect.top + window.scrollY}px`;
+      dropdown.style.top = 'auto';
+    }
   }
 }

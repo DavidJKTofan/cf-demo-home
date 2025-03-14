@@ -481,3 +481,121 @@ footer {
 .checkbox-item:hover {
   background-color: rgba(246, 130, 31, 0.05);
 }
+
+/* Dropdown Menu Improvements */
+.dropdown-menu {
+  position: fixed; /* Change to fixed for better positioning */
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+}
+
+/* Custom scrollbar styling */
+.dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 3px;
+}
+
+/* Checkbox item improvements */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.checkbox-item:not(:last-child) {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.checkbox-item-hover,
+.checkbox-item:hover {
+  background-color: rgba(246, 130, 31, 0.05);
+}
+
+.checkbox-item input[type="checkbox"] {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary-color);
+}
+
+.checkbox-item label {
+  flex: 1;
+  cursor: pointer;
+}
+
+/* Scroll indicators */
+.scroll-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(var(--card-color), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--primary-color);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.scroll-indicator-top {
+  top: 0;
+}
+
+.scroll-indicator-bottom {
+  bottom: 0;
+  background: linear-gradient(transparent, var(--card-color));
+  transform: rotate(180deg);
+}
+
+.scroll-indicator.visible {
+  opacity: 1;
+}
+
+/* Animation improvements */
+.dropdown-animate {
+  transform-origin: top;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  transform: translateY(-10px) scaleY(0.95);
+  opacity: 0;
+}
+
+.dropdown-animate.show {
+  transform: translateY(0) scaleY(1);
+  opacity: 1;
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: fixed;
+    left: 50% !important;
+    transform: translateX(-50%);
+    width: calc(100% - 32px) !important;
+    max-width: 400px;
+  }
+
+  .checkbox-item {
+    padding: 12px 16px; /* Larger touch targets */
+  }
+}
