@@ -10,18 +10,32 @@
  */
 export async function fetchData(url, retries = 3) {
   let currentRetry = 0;
+  const timeout = 5000; // 5 seconds timeout
 
   while (currentRetry < retries) {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+
       const response = await fetch(url, {
         headers: { "X-Requested-With": "XMLHttpRequest" },
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      return await response.json();
+      const data = await response.json();
+      
+      // Validate data structure
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid data format');
+      }
+
+      return data;
     } catch (error) {
       currentRetry++;
       console.warn(`Attempt ${currentRetry}/${retries} failed for ${url}:`, error);

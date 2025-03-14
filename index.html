@@ -36,10 +36,6 @@
 
   <!-- Resource Hints -->
   <link rel="preload" href="css/styles.css" as="style" />
-  <link rel="preload" href="js/utils.js" as="script" />
-  <link rel="preload" href="js/DemoRenderer.js" as="script" />
-  <link rel="preload" href="js/FilterManager.js" as="script" />
-  <link rel="modulepreload" href="js/main.js" />
 
   <!-- Critical CSS inline -->
   <style>
@@ -61,11 +57,11 @@
   <!-- Defer non-critical CSS -->
   <link rel="stylesheet" href="css/styles.css" media="print" onload="this.media='all'">
 
-  <!-- JavaScript with modern attributes -->
-  <script type="module" src="js/utils.js"></script>
-  <script type="module" src="js/DemoRenderer.js"></script>
-  <script type="module" src="js/FilterManager.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <!-- modulepreload tags -->
+  <link rel="modulepreload" href="js/utils.js" crossorigin="anonymous" />
+  <link rel="modulepreload" href="js/DemoRenderer.js" crossorigin="anonymous" />
+  <link rel="modulepreload" href="js/FilterManager.js" crossorigin="anonymous" />
+  <link rel="modulepreload" href="js/main.js" crossorigin="anonymous" />
 </head>
 
 <body>
@@ -79,6 +75,8 @@
             id="searchInput"
             placeholder="Search demos..."
             aria-label="Search demos"
+            role="searchbox"
+            autocomplete="off"
           />
         </div>
         <div class="filter-dropdown">
@@ -125,11 +123,11 @@
   </header>
 
   <div class="container">
-    <div id="loadingIndicator" class="loading-indicator">
-      <div class="spinner"></div>
+    <div id="loadingIndicator" class="loading-indicator" role="alert" aria-live="polite">
+      <div class="spinner" role="progressbar" aria-label="Loading demos"></div>
       <p>Loading demos...</p>
     </div>
-    <div class="demo-grid" id="demoGrid">
+    <div class="demo-grid" id="demoGrid" role="main" aria-live="polite">
       <!-- Demo cards will be dynamically added here -->
     </div>
   </div>
@@ -145,6 +143,21 @@
       </p>
     </div>
   </footer>
+
+  <!-- Add these script tags right before </body> -->
+  <script type="module" src="js/utils.js"></script>
+  <script type="module" src="js/DemoRenderer.js"></script>
+  <script type="module" src="js/FilterManager.js"></script>
+  <script type="module" src="js/main.js"></script>
+
+  <!-- Add after <body> -->
+  <noscript>
+    <div class="container">
+      <p style="text-align: center; padding: 2rem;">
+        Please enable JavaScript to view Cloudflare Demos.
+      </p>
+    </div>
+  </noscript>
 </body>
 
 </html>
