@@ -340,28 +340,21 @@ class FilterManager {
    */
   _handleCategoryToggle() {
     // Close other dropdown if open
-    if (this.activeDropdown && this.activeDropdown !== this.categoryContent) {
-      this.activeDropdown.classList.remove('show');
+    if (this.labelContent.classList.contains('show')) {
+      this.labelContent.classList.remove('show');
       this.labelBtn.setAttribute('aria-expanded', 'false');
     }
 
-    const isExpanded = this.categoryContent.classList.toggle('show');
-    this.categoryBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-    
-    // Update active dropdown tracking
-    this.activeDropdown = isExpanded ? this.categoryContent : null;
+    const isExpanded = !this.categoryContent.classList.contains('show');
+    this.categoryContent.classList.toggle('show');
+    this.categoryBtn.setAttribute('aria-expanded', isExpanded);
 
-    // Reset focus index when opening
     if (isExpanded) {
-      this.currentFocusIndex = -1;
-      // Focus first checkbox item after brief delay for animation
-      setTimeout(() => {
-        const firstItem = this.categoryContent.querySelector('.checkbox-item');
-        if (firstItem) firstItem.focus();
-      }, 100);
-
-      // Position dropdown relative to button
-      this._positionDropdown(this.categoryContent, this.categoryBtn);
+      // Position the dropdown
+      const buttonRect = this.categoryBtn.getBoundingClientRect();
+      this.categoryContent.style.top = `${buttonRect.bottom + window.scrollY}px`;
+      this.categoryContent.style.left = `${buttonRect.left + window.scrollX}px`;
+      this.categoryContent.style.width = `${buttonRect.width}px`;
     }
   }
 
@@ -370,16 +363,22 @@ class FilterManager {
    * @private
    */
   _handleLabelToggle() {
-    const isExpanded = this.labelContent.classList.toggle("show");
-    this.labelBtn.setAttribute("aria-expanded", isExpanded ? "true" : "false");
-
     // Close other dropdown if open
-    this.categoryContent.classList.remove("show");
-    this.categoryBtn.setAttribute("aria-expanded", "false");
+    if (this.categoryContent.classList.contains('show')) {
+      this.categoryContent.classList.remove('show');
+      this.categoryBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    const isExpanded = !this.labelContent.classList.contains('show');
+    this.labelContent.classList.toggle('show');
+    this.labelBtn.setAttribute('aria-expanded', isExpanded);
 
     if (isExpanded) {
-      // Position dropdown relative to button
-      this._positionDropdown(this.labelContent, this.labelBtn);
+      // Position the dropdown
+      const buttonRect = this.labelBtn.getBoundingClientRect();
+      this.labelContent.style.top = `${buttonRect.bottom + window.scrollY}px`;
+      this.labelContent.style.left = `${buttonRect.left + window.scrollX}px`;
+      this.labelContent.style.width = `${buttonRect.width}px`;
     }
   }
 
@@ -460,14 +459,11 @@ class FilterManager {
    * @param {Event} e - Click event
    */
   _handleClickOutside(e) {
-    if (this.activeDropdown && 
-        !this.activeDropdown.contains(e.target) && 
-        !e.target.closest('.dropdown-btn')) {
-      this.activeDropdown.classList.remove('show');
-      const relatedBtn = this.activeDropdown === this.categoryContent ? 
-                        this.categoryBtn : this.labelBtn;
-      relatedBtn.setAttribute('aria-expanded', 'false');
-      this.activeDropdown = null;
+    if (!e.target.closest('.filter-dropdown')) {
+      this.categoryContent.classList.remove('show');
+      this.labelContent.classList.remove('show');
+      this.categoryBtn.setAttribute('aria-expanded', 'false');
+      this.labelBtn.setAttribute('aria-expanded', 'false');
     }
   }
 
@@ -657,42 +653,6 @@ class FilterManager {
       scrollIndicatorBottom.classList.toggle('visible', 
         scrollTop < scrollHeight - clientHeight - 10);
     });
-  }
-
-  /**
-   * Position dropdown menu relative to its button
-   * @private
-   * @param {HTMLElement} dropdown - Dropdown element
-   * @param {HTMLElement} button - Button element
-   */
-  _positionDropdown(dropdown, button) {
-    // Reset any previous inline styles
-    dropdown.style.maxHeight = '';
-    dropdown.style.top = '';
-    dropdown.style.bottom = '';
-    
-    const buttonRect = button.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    
-    // Calculate available space
-    const spaceBelow = viewportHeight - buttonRect.bottom;
-    const spaceAbove = buttonRect.top;
-    
-    // Set fixed width to match button
-    dropdown.style.width = `${buttonRect.width}px`;
-    
-    // Position dropdown
-    if (spaceBelow >= 300 || spaceBelow > spaceAbove) {
-      // Position below
-      dropdown.style.top = `${buttonRect.height + 4}px`;
-      dropdown.style.maxHeight = `${Math.min(spaceBelow - 10, 300)}px`;
-      dropdown.style.bottom = 'auto';
-    } else {
-      // Position above
-      dropdown.style.bottom = `${buttonRect.height + 4}px`;
-      dropdown.style.maxHeight = `${Math.min(spaceAbove - 10, 300)}px`;
-      dropdown.style.top = 'auto';
-    }
   }
 
   /**

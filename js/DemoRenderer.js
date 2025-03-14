@@ -220,25 +220,23 @@ class DemoRenderer {
   showLoading(count = 6) {
     if (!this.container) return;
     
-    // Clear existing content
-    this.container.innerHTML = "";
+    // Keep existing content visible until new content is ready
+    const existingContent = this.container.innerHTML;
     
-    // Add skeleton cards in a container with fixed dimensions
-    const gridContainer = document.createElement('div');
-    gridContainer.style.display = 'grid';
-    gridContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(300px, 1fr))';
-    gridContainer.style.gap = '1.5rem';
-    gridContainer.style.minHeight = '400px'; // Match CSS min-height
-    
-    for (let i = 0; i < count; i++) {
-      const skeletonCard = createElement('div', {
-        className: 'skeleton-card',
-        style: 'opacity: 0.7; transition: opacity 0.3s'
+    const skeletonCards = Array(count)
+      .fill(0)
+      .map(() => {
+        const card = createElement('div', {
+          className: 'skeleton-card',
+        });
+        return card;
       });
-      gridContainer.appendChild(skeletonCard);
-    }
-    
-    this.container.appendChild(gridContainer);
+
+    // Replace content all at once to prevent multiple reflows
+    requestAnimationFrame(() => {
+      this.container.innerHTML = '';
+      skeletonCards.forEach(card => this.container.appendChild(card));
+    });
   }
 
   /**
@@ -283,36 +281,22 @@ class DemoRenderer {
     try {
       this.isLoading = true;
       
-      // Show loading state
-      this.container.innerHTML = "";
-      this.showLoading();
-
-      // Store current filters
-      this.currentFilters = {
-        search: searchText,
-        categories: categories,
-        labels: labels
-      };
-
-      // Filter demos synchronously
-      const filteredDemos = this._trackPerformance(() => 
-        this.filterDemos(searchText, categories, labels)
-      );
-
-      // Clear loading state
-      this.container.innerHTML = "";
-
-      if (!Array.isArray(filteredDemos) || filteredDemos.length === 0) {
-        this._showNoResults(searchText);
-        return;
-      }
-
-      // Create and append demo cards
-      filteredDemos.forEach(demo => {
-        const card = this.createDemoCard(demo);
-        this.container.appendChild(card);
+      // Filter demos first
+      const filteredDemos = this.filterDemos(searchText, categories, labels);
+      
+      // Prepare all cards before rendering
+      const cards = filteredDemos.map(demo => this.createDemoCard(demo));
+      
+      // Update DOM all at once
+      requestAnimationFrame(() => {
+        this.container.innerHTML = '';
+        if (cards.length === 0) {
+          this._showNoResults(searchText);
+        } else {
+          cards.forEach(card => this.container.appendChild(card));
+        }
       });
-
+      
     } catch (error) {
       console.error('Error rendering demos:', error);
       this._showError();

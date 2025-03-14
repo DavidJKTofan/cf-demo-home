@@ -78,7 +78,6 @@ h1 {
 .filter-dropdown {
   position: relative;
   min-width: 200px;
-  height: 40px;
 }
 
 .dropdown-btn {
@@ -108,30 +107,21 @@ h1 {
 }
 
 .dropdown-content {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  width: 100%;
-  max-height: 300px;
-  transform-origin: top;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s, visibility 0.2s;
   display: none;
+  position: absolute;
   background-color: var(--card-color);
   min-width: 200px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  z-index: 10;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-height: 300px;
   overflow-y: auto;
   width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-content.show {
-  opacity: 1;
-  visibility: visible;
+  display: block;
 }
 
 .checkbox-item {
@@ -179,11 +169,10 @@ h1 {
 }
 
 .demo-grid {
+  min-height: 400px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
-  min-height: 400px;
-  position: relative;
 }
 
 .demo-card {
@@ -202,6 +191,8 @@ h1 {
   position: relative;
   aspect-ratio: 3/2;
   min-height: 250px;
+  opacity: 1;
+  transform: none;
 }
 
 .demo-card:hover {
@@ -332,9 +323,9 @@ h1 {
 
 .loading-indicator {
   position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  top: 200px;
+  transform: translateX(-50%);
   z-index: 1;
   background: rgba(255, 255, 255, 0.9);
   padding: 2rem;
