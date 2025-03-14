@@ -70,6 +70,16 @@ class FilterManager {
 
     // Initialize filters from URL immediately
     this.initialFiltersApplied = false;
+
+    // Add initial state support
+    if (config.initialState) {
+      this.activeSearch = config.initialState.search || "";
+      this.activeCategories = config.initialState.categories || [];
+      this.activeLabels = config.initialState.labels || [];
+    }
+
+    // Add state tracking
+    this.isInitialized = false;
   }
 
   /**
@@ -77,7 +87,7 @@ class FilterManager {
    * @param {Array} categories - Available categories
    * @param {Array} labels - Available labels
    */
-  init(categories, labels) {
+  async init(categories, labels) {
     this.categories = categories || [];
     this.labels = labels || [];
 
@@ -86,16 +96,18 @@ class FilterManager {
       return;
     }
 
-    // Apply URL filters before setting up the UI
-    this.applyFiltersFromUrl();
-    
-    // Then setup the UI with the applied filters
-    this.setupFilters();
+    // Setup UI with current state
+    await this.setupFilters();
     this.setupEventListeners();
+    
+    // Mark as initialized
+    this.isInitialized = true;
 
-    // Trigger initial filter if URL had parameters
-    if (this.hasActiveFilters()) {
-      this.notifyFilterChange();
+    // Update UI to reflect current state
+    this.updateCategoryFilterText();
+    this.updateLabelFilterText();
+    if (this.activeSearch) {
+      this.searchInput.value = this.activeSearch;
     }
   }
 
@@ -489,7 +501,7 @@ class FilterManager {
    * Update URL parameters based on active filters
    */
   updateUrlParams() {
-    if (!window.history || !window.URLSearchParams) return;
+    if (!window.history || !window.URLSearchParams || !this.isInitialized) return;
 
     const url = new URL(window.location);
     const params = new URLSearchParams();
@@ -507,64 +519,65 @@ class FilterManager {
       params.append("label", encodeURIComponent(label));
     });
 
-    // Only update URL if there are filters
-    const queryString = params.toString();
-    const newUrl = queryString ? 
-      `${url.pathname}?${queryString}` : 
-      url.pathname;
-
     // Update URL without reloading page
-    window.history.replaceState(
-      { filters: this.getFilterState() }, 
-      '', 
+    const queryString = params.toString();
+    const newUrl = queryString ? `${url.pathname}?${queryString}` : url.pathname;
+    
+    window.history.pushState(
+      { filters: this.getFilterState() },
+      '',
       newUrl
     );
   }
 
   /**
    * Apply filters from URL parameters
+   * @param {boolean} updateUrl - Whether to update the URL after applying filters
    */
-  applyFiltersFromUrl() {
+  async applyFiltersFromUrl(updateUrl = true) {
     if (!window.URLSearchParams) return;
 
     const params = new URLSearchParams(window.location.search);
 
-    // Clear existing filters
-    this.activeSearch = '';
-    this.activeCategories = [];
-    this.activeLabels = [];
-
     // Get search parameter
     const search = params.get("search");
-    if (search) {
-      this.activeSearch = decodeURIComponent(search);
-      this.searchInput.value = this.activeSearch;
-    }
+    this.activeSearch = search ? decodeURIComponent(search) : "";
+    this.searchInput.value = this.activeSearch;
 
     // Get category parameters
     const categories = params.getAll("category");
-    if (categories.length > 0) {
-      this.activeCategories = categories.map(cat => decodeURIComponent(cat))
-        .filter(cat => this.categories.includes(cat));
-    }
+    this.activeCategories = categories
+      .map(cat => decodeURIComponent(cat))
+      .filter(cat => this.categories.includes(cat));
 
     // Get label parameters
     const labels = params.getAll("label");
-    if (labels.length > 0) {
-      this.activeLabels = labels.map(label => decodeURIComponent(label))
-        .filter(label => this.labels.includes(label));
-    }
+    this.activeLabels = labels
+      .map(label => decodeURIComponent(label))
+      .filter(label => this.labels.includes(label));
 
-    // Update UI to reflect the active filters
+    // Update UI
+    this.setupFilters();
     this.updateCategoryFilterText();
     this.updateLabelFilterText();
+
+    // Update URL if needed
+    if (updateUrl) {
+      this.updateUrlParams();
+    }
   }
 
   /**
-   * Call the filter change callback
+   * Handle filter changes
    */
-  notifyFilterChange() {
-    this.onFilterChange(
+  async notifyFilterChange() {
+    if (!this.isInitialized) return;
+
+    // Update URL first
+    this.updateUrlParams();
+
+    // Then notify callback
+    await this.onFilterChange(
       this.activeSearch,
       this.activeCategories,
       this.activeLabels

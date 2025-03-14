@@ -7,47 +7,44 @@ let filterManager;
 // Initialize the application when DOM is loaded
 document.addEventListener("DOMContentLoaded", async function () {
   try {
-    // Initialize demo renderer
-    demoRenderer = new DemoRenderer("demoGrid");
-
-    // Initialize filter manager with callback
-    filterManager = new FilterManager({
-      onFilterChange: async (search, categories, labels) => {
-        await demoRenderer.renderDemos(search, categories, labels);
-      },
-    });
-
-    // Load data from JSON files
+    // Load data from JSON files first
     const [demos, categories, labels] = await Promise.all([
       fetchData("data/demos.json"),
       fetchData("data/categories.json"),
       fetchData("data/labels.json"),
     ]);
 
-    // Initialize components with data
+    // Initialize demo renderer
+    demoRenderer = new DemoRenderer("demoGrid");
     demoRenderer.init(demos);
-    
-    // Get initial URL parameters before setting up filters
+
+    // Get initial URL parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const initialSearch = urlParams.get("search") || "";
-    const initialCategories = urlParams.getAll("category") || [];
-    const initialLabels = urlParams.getAll("label") || [];
+    const initialSearch = urlParams.get("search");
+    const initialCategories = urlParams.getAll("category");
+    const initialLabels = urlParams.getAll("label");
+
+    // Initialize filter manager with callback and initial state
+    filterManager = new FilterManager({
+      onFilterChange: async (search, categories, labels) => {
+        await demoRenderer.renderDemos(search, categories, labels);
+      },
+      initialState: {
+        search: initialSearch ? decodeURIComponent(initialSearch) : "",
+        categories: initialCategories.map(c => decodeURIComponent(c)),
+        labels: initialLabels.map(l => decodeURIComponent(l))
+      }
+    });
 
     // Initialize filter manager with data
-    filterManager.init(categories, labels);
+    await filterManager.init(categories, labels);
 
-    // If we have URL parameters, apply them immediately
-    if (initialSearch || initialCategories.length > 0 || initialLabels.length > 0) {
-      // Initial render with filters
-      await demoRenderer.renderDemos(
-        decodeURIComponent(initialSearch),
-        initialCategories.map(c => decodeURIComponent(c)),
-        initialLabels.map(l => decodeURIComponent(l))
-      );
-    } else {
-      // No filters, render all demos
-      await demoRenderer.renderDemos();
-    }
+    // Initial render based on URL parameters
+    await demoRenderer.renderDemos(
+      filterManager.activeSearch,
+      filterManager.activeCategories,
+      filterManager.activeLabels
+    );
 
     console.log("Cloudflare Product Demos application initialized successfully");
   } catch (error) {
@@ -58,6 +55,21 @@ document.addEventListener("DOMContentLoaded", async function () {
       </div>
     `;
   }
+});
+
+// Handle browser navigation
+window.addEventListener('popstate', async function(event) {
+  if (!filterManager) return;
+
+  // Update filters from URL without triggering URL update
+  await filterManager.applyFiltersFromUrl(false);
+  
+  // Re-render with current URL parameters
+  await demoRenderer.renderDemos(
+    filterManager.activeSearch,
+    filterManager.activeCategories,
+    filterManager.activeLabels
+  );
 });
 
 // Add a method to reload data (useful for future enhancements)
@@ -95,21 +107,3 @@ async function reloadData() {
     console.error("Error reloading data:", error);
   }
 }
-
-// Add support for direct linking with filters
-window.addEventListener('popstate', async function(event) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const search = urlParams.get("search") || "";
-  const categories = urlParams.getAll("category") || [];
-  const labels = urlParams.getAll("label") || [];
-
-  // Update filter manager state
-  filterManager.applyFiltersFromUrl();
-  
-  // Re-render with current URL parameters
-  await demoRenderer.renderDemos(
-    decodeURIComponent(search),
-    categories.map(c => decodeURIComponent(c)),
-    labels.map(l => decodeURIComponent(l))
-  );
-});

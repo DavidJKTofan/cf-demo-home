@@ -599,3 +599,23 @@ footer {
     padding: 12px 16px; /* Larger touch targets */
   }
 }
+
+/* Add loading state styles */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Improve filter button feedback */
+.dropdown-btn[aria-expanded="true"] {
+  background-color: var(--hover-color);
+  border-color: var(--primary-color);
+}
+
+/* Add active filter indication */
+.dropdown-btn.has-active-filters {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  font-weight: 500;
+}

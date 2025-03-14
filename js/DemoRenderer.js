@@ -215,7 +215,7 @@ class DemoRenderer {
    * @param {Function} operation - Operation to measure
    * @returns {*} - Operation result
    */
-  async _trackPerformance(operation) {
+  _trackPerformance(operation) {
     const start = performance.now();
     try {
       const result = operation();
@@ -255,7 +255,14 @@ class DemoRenderer {
       this.container.innerHTML = "";
       this.showLoading();
 
-      // Filter demos (remove the await since filterDemos is synchronous)
+      // Store current filters
+      this.currentFilters = {
+        search: searchText,
+        categories: categories,
+        labels: labels
+      };
+
+      // Filter demos synchronously
       const filteredDemos = this._trackPerformance(() => 
         this.filterDemos(searchText, categories, labels)
       );
@@ -263,7 +270,7 @@ class DemoRenderer {
       // Clear loading state
       this.container.innerHTML = "";
 
-      if (filteredDemos.length === 0) {
+      if (!Array.isArray(filteredDemos) || filteredDemos.length === 0) {
         this._showNoResults(searchText);
         return;
       }
