@@ -1,0 +1,11 @@
+# robots.txt for cf-demo-home
+
+User-agent: *
+Disallow: /data/
+Allow: /
+
+# Sitemap
+Sitemap: https://automatic-demo.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10 

@@ -1,141 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Essential Meta Tags -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cloudflare Demos | Explore Cloudflare Solutions & Features</title>
-    <meta
-      name="description"
-      content="Discover interactive Cloudflare solution demos showcasing security, performance, and developer tools. Learn how Cloudflare enhances web experiences."
-    />
-    <meta
-      name="keywords"
-      content="Cloudflare, security, performance, CDN, WAF, Zero Trust, DDoS protection, networking, developer tools"
-    />
-    <meta name="author" content="DavidJKTofan" />
-    <meta name="robots" content="index, follow" />
 
-    <!-- Open Graph / Facebook Meta Tags -->
-    <meta
-      property="og:title"
-      content="Cloudflare Demos | Explore Cloudflare Solutions & Features"
-    />
-    <meta
-      property="og:description"
-      content="Explore Cloudflare solution demos and learn about security, performance, and developer tools."
-    />
-    <meta property="og:image" content="https://automatic-demo.com/thumbnail.png" />
-    <meta property="og:url" content="/" />
-    <meta property="og:type" content="website" />
+<head>
+  <!-- Essential Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cloudflare Demos | Explore Cloudflare Solutions & Features</title>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Cloudflare Demos | Explore Cloudflare Solutions & Features"
-    />
-    <meta
-      name="twitter:description"
-      content="Discover Cloudflare solution demos showcasing security, performance, and developer tools."
-    />
-    <meta
-      name="twitter:image"
-      content="https://automatic-demo.com/thumbnail.png"
-    />
-    <meta name="twitter:site" content="@Cloudflare" />
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="Discover interactive Cloudflare solution demos showcasing security, performance, and developer tools." />
+  <meta name="keywords"
+    content="Cloudflare, security, performance, CDN, WAF, Zero Trust, networking, developer tools" />
+  <meta name="author" content="DavidJKTofan" />
+  <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://automatic-demo.com/" />
 
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <!-- Open Graph / Facebook Meta Tags -->
+  <meta property="og:title" content="Cloudflare Demos | Explore Cloudflare Solutions & Features" />
+  <meta property="og:description"
+    content="Explore Cloudflare solution demos and learn about security, performance, and developer tools." />
+  <meta property="og:image" content="https://automatic-demo.com/thumbnail.png" />
+  <meta property="og:url" content="/" />
+  <meta property="og:type" content="website" />
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/styles.css" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cloudflare Demos | Explore Cloudflare Solutions & Features" />
+  <meta name="twitter:description"
+    content="Discover Cloudflare solution demos showcasing security, performance, and developer tools." />
+  <meta name="twitter:image" content="https://automatic-demo.com/thumbnail.png" />
 
-    <!-- Preload Critical Assets -->
-    <link rel="preload" href="css/styles.css" as="style" />
-    <link rel="preload" href="js/utils.js" as="script" />
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
-    <!-- Accessibility Enhancements -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="theme-color" content="#ffffff" />
+  <!-- Resource Hints -->
+  <link rel="preload" href="css/styles.css" as="style" />
+  <link rel="preload" href="js/utils.js" as="script" />
+  <link rel="preload" href="js/DemoRenderer.js" as="script" />
+  <link rel="preload" href="js/FilterManager.js" as="script" />
+  <link rel="modulepreload" href="js/main.js" />
 
-    <!-- JavaScript (Defer for Performance) -->
-    <script defer src="js/utils.js"></script>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <h1>Cloudflare Demos</h1>
-        <div class="filters">
-          <div class="search-box">
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search demos..."
-              aria-label="Search demos"
-            />
-          </div>
-          <div class="filter-dropdown">
-            <button
-              class="dropdown-btn"
-              id="categoryFilterBtn"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Filter by Category
-            </button>
-            <div
-              class="dropdown-content"
-              id="categoryFilterContent"
-              role="menu"
-            >
-              <!-- Categories will be dynamically added here -->
-            </div>
-          </div>
-          <div class="filter-dropdown">
-            <button
-              class="dropdown-btn"
-              id="labelFilterBtn"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Filter by Product
-            </button>
-            <div class="dropdown-content" id="labelFilterContent" role="menu">
-              <!-- Labels will be dynamically added here -->
-            </div>
-          </div>
-          <button class="clear-filters" id="clearFilters">Clear Filters</button>
-        </div>
-      </div>
-    </header>
+  <!-- Stylesheets with performance attributes -->
+  <link rel="stylesheet" href="css/styles.css" media="print" onload="this.media='all'" />
 
+  <!-- JavaScript with modern attributes -->
+  <script defer src="js/utils.js"></script>
+  <script defer src="js/DemoRenderer.js"></script>
+  <script defer src="js/FilterManager.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+
+<body>
+  <header>
     <div class="container">
-      <div id="loadingIndicator" class="loading-indicator">
-        <div class="spinner"></div>
-        <p>Loading demos...</p>
-      </div>
-      <div class="demo-grid" id="demoGrid">
-        <!-- Demo cards will be dynamically added here -->
+      <h1>Cloudflare Demos</h1>
+      <div class="filters">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search demos..." aria-label="Search demos" />
+        </div>
+        <div class="filter-dropdown">
+          <button class="dropdown-btn" id="categoryFilterBtn" aria-haspopup="true" aria-expanded="false">
+            Filter by Category
+          </button>
+          <div class="dropdown-content" id="categoryFilterContent" role="menu">
+            <!-- Categories will be dynamically added here -->
+          </div>
+        </div>
+        <div class="filter-dropdown">
+          <button class="dropdown-btn" id="labelFilterBtn" aria-haspopup="true" aria-expanded="false">
+            Filter by Product
+          </button>
+          <div class="dropdown-content" id="labelFilterContent" role="menu">
+            <!-- Labels will be dynamically added here -->
+          </div>
+        </div>
+        <button class="clear-filters" id="clearFilters">Clear Filters</button>
       </div>
     </div>
+  </header>
 
-    <footer>
-      <div class="container">
-        <p>© 2025 automatic-demo.com</p>
-        <p class="disclaimer">
-          This is an unofficial demonstration website. Not affiliated with or
-          endorsed by Cloudflare. All product names, logos, and brands are
-          property of Cloudflare. This site is for informational purposes only
-          and comes with no warranty or guarantee of accuracy.
-        </p>
-      </div>
-    </footer>
+  <div class="container">
+    <div id="loadingIndicator" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Loading demos...</p>
+    </div>
+    <div class="demo-grid" id="demoGrid">
+      <!-- Demo cards will be dynamically added here -->
+    </div>
+  </div>
 
-    <!-- Load JavaScript modules -->
-    <script src="js/utils.js"></script>
-    <script src="js/DemoRenderer.js"></script>
-    <script src="js/FilterManager.js"></script>
-    <script src="js/main.js"></script>
-  </body>
+  <footer>
+    <div class="container">
+      <p>© 2025 automatic-demo.com</p>
+      <p class="disclaimer">
+        This is an unofficial demonstration website. Not affiliated with or
+        endorsed by Cloudflare. All product names, logos, and brands are
+        property of Cloudflare. This site is for informational purposes only
+        and comes with no warranty or guarantee of accuracy.
+      </p>
+    </div>
+  </footer>
+</body>
+
 </html>
