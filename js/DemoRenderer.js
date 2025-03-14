@@ -18,6 +18,13 @@ class DemoRenderer {
     };
     this.initIntersectionObserver();
     this.isLoading = false;
+
+    // Add performance tracking
+    this.performanceMetrics = {
+      filterOperations: 0,
+      averageFilterTime: 0,
+      totalFilterTime: 0
+    };
   }
 
   /**
@@ -203,6 +210,36 @@ class DemoRenderer {
   }
 
   /**
+   * Track performance of operations
+   * @private
+   * @param {Function} operation - Operation to measure
+   * @returns {*} - Operation result
+   */
+  async _trackPerformance(operation) {
+    const start = performance.now();
+    try {
+      const result = operation();
+      const duration = performance.now() - start;
+
+      // Update metrics
+      this.performanceMetrics.filterOperations++;
+      this.performanceMetrics.totalFilterTime += duration;
+      this.performanceMetrics.averageFilterTime = 
+        this.performanceMetrics.totalFilterTime / this.performanceMetrics.filterOperations;
+
+      // Log if operation takes too long
+      if (duration > 100) {
+        console.warn(`Slow operation (${duration.toFixed(2)}ms)`);
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Performance tracking error:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Render demos based on filters
    * @param {string} searchText - Text to search for
    * @param {Array} categories - Active category filters
@@ -218,8 +255,8 @@ class DemoRenderer {
       this.container.innerHTML = "";
       this.showLoading();
 
-      // Filter demos
-      const filteredDemos = await this._trackPerformance(() => 
+      // Filter demos (remove the await since filterDemos is synchronous)
+      const filteredDemos = this._trackPerformance(() => 
         this.filterDemos(searchText, categories, labels)
       );
 
@@ -382,5 +419,13 @@ class DemoRenderer {
         this.loadingIndicator.style.display = "none";
       }
     }
+  }
+
+  /**
+   * Get performance metrics
+   * @returns {Object} Current performance metrics
+   */
+  getPerformanceMetrics() {
+    return { ...this.performanceMetrics };
   }
 }
