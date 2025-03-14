@@ -454,3 +454,30 @@ footer {
   font-size: 0.9rem;
   border-top: 1px solid var(--border-color);
 }
+
+.dropdown-animate {
+  transition: height 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.dropdown-animate.show {
+  opacity: 1;
+  height: auto;
+}
+
+.checkbox-item {
+  transition: background-color 0.2s ease;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.checkbox-item:focus {
+  outline: 2px solid #f6821f; /* Cloudflare orange */
+  background-color: rgba(246, 130, 31, 0.1);
+}
+
+.checkbox-item:hover {
+  background-color: rgba(246, 130, 31, 0.05);
+}

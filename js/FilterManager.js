@@ -61,6 +61,12 @@ class FilterManager {
     this._handleLabelChange = this._handleLabelChange.bind(this);
     this._handleClearFilters = this._handleClearFilters.bind(this);
     this._handleClickOutside = this._handleClickOutside.bind(this);
+
+    // Add new state tracking for active dropdowns
+    this.activeDropdown = null;
+    
+    // Add keyboard navigation state
+    this.currentFocusIndex = -1;
   }
 
   /**
@@ -181,6 +187,38 @@ class FilterManager {
     // Update button text to reflect active filters
     this.updateCategoryFilterText();
     this.updateLabelFilterText();
+
+    // Enhance checkbox items with better keyboard navigation
+    const checkboxItems = this.categoryContent.querySelectorAll('.checkbox-item');
+    checkboxItems.forEach((item, index) => {
+      item.setAttribute('data-index', index);
+      
+      // Add keyboard navigation
+      item.addEventListener('keydown', (e) => {
+        switch(e.key) {
+          case 'ArrowDown':
+            e.preventDefault();
+            this._focusNextItem(checkboxItems, index);
+            break;
+          case 'ArrowUp':
+            e.preventDefault();
+            this._focusPreviousItem(checkboxItems, index);
+            break;
+          case 'Home':
+            e.preventDefault();
+            checkboxItems[0].focus();
+            break;
+          case 'End':
+            e.preventDefault();
+            checkboxItems[checkboxItems.length - 1].focus();
+            break;
+        }
+      });
+    });
+
+    // Add animation classes for smoother transitions
+    this.categoryContent.classList.add('dropdown-animate');
+    this.labelContent.classList.add('dropdown-animate');
   }
 
   /**
@@ -250,15 +288,27 @@ class FilterManager {
    * @private
    */
   _handleCategoryToggle() {
-    const isExpanded = this.categoryContent.classList.toggle("show");
-    this.categoryBtn.setAttribute(
-      "aria-expanded",
-      isExpanded ? "true" : "false"
-    );
-
     // Close other dropdown if open
-    this.labelContent.classList.remove("show");
-    this.labelBtn.setAttribute("aria-expanded", "false");
+    if (this.activeDropdown && this.activeDropdown !== this.categoryContent) {
+      this.activeDropdown.classList.remove('show');
+      this.labelBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    const isExpanded = this.categoryContent.classList.toggle('show');
+    this.categoryBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+    
+    // Update active dropdown tracking
+    this.activeDropdown = isExpanded ? this.categoryContent : null;
+
+    // Reset focus index when opening
+    if (isExpanded) {
+      this.currentFocusIndex = -1;
+      // Focus first checkbox item after brief delay for animation
+      setTimeout(() => {
+        const firstItem = this.categoryContent.querySelector('.checkbox-item');
+        if (firstItem) firstItem.focus();
+      }, 100);
+    }
   }
 
   /**
@@ -351,20 +401,14 @@ class FilterManager {
    * @param {Event} e - Click event
    */
   _handleClickOutside(e) {
-    if (
-      !this.categoryBtn.contains(e.target) &&
-      !this.categoryContent.contains(e.target)
-    ) {
-      this.categoryContent.classList.remove("show");
-      this.categoryBtn.setAttribute("aria-expanded", "false");
-    }
-
-    if (
-      !this.labelBtn.contains(e.target) &&
-      !this.labelContent.contains(e.target)
-    ) {
-      this.labelContent.classList.remove("show");
-      this.labelBtn.setAttribute("aria-expanded", "false");
+    if (this.activeDropdown && 
+        !this.activeDropdown.contains(e.target) && 
+        !e.target.closest('.dropdown-btn')) {
+      this.activeDropdown.classList.remove('show');
+      const relatedBtn = this.activeDropdown === this.categoryContent ? 
+                        this.categoryBtn : this.labelBtn;
+      relatedBtn.setAttribute('aria-expanded', 'false');
+      this.activeDropdown = null;
     }
   }
 
@@ -518,5 +562,24 @@ class FilterManager {
     this.setupFilters();
     this.updateUrlParams();
     this.notifyFilterChange();
+  }
+
+  // Add helper methods for keyboard navigation
+  _focusNextItem(items, currentIndex) {
+    const nextIndex = (currentIndex + 1) % items.length;
+    items[nextIndex].focus();
+  }
+
+  _focusPreviousItem(items, currentIndex) {
+    const prevIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+    items[prevIndex].focus();
+  }
+
+  // Add method to handle dropdown animations
+  _animateDropdown(dropdown, show) {
+    dropdown.style.height = show ? `${dropdown.scrollHeight}px` : '0';
+    dropdown.addEventListener('transitionend', () => {
+      if (show) dropdown.style.height = 'auto';
+    }, { once: true });
   }
 }

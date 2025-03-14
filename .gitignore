@@ -33,3 +33,5 @@ yarn-error.log*
 # Auto-Generating Product Pages
 demos/generate_landing_pages.py
 demos/template.html
+.cursorrules
+.cursorignore
