@@ -10,7 +10,7 @@
  */
 export async function fetchData(url, retries = 3) {
   let currentRetry = 0;
-  const timeout = 5000; // 5 seconds timeout
+  const timeout = 4000; // 4 seconds timeout
 
   while (currentRetry < retries) {
     try {
