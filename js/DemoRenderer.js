@@ -17,6 +17,7 @@ class DemoRenderer {
       labels: [],
     };
     this.initIntersectionObserver();
+    this.isLoading = false;
   }
 
   /**
@@ -207,90 +208,77 @@ class DemoRenderer {
    * @param {Array} categories - Active category filters
    * @param {Array} labels - Active label filters
    */
-  renderDemos(searchText = "", categories = [], labels = []) {
-    // Store current filters for potential use later
-    this.currentFilters = {
-      search: searchText,
-      categories: categories,
-      labels: labels,
-    };
+  async renderDemos(searchText = "", categories = [], labels = []) {
+    if (this.isLoading) return;
+    
+    try {
+      this.isLoading = true;
+      
+      // Show loading state
+      this.container.innerHTML = "";
+      this.showLoading();
 
-    // Clear the container
-    this.container.innerHTML = "";
-
-    // Show simple loading if search or filters have changed significantly
-    if (
-      (searchText && searchText.length > 2) ||
-      categories.length > 0 ||
-      labels.length > 0
-    ) {
-      // Add a minimal loading state
-      const loadingEl = createElement(
-        "div",
-        {
-          className: "loading-indicator loading-inline",
-          "aria-live": "polite",
-        },
-        `<div class="spinner small"></div>`
-      );
-      this.container.appendChild(loadingEl);
-    }
-
-    // Use setTimeout to free up the main thread for the loading indicator to render
-    setTimeout(() => {
       // Filter demos
-      const filteredDemos = this.filterDemos(searchText, categories, labels);
+      const filteredDemos = await this._trackPerformance(() => 
+        this.filterDemos(searchText, categories, labels)
+      );
 
-      // Clear any temporary loading elements
+      // Clear loading state
       this.container.innerHTML = "";
 
-      // Show no results message if needed
       if (filteredDemos.length === 0) {
-        const searchTerms = searchText ? `"${searchText}"` : "";
-        const noResultsElement = createElement(
-          "div",
-          {
-            className: "no-results",
-            "aria-live": "polite",
-          },
-          `<p>No demos match your filters ${searchTerms}.</p><p>Try adjusting your search criteria or <button class="text-button" id="clearFiltersInline">clear all filters</button>.</p>`
-        );
-
-        this.container.appendChild(noResultsElement);
-
-        // Add event listener to the inline clear filters button
-        const clearFiltersBtn = document.getElementById("clearFiltersInline");
-        if (clearFiltersBtn) {
-          clearFiltersBtn.addEventListener("click", () => {
-            document.getElementById("clearFilters").click();
-          });
-        }
-
+        this._showNoResults(searchText);
         return;
       }
 
       // Create and append demo cards
-      filteredDemos.forEach((demo) => {
+      filteredDemos.forEach(demo => {
         const card = this.createDemoCard(demo);
         this.container.appendChild(card);
       });
 
-      // Announce to screen readers how many results were found
-      const announcement = createElement(
-        "div",
-        {
-          className: "sr-only",
-          "aria-live": "polite",
-        },
-        `Found ${filteredDemos.length} matching demos.`
-      );
-      this.container.appendChild(announcement);
+    } catch (error) {
+      console.error('Error rendering demos:', error);
+      this._showError();
+    } finally {
+      this.isLoading = false;
+    }
+  }
 
-      // Clean up announcement after it's been read
-      setTimeout(() => {
-        announcement.remove();
-      }, 3000);
-    }, 10);
+  _showNoResults(searchText) {
+    const searchTerms = searchText ? `"${searchText}"` : "";
+    const noResultsElement = createElement(
+      "div",
+      {
+        className: "no-results",
+        "aria-live": "polite",
+      },
+      `<p>No demos match your filters ${searchTerms}.</p>
+       <p>Try adjusting your search criteria or <button class="text-button" id="clearFiltersInline">clear all filters</button>.</p>`
+    );
+
+    this.container.appendChild(noResultsElement);
+
+    // Add event listener to the inline clear filters button
+    const clearFiltersBtn = document.getElementById("clearFiltersInline");
+    if (clearFiltersBtn) {
+      clearFiltersBtn.addEventListener("click", () => {
+        document.getElementById("clearFilters").click();
+      });
+    }
+  }
+
+  _showError() {
+    const errorElement = createElement(
+      "div",
+      {
+        className: "error-message",
+        "aria-live": "assertive",
+      },
+      `<p>There was an error loading the demos. Please try refreshing the page.</p>`
+    );
+
+    this.container.appendChild(errorElement);
   }
 
   /**
