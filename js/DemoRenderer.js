@@ -1,7 +1,9 @@
+import { createElement, debounce } from './utils.js';
+
 /**
  * Class to handle rendering demo cards with enhanced performance and accessibility
  */
-class DemoRenderer {
+export class DemoRenderer {
   /**
    * Create a new DemoRenderer instance
    * @param {string} containerId - ID of the container element for demo cards
@@ -25,6 +27,20 @@ class DemoRenderer {
       averageFilterTime: 0,
       totalFilterTime: 0
     };
+
+    // Add virtual scrolling support
+    this.virtualScroll = {
+      itemHeight: 250,
+      visibleItems: 12,
+      startIndex: 0,
+      endIndex: 12
+    };
+
+    // Add intersection observer for lazy loading
+    this.setupIntersectionObserver();
+    
+    // Add ResizeObserver for layout changes
+    this.setupResizeObserver();
   }
 
   /**
@@ -80,6 +96,41 @@ class DemoRenderer {
         }
       );
     }
+  }
+
+  setupIntersectionObserver() {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            requestAnimationFrame(() => {
+              card.style.opacity = "1";
+              card.style.transform = "translateY(0)";
+            });
+            this.observer.unobserve(card);
+          }
+        });
+      },
+      { rootMargin: "50px" }
+    );
+  }
+
+  setupResizeObserver() {
+    this.resizeObserver = new ResizeObserver(debounce(() => {
+      if (this.container) {
+        this.updateVirtualScroll();
+      }
+    }, 150));
+    
+    if (this.container) {
+      this.resizeObserver.observe(this.container);
+    }
+  }
+
+  updateVirtualScroll() {
+    const containerHeight = this.container.clientHeight;
+    this.virtualScroll.visibleItems = Math.ceil(containerHeight / this.virtualScroll.itemHeight) + 4;
   }
 
   /**
@@ -281,28 +332,90 @@ class DemoRenderer {
     try {
       this.isLoading = true;
       
-      // Filter demos first
-      const filteredDemos = this.filterDemos(searchText, categories, labels);
+      // Filter demos
+      const filteredDemos = this._trackPerformance(() => 
+        this.filterDemos(searchText, categories, labels)
+      );
+
+      // Update virtual scroll
+      this.virtualScroll.startIndex = 0;
+      this.virtualScroll.endIndex = Math.min(
+        this.virtualScroll.visibleItems,
+        filteredDemos.length
+      );
+
+      // Render visible items
+      await this.renderVisibleItems(filteredDemos);
       
-      // Prepare all cards before rendering
-      const cards = filteredDemos.map(demo => this.createDemoCard(demo));
-      
-      // Update DOM all at once
-      requestAnimationFrame(() => {
-        this.container.innerHTML = '';
-        if (cards.length === 0) {
-          this._showNoResults(searchText);
-        } else {
-          cards.forEach(card => this.container.appendChild(card));
-        }
-      });
-      
+      // Setup infinite scroll if needed
+      if (filteredDemos.length > this.virtualScroll.visibleItems) {
+        this.setupInfiniteScroll(filteredDemos);
+      }
+
     } catch (error) {
       console.error('Error rendering demos:', error);
       this._showError();
     } finally {
       this.isLoading = false;
     }
+  }
+
+  async renderVisibleItems(demos) {
+    const fragment = document.createDocumentFragment();
+    const visibleDemos = demos.slice(
+      this.virtualScroll.startIndex,
+      this.virtualScroll.endIndex
+    );
+
+    const cards = await Promise.all(
+      visibleDemos.map(demo => this.createDemoCard(demo))
+    );
+
+    cards.forEach(card => fragment.appendChild(card));
+
+    requestAnimationFrame(() => {
+      this.container.innerHTML = '';
+      this.container.appendChild(fragment);
+    });
+  }
+
+  setupInfiniteScroll(demos) {
+    const loadMore = debounce(() => {
+      if (this.isLoading) return;
+
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const containerBottom = this.container.offsetTop + this.container.offsetHeight;
+
+      if (scrollPosition >= containerBottom - 500) {
+        this.loadMoreItems(demos);
+      }
+    }, 150);
+
+    window.addEventListener('scroll', loadMore, { passive: true });
+  }
+
+  async loadMoreItems(demos) {
+    this.virtualScroll.startIndex = this.virtualScroll.endIndex;
+    this.virtualScroll.endIndex = Math.min(
+      this.virtualScroll.endIndex + this.virtualScroll.visibleItems,
+      demos.length
+    );
+
+    const newItems = demos.slice(
+      this.virtualScroll.startIndex,
+      this.virtualScroll.endIndex
+    );
+
+    const fragment = document.createDocumentFragment();
+    const cards = await Promise.all(
+      newItems.map(demo => this.createDemoCard(demo))
+    );
+
+    cards.forEach(card => fragment.appendChild(card));
+
+    requestAnimationFrame(() => {
+      this.container.appendChild(fragment);
+    });
   }
 
   _showNoResults(searchText) {

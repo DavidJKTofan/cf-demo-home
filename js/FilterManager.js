@@ -1,8 +1,10 @@
+import { createElement, toKebabCase, debounce } from './utils.js';
+
 /**
  * Class to manage filters functionality for demo filtering
  * Handles category and label filtering, search functionality, and filter state
  */
-class FilterManager {
+export class FilterManager {
   /**
    * Create a new FilterManager instance
    * @param {Object} config - Configuration object

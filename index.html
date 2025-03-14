@@ -41,8 +41,24 @@
   <link rel="preload" href="js/FilterManager.js" as="script" />
   <link rel="modulepreload" href="js/main.js" />
 
-  <!-- Stylesheets with performance attributes -->
-  <link rel="stylesheet" href="css/styles.css" media="print" onload="this.media='all'" />
+  <!-- Critical CSS inline -->
+  <style>
+    /* Add critical CSS here */
+    :root {
+      --primary-color: #f6821f;
+      --secondary-color: #0051c3;
+      --background-color: #f6f7f8;
+    }
+    body { margin: 0; background: var(--background-color); }
+    .loading-indicator { display: none; }
+
+  <!-- Preload critical assets -->
+  <link rel="preload" href="data/demos.json" as="fetch" crossorigin>
+  <link rel="preload" href="data/categories.json" as="fetch" crossorigin>
+  <link rel="preload" href="data/labels.json" as="fetch" crossorigin>
+  
+  <!-- Defer non-critical CSS -->
+  <link rel="stylesheet" href="css/styles.css" media="print" onload="this.media='all'">
 
   <!-- JavaScript with modern attributes -->
   <script defer src="js/utils.js"></script>

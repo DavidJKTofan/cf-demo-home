@@ -1,45 +1,45 @@
 /**
  * Main application code
  */
+import { DemoRenderer } from './DemoRenderer.js';
+import { FilterManager } from './FilterManager.js';
+import { fetchData } from './utils.js';
+
 let demoRenderer;
 let filterManager;
 
-// Initialize the application when DOM is loaded
-document.addEventListener("DOMContentLoaded", async function () {
+// Use dynamic imports for better code splitting
+async function initializeApp() {
   try {
-    // Load data from JSON files first
+    // Load data in parallel
     const [demos, categories, labels] = await Promise.all([
       fetchData("data/demos.json"),
       fetchData("data/categories.json"),
       fetchData("data/labels.json"),
     ]);
 
-    // Initialize demo renderer
-    demoRenderer = new DemoRenderer("demoGrid");
+    // Initialize components
+    const demoRenderer = new DemoRenderer("demoGrid");
     demoRenderer.init(demos);
 
     // Get initial URL parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const initialSearch = urlParams.get("search");
-    const initialCategories = urlParams.getAll("category");
-    const initialLabels = urlParams.getAll("label");
+    const initialState = {
+      search: urlParams.get("search") ? decodeURIComponent(urlParams.get("search")) : "",
+      categories: urlParams.getAll("category").map(c => decodeURIComponent(c)),
+      labels: urlParams.getAll("label").map(l => decodeURIComponent(l))
+    };
 
-    // Initialize filter manager with callback and initial state
-    filterManager = new FilterManager({
+    const filterManager = new FilterManager({
       onFilterChange: async (search, categories, labels) => {
         await demoRenderer.renderDemos(search, categories, labels);
       },
-      initialState: {
-        search: initialSearch ? decodeURIComponent(initialSearch) : "",
-        categories: initialCategories.map(c => decodeURIComponent(c)),
-        labels: initialLabels.map(l => decodeURIComponent(l))
-      }
+      initialState
     });
 
-    // Initialize filter manager with data
     await filterManager.init(categories, labels);
-
-    // Initial render based on URL parameters
+    
+    // Initial render
     await demoRenderer.renderDemos(
       filterManager.activeSearch,
       filterManager.activeCategories,
@@ -50,12 +50,19 @@ document.addEventListener("DOMContentLoaded", async function () {
   } catch (error) {
     console.error("Error initializing application:", error);
     document.getElementById("demoGrid").innerHTML = `
-      <div class="no-results">
+      <div class="error-message">
         <p>There was an error loading the application. Please try again later.</p>
       </div>
     `;
   }
-});
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+  initializeApp();
+}
 
 // Handle browser navigation
 window.addEventListener('popstate', async function(event) {
