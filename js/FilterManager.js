@@ -67,6 +67,9 @@ class FilterManager {
     
     // Add keyboard navigation state
     this.currentFocusIndex = -1;
+
+    // Initialize filters from URL immediately
+    this.initialFiltersApplied = false;
   }
 
   /**
@@ -78,17 +81,22 @@ class FilterManager {
     this.categories = categories || [];
     this.labels = labels || [];
 
-    // Check if DOM elements exist
     if (!this.validateDomElements()) {
       console.error("FilterManager: Required DOM elements not found");
       return;
     }
 
+    // Apply URL filters before setting up the UI
+    this.applyFiltersFromUrl();
+    
+    // Then setup the UI with the applied filters
     this.setupFilters();
     this.setupEventListeners();
 
-    // Apply filters from URL if present
-    this.applyFiltersFromUrl();
+    // Trigger initial filter if URL had parameters
+    if (this.hasActiveFilters()) {
+      this.notifyFilterChange();
+    }
   }
 
   /**
@@ -210,6 +218,23 @@ class FilterManager {
     // Add scroll indicators if content overflows
     this._addScrollIndicators(this.categoryContent);
     this._addScrollIndicators(this.labelContent);
+
+    // Check corresponding checkboxes based on active filters
+    this.activeCategories.forEach(category => {
+      const checkbox = this.categoryContent.querySelector(`input[value="${category}"]`);
+      if (checkbox) {
+        checkbox.checked = true;
+        checkbox.setAttribute('aria-checked', 'true');
+      }
+    });
+
+    this.activeLabels.forEach(label => {
+      const checkbox = this.labelContent.querySelector(`input[value="${label}"]`);
+      if (checkbox) {
+        checkbox.checked = true;
+        checkbox.setAttribute('aria-checked', 'true');
+      }
+    });
   }
 
   /**
@@ -261,6 +286,29 @@ class FilterManager {
         // Update ARIA attributes
         this.categoryBtn.setAttribute("aria-expanded", "false");
         this.labelBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Add popstate event listener for browser navigation
+    window.addEventListener('popstate', (event) => {
+      if (event.state && event.state.filters) {
+        // Restore filters from state
+        const { search, categories, labels } = event.state.filters;
+        this.activeSearch = search;
+        this.activeCategories = categories;
+        this.activeLabels = labels;
+        
+        // Update UI
+        this.searchInput.value = search;
+        this.setupFilters();
+        this.updateCategoryFilterText();
+        this.updateLabelFilterText();
+        
+        // Apply filters
+        this.notifyFilterChange();
+      } else {
+        // No state, reset filters
+        this.resetFilters();
       }
     });
   }
@@ -444,28 +492,33 @@ class FilterManager {
     if (!window.history || !window.URLSearchParams) return;
 
     const url = new URL(window.location);
-    const params = new URLSearchParams(url.search);
-
-    // Clear existing filter params
-    params.delete("search");
-    params.delete("category");
-    params.delete("label");
+    const params = new URLSearchParams();
 
     // Add current filter values
     if (this.activeSearch) {
-      params.set("search", this.activeSearch);
+      params.set("search", encodeURIComponent(this.activeSearch));
     }
 
     this.activeCategories.forEach((category) => {
-      params.append("category", category);
+      params.append("category", encodeURIComponent(category));
     });
 
     this.activeLabels.forEach((label) => {
-      params.append("label", label);
+      params.append("label", encodeURIComponent(label));
     });
 
+    // Only update URL if there are filters
+    const queryString = params.toString();
+    const newUrl = queryString ? 
+      `${url.pathname}?${queryString}` : 
+      url.pathname;
+
     // Update URL without reloading page
-    window.history.replaceState({}, "", `${url.pathname}?${params}`);
+    window.history.replaceState(
+      { filters: this.getFilterState() }, 
+      '', 
+      newUrl
+    );
   }
 
   /**
@@ -476,53 +529,35 @@ class FilterManager {
 
     const params = new URLSearchParams(window.location.search);
 
+    // Clear existing filters
+    this.activeSearch = '';
+    this.activeCategories = [];
+    this.activeLabels = [];
+
     // Get search parameter
     const search = params.get("search");
     if (search) {
-      this.activeSearch = search;
-      this.searchInput.value = search;
+      this.activeSearch = decodeURIComponent(search);
+      this.searchInput.value = this.activeSearch;
     }
 
     // Get category parameters
     const categories = params.getAll("category");
     if (categories.length > 0) {
-      this.activeCategories = categories;
-
-      // Check corresponding checkboxes
-      categories.forEach((category) => {
-        const checkbox = document.getElementById(
-          `category-${toKebabCase(category)}`
-        );
-        if (checkbox) {
-          checkbox.checked = true;
-          checkbox.setAttribute("aria-checked", "true");
-        }
-      });
-
-      this.updateCategoryFilterText();
+      this.activeCategories = categories.map(cat => decodeURIComponent(cat))
+        .filter(cat => this.categories.includes(cat));
     }
 
     // Get label parameters
     const labels = params.getAll("label");
     if (labels.length > 0) {
-      this.activeLabels = labels;
-
-      // Check corresponding checkboxes
-      labels.forEach((label) => {
-        const checkbox = document.getElementById(`label-${toKebabCase(label)}`);
-        if (checkbox) {
-          checkbox.checked = true;
-          checkbox.setAttribute("aria-checked", "true");
-        }
-      });
-
-      this.updateLabelFilterText();
+      this.activeLabels = labels.map(label => decodeURIComponent(label))
+        .filter(label => this.labels.includes(label));
     }
 
-    // If any filters are active, apply them
-    if (search || categories.length > 0 || labels.length > 0) {
-      this.notifyFilterChange();
-    }
+    // Update UI to reflect the active filters
+    this.updateCategoryFilterText();
+    this.updateLabelFilterText();
   }
 
   /**
@@ -643,5 +678,15 @@ class FilterManager {
       dropdown.style.bottom = `${viewportHeight - buttonRect.top + window.scrollY}px`;
       dropdown.style.top = 'auto';
     }
+  }
+
+  /**
+   * Check if there are any active filters
+   * @returns {boolean}
+   */
+  hasActiveFilters() {
+    return this.activeSearch !== '' || 
+           this.activeCategories.length > 0 || 
+           this.activeLabels.length > 0;
   }
 }
