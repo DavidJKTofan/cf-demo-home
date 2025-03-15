@@ -47,18 +47,28 @@ h1 {
   font-size: 1.8rem;
 }
 
+pre {
+  background: var(--card-color, #1e1e1e);
+  padding: 1rem;
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Courier New', monospace;
+}
+
 code {
+  display: block;
+  color: var(--text-color, #e6e6e6);
+  line-height: 1.5;
   font-family: "Courier New", Courier, monospace;
   font-size: 0.95em;
   background-color: rgba(27, 31, 35, 0.05);
-  color: #d63384;
-  /* Nice pink tone for better visibility */
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   white-space: pre-wrap;
-  /* Allows the text to wrap onto new lines */
   word-break: break-word;
-  /* Breaks long words to avoid overflow */
 }
 
 .filters {

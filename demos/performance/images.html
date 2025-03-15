@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Images - Demo</title>
+  <meta name="description"
+    content="Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery.">
+  <meta name="keywords" content="Cloudflare, Application Performance, Images">
+  <meta property="og:title" content="Images - Demo">
+  <meta property="og:description"
+    content="Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery.">
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="home-button" style="
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+          ">Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Demo: Images</h1>
+
+    <div class="demo-card"
+      style="cursor: auto; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; background-color: var(--card-color); border: 1px solid var(--border-color);">
+      <div class="demo-meta">
+        <span class="demo-category" style="margin-bottom: 1rem; display: inline-block;">Application Performance</span>
+        <div class="demo-labels" style="margin: 1rem 0;">
+          <span class="demo-label" style="margin-right: 0.5rem;">Images</span>
+          <span class="demo-label" style="margin-right: 0.5rem;">Image Transformation</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <h3 style="margin: 1rem 0; color: var(--secondary-color);">Description</h3>
+        <p>Cloudflare Images is a managed-images hosting service that automatically optimizes images on-demand. Some
+          relevant features are:</p>
+        <ul style="margin-left: 1.5rem;">
+          <li>
+            <a href="https://developers.cloudflare.com/images/upload-images/direct-creator-upload/" target="_blank"
+              rel="noopener noreferrer external"><b>accept user-uploaded images</b></a> with a one-time upload URL.
+          </li>
+          <li>
+            <a href="https://developers.cloudflare.com/images/manage-images/create-variants/" target="_blank"
+              rel="noopener noreferrer external"><b>Create variants</b></a> of images on-demand.
+          </li>
+          <li>
+            <a href="https://developers.cloudflare.com/images/manage-images/enable-flexible-variants/" target="_blank"
+              rel="noopener noreferrer external"><b>Enable flexible variants</b></a> to apply more customizable <a
+              href="https://developers.cloudflare.com/images/transform-images/transform-via-url/#options"
+              target="_blank" rel="noopener noreferrer external">transformation parameters</a>, similar to the <a
+              href="/demos/performance/image-transformation" target="_blank" rel="noopener noreferrer external">Image
+              Transformation</a> service.
+          </li>
+          <li>
+            <a href="https://developers.cloudflare.com/images/manage-images/serve-images/serve-private-images/"
+              target="_blank" rel="noopener noreferrer external"><b>Serve private images</b></a>by using signed URL
+            tokens.
+          </li>
+        </ul><br>
+        <p>Alternatively, for other hosting options, check out <a
+            href="https://developers.cloudflare.com/workers/platform/storage-options/" target="_blank"
+            rel="noopener noreferrer external">Cloudflare's Developer Platform</a>.</p>
+      </div>
+
+
+      <div style="margin-top: 1.5rem;">
+        <a rel="noopener noreferrer external"
+          href="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
+          target="_blank"
+          style="display: inline-block; padding: 0.6rem 1.2rem; background-color: var(--secondary-color); color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+          Images Demo
+        </a>
+      </div>
+
+      <div class="last-updated-container">
+        <p>Last Updated: <span id="last-updated">March 2025</span></p>
+      </div>
+
+    </div>
+
+    <h2>Code Snippet</h2>
+    <pre>
+      <p style="line-height: 0.5;">Cloudflare Images standard URL:</p>
+      <code>
+      https://imagedelivery.net/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;
+      </code>
+      <p style="line-height: 0.5;">Cloudflare Images custom domain:</p>
+      <code>
+      https://example.com/cdn-cgi/imagedelivery/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;
+      </code>
+    </pre>
+
+    <br>
+
+    <h2>Images Demo</h2>
+    <p>Image hosted on Cloudflare Images.</p>
+    <img src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
+      alt="Demo Image for Cloudflare Images" style="
+          max-width: 100%;
+          height: 500px;
+          border-radius: 6px;
+          border: 1px solid var(--border-color);
+          border: 3px solid #0051c3;
+        " />
+
+    <div class="responsive-grid">
+      <div>
+        <h3>Variant of an Image</h3>
+        <img src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/contain"
+          alt="Demo Image for Image Transformations"
+          style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
+      </div>
+      <div>
+        <h3>Flexible Variant of an Image</h3>
+        </p>
+        <img
+          src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=300,quality=50,rotate=180"
+          alt="Demo Image for Image Transformations"
+          style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
+      </div>
+    </div>
+    <br>
+
+    <h2>Images Dashboard View</h2>
+    <img src="img/cf-account-images.png" alt="Zone Image Transformation Dashboard Settings" style="
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      border: 3px solid #0051c3;
+    " />
+  </main>
+
+  <footer>
+    <p>&copy; 2025 automatic-demo.com</p>
+  </footer>
+</body>
+
+</html>

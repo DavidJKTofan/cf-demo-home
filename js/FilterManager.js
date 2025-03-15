@@ -132,9 +132,13 @@ export class FilterManager {
    * Setup filter dropdowns
    */
   setupFilters() {
+    // Sort categories and labels alphabetically
+    const sortedCategories = [...this.categories].sort((a, b) => a.localeCompare(b));
+    const sortedLabels = [...this.labels].sort((a, b) => a.localeCompare(b));
+
     // Build category filter checkboxes
     this.categoryContent.innerHTML = "";
-    this.categories.forEach((category) => {
+    sortedCategories.forEach((category) => {
       const categoryId = `category-${toKebabCase(category)}`;
 
       const checkboxItem = createElement(
@@ -171,7 +175,7 @@ export class FilterManager {
 
     // Build label filter checkboxes
     this.labelContent.innerHTML = "";
-    this.labels.forEach((label) => {
+    sortedLabels.forEach((label) => {
       const labelId = `label-${toKebabCase(label)}`;
 
       const checkboxItem = createElement(

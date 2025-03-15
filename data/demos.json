@@ -34,18 +34,18 @@
   },
   {
     "id": 4,
-    "title": "DNS Security Demo",
-    "description": "Learn how Cloudflare DNS services can protect your domain from threats.",
-    "url": "https://automatic-demo.com/dns-demo",
-    "category": "Network Services",
+    "title": "Images Demo",
+    "description": "Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery.",
+    "url": "/demos/performance/images",
+    "category": "Application Performance",
     "labels": [
-      "DNSSEC"
+      "Images"
     ]
   },
   {
     "id": 5,
     "title": "Images Transformations Demo",
-    "description": "There are two main methods to transform images: via URL - usually also used with srcset -, or via Workers.",
+    "description": "Transform images on the fly with Image Transformations: via URL - usually also used with srcset -, or programmatically via Workers.",
     "url": "/demos/performance/image-transformation",
     "category": "Application Performance",
     "labels": [
