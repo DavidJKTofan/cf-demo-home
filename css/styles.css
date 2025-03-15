@@ -47,6 +47,20 @@ h1 {
   font-size: 1.8rem;
 }
 
+code {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.95em;
+  background-color: rgba(27, 31, 35, 0.05);
+  color: #d63384;
+  /* Nice pink tone for better visibility */
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  /* Allows the text to wrap onto new lines */
+  word-break: break-word;
+  /* Breaks long words to avoid overflow */
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -189,7 +203,7 @@ h1 {
   color: var(--text-color);
   border: 1px solid var(--border-color);
   position: relative;
-  aspect-ratio: 3/2;
+  /* aspect-ratio: 3/2; */
   min-height: 250px;
   opacity: 1;
   transform: none;
@@ -451,6 +465,7 @@ h1 {
 
 /* Improve touch targets on mobile */
 @media (hover: none) and (pointer: coarse) {
+
   .dropdown-btn,
   .clear-filters,
   .checkbox-item {
@@ -493,7 +508,8 @@ footer {
 }
 
 .checkbox-item:focus {
-  outline: 2px solid #f6821f; /* Cloudflare orange */
+  outline: 2px solid #f6821f;
+  /* Cloudflare orange */
   background-color: rgba(246, 130, 31, 0.1);
 }
 
@@ -503,7 +519,8 @@ footer {
 
 /* Dropdown Menu Improvements */
 .dropdown-menu {
-  position: fixed; /* Change to fixed for better positioning */
+  position: fixed;
+  /* Change to fixed for better positioning */
   background: var(--card-color);
   border: 1px solid var(--border-color);
   border-radius: 4px;
@@ -615,7 +632,8 @@ footer {
   }
 
   .checkbox-item {
-    padding: 12px 16px; /* Larger touch targets */
+    padding: 12px 16px;
+    /* Larger touch targets */
   }
 }
 
