@@ -3,17 +3,17 @@
     "id": 1,
     "title": "DNSSEC",
     "description": "DNSSEC adds an extra layer of authentication layer to DNS, making sure that visitors go to your domain instead of a spoofed domain. Additionally, you have access to DNS Analytics.",
-    "url": "https://dnsviz.net/d/automatic-demo.com/analyze/",
+    "url": "/demos/performance/dnssec",
     "category": "Application Performance",
     "labels": ["DNS", "DNSSEC"]
   },
   {
     "id": 2,
-    "title": "WAF Protection Demo",
-    "description": "Explore how Cloudflare WAF protects your applications from common vulnerabilities.",
-    "url": "https://automatic-demo.com/waf-demo",
+    "title": "WAF Demo",
+    "description": "Explore how the Cloudflare WAF protects your HTTP/S applications from common and new vulnerabilities.",
+    "url": "/demos/security/waf",
     "category": "Application Security",
-    "labels": ["WAF", "Bot Management"]
+    "labels": ["WAF", "Firewall"]
   },
   {
     "id": 3,
@@ -34,7 +34,7 @@
   {
     "id": 5,
     "title": "Images Transformations Demo",
-    "description": "There are two main methods to transform images: via URL - usually also used with srcset -, or via Workers. The Workers method allows for more programmatic customization, as well as more complex transformations. The URL method is simpler to implement, such as using width=auto to automatically resize the image based on the available browser and device information.",
+    "description": "There are two main methods to transform images: via URL - usually also used with srcset -, or via Workers.",
     "url": "https://gist.github.com/DavidJKTofan/31a3b6164dfdc6961c6910f7da9b9bf3",
     "category": "Application Performance",
     "labels": ["Images", "Images Transformations", "Workers"]
@@ -59,7 +59,7 @@
     "id": 8,
     "title": "Waiting Room Demo",
     "description": "Waiting Room helps manage surges in website traffic, especially during high-demand events like Black Friday.",
-    "url": "https://performance.cf-testing.com/cloudflare-waiting-room-demo.html",
+    "url": "/demos/performance/waiting-room",
     "category": "Application Performance",
     "labels": ["Waiting Room"]
   },

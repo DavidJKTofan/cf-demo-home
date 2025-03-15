@@ -23,21 +23,6 @@
             font-weight: bold;
           ">Home</a>
     </div>
-    <style>
-      .responsive-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        align-items: start;
-        max-width: 100%;
-      }
-
-      @media (min-width: 600px) {
-        .responsive-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-    </style>
   </header>
 
   <main class="container">
@@ -81,6 +66,11 @@
           Workers Code Example
         </a>
       </div>
+
+      <div class="last-updated-container">
+        <p>Last Updated: <span id="last-updated">March 2025</span></p>
+      </div>
+
     </div>
 
     <h2>Images Transformations Demo</h2>
@@ -97,14 +87,14 @@
       <div>
         <h3>Transformed Image</h3>
         <p><code>/cdn-cgi/image/width=250,quality=75/img/munich-original-img.jpeg</code></p>
-        <img src="/cdn-cgi/image/width=250,quality=75/img/munich-original-img.jpeg"
+        <img src="cdn-cgi/image/width=250,quality=75/img/munich-original-img.jpeg"
           alt="Demo Image for Image Transformations"
           style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
       </div>
       <div>
         <h3>Transformed Image</h3>
         <p><code>/cdn-cgi/image/fit=cover,g=0.5x0.5,w=100,h=280/img/munich-original-img.jpeg</code></p>
-        <img src="/cdn-cgi/image/fit=cover,g=0.5x0.5,w=100,h=280/img/munich-original-img.jpeg"
+        <img src="cdn-cgi/image/fit=cover,g=0.5x0.5,w=100,h=280/img/munich-original-img.jpeg"
           alt="Demo Image for Image Transformations"
           style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
       </div>

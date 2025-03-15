@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAF - Demo</title>
+  <meta name="description"
+    content="The Cloudflare WAF is a Web Application Firewall that protects your HTTP/S web applications from common and new vulnerabilities.">
+  <meta name="keywords" content="Cloudflare, Application Security, WAF, Firewall">
+  <meta property="og:title" content="WAF - Demo">
+  <meta property="og:description"
+    content="The Cloudflare WAF is a Web Application Firewall that protects your HTTP/S web applications from common and new vulnerabilities.">
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="home-button" style="
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+          ">Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Demo: WAF</h1>
+
+    <div class="demo-card"
+      style="cursor: auto; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; background-color: var(--card-color); border: 1px solid var(--border-color);">
+      <div class="demo-meta">
+        <span class="demo-category" style="margin-bottom: 1rem; display: inline-block;">Application Security</span>
+        <div class="demo-labels" style="margin: 1rem 0;">
+          <span class="demo-label" style="margin-right: 0.5rem;">WAF</span> <span class="demo-label"
+            style="margin-right: 0.5rem;">Firewall</span>
+        </div>
+      </div>
+
+      <h3 style="margin: 1rem 0; color: var(--secondary-color);">Description</h3>
+      <p style="margin-bottom: 1.5rem;">The Cloudflare WAF is a Web Application Firewall that protects your <a
+          href="https://developers.cloudflare.com/fundamentals/reference/network-ports/" target="_blank"
+          rel="noopener noreferrer external">HTTP/S</a> web applications from common and new vulnerabilities. It mainly
+        consist of the following components:</p>
+      <ul style="margin-left: 1.5rem;">
+        <li>
+          <a href="https://developers.cloudflare.com/waf/detections/" target="_blank"
+            rel="noopener noreferrer external"><b>Traffic Detections</b></a>
+        </li>
+        <li>
+          <a href="https://developers.cloudflare.com/waf/custom-rules/" target="_blank"
+            rel="noopener noreferrer external"><b>Custom Rules</b></a>
+        </li>
+        <li>
+          <a href="https://developers.cloudflare.com/waf/rate-limiting-rules/" target="_blank"
+            rel="noopener noreferrer external"><b>Rate Limiting Rules</b></a>
+        </li>
+        <li>
+          <a href="https://developers.cloudflare.com/waf/managed-rules/" target="_blank"
+            rel="noopener noreferrer external"><b>WAF Managed Rules</b></a>
+        </li>
+        <li>
+          <a href="https://developers.cloudflare.com/waf/tools/" target="_blank"
+            rel="noopener noreferrer external"><b>Additional Tools</b></a>
+        </li>
+      </ul><br>
+
+      <div style="margin-top: 1.5rem;">
+        <a href="https://www.cf-testing.com/?url=file:///etc/passwd" target="_blank"
+          style="display: inline-block; padding: 0.6rem 1.2rem; background-color: var(--secondary-color); color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+          Visit Demo
+        </a>
+      </div>
+
+      <div class="last-updated-container">
+        <p>Last Updated: <span id="last-updated">March 2025</span></p>
+      </div>
+
+    </div>
+
+    <h2>Security Analytics</h2>
+    <img src="img/cf-zone-waf-analytics.png" alt="Zone WAF Dashboard Settings" style="
+          max-width: 100%;
+          height: auto;
+          border-radius: 6px;
+          border: 1px solid var(--border-color);
+          border: 3px solid #0051c3;
+        " />
+    <br>
+    <br>
+
+    <div class="responsive-grid">
+      <div>
+        <h3>Cloudflare-branded Managed Challenge</h3>
+        <img src="img/cf-waf-managed-challenge.png" alt="Demo Image for a Cloudflare-branded Managed Challenge"
+          style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
+      </div>
+      <div>
+        <h3>Cloudflare-branded Block</h3>
+        <img src="img/cf-waf-block.png" alt="Demo Image for a Cloudflare-branded Block"
+          style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
+      </div>
+      <div>
+        <h3>Custom-branded Managed Challenge</h3>
+        <p>Use <a
+            href="https://developers.cloudflare.com/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/"
+            target="_blank" rel="noopener noreferrer external">Custom Pages</a> to create a custom-branded
+          Managed Challenge. For advanced customization on errors, use the <a
+            href="https://developers.cloudflare.com/rules/custom-errors/" target="_blank"
+            rel="noopener noreferrer external">Custom Errors</a> feature.</p>
+        <img src="img/cf-waf-block.png" alt="Demo Image for a Cloudflare-branded Block"
+          style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
+      </div>
+      <div>
+        <h3>Block with Custom JSON Response</h3>
+        <p>Use <a
+            href="https://developers.cloudflare.com/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests"
+            target="_blank" rel="noopener noreferrer external">Custom Response</a> to for example trigger an action on
+          your native mobile application or for a service to use.</p>
+        <img src="img/cf-waf-block-custom-json-response.png" alt="Demo Image for a Cloudflare-branded Block"
+          style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
+      </div>
+    </div>
+    <br>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 automatic-demo.com</p>
+  </footer>
+</body>
+
+</html>

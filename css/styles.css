@@ -621,6 +621,27 @@ footer {
   opacity: 1;
 }
 
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  max-width: 100%;
+}
+
+@media (min-width: 600px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.last-updated-container {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+  font-style: italic;
+}
+
 /* Mobile improvements */
 @media (max-width: 768px) {
   .dropdown-menu {
