@@ -7,6 +7,8 @@
   --border-color: #e5e7eb;
   --hover-color: #f0f0f0;
   --focus-color: rgba(0, 81, 195, 0.3);
+  --link-color: #0051c3;
+  --link-hover-color: #f6821f;
 }
 
 * {
@@ -21,6 +23,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header {
@@ -693,4 +696,447 @@ footer {
   aspect-ratio: 16/9;
   width: 100%;
   background: var(--background-color);
+}
+
+/* Improved mobile responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .demo-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .demo-meta-tags {
+    flex-wrap: wrap;
+  }
+
+  .code-block {
+    margin: 1rem -1rem;
+    border-radius: 0;
+  }
+
+  pre {
+    padding: 1rem;
+    font-size: 0.9rem;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Safe area insets for modern mobile devices */
+@supports(padding: max(0px)) {
+  .container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Improved image handling */
+.image-container {
+  position: relative;
+  width: 100%;
+  margin: 2rem 0;
+  background: var(--background-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Improved code blocks */
+.code-block {
+  position: relative;
+  margin: 2rem 0;
+  background: var(--card-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  background: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.code-block:hover .copy-button {
+  opacity: 1;
+}
+
+/* Improved breadcrumb navigation */
+.breadcrumb {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.breadcrumb ol {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.breadcrumb li:not(:last-child)::after {
+  content: "/";
+  margin-left: 0.5rem;
+  color: var(--border-color);
+}
+
+/* Improved demo header */
+.demo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.demo-meta-tags {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Improved home button */
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.home-button:hover {
+  background-color: var(--hover-color);
+}
+
+.home-icon {
+  fill: currentColor;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary-color: #f6821f;
+    --secondary-color: #4693ff;
+    --background-color: #1a1a1a;
+    --card-color: #2d2d2d;
+    --text-color: #e0e0e0;
+    --border-color: #404040;
+    --hover-color: #363636;
+    --link-color: #66b3ff;
+    --link-hover-color: #ff9f4d;
+    --focus-color: rgba(70, 147, 255, 0.3);
+  }
+}
+
+/* Print styles */
+@media print {
+  .theme-toggle,
+  .home-button {
+    display: none;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .demo-card {
+    break-inside: avoid;
+    border: 1px solid #ccc !important;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.theme-toggle:hover {
+  background-color: var(--hover-color);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Theme icons */
+.sun-icon,
+.moon-icon {
+  fill: currentColor;
+  transition: transform 0.2s ease;
+}
+
+[data-theme="dark"] .sun-icon {
+  display: none;
+}
+
+[data-theme="light"] .moon-icon {
+  display: none;
+}
+
+/* Improved header layout */
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Enhanced link styles */
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  border-bottom-color: currentColor;
+}
+
+/* Improved focus styles */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Animation for theme transition */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Preserve theme preference */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary-color: #f6821f;
+    --secondary-color: #4693ff;
+    --background-color: #1a1a1a;
+    --card-color: #2d2d2d;
+    --text-color: #e0e0e0;
+    --border-color: #404040;
+    --hover-color: #363636;
+    --link-color: #66b3ff;
+    --link-hover-color: #ff9f4d;
+    --focus-color: rgba(70, 147, 255, 0.3);
+  }
+}
+
+/* Header layout improvements */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Dark mode adjustments for demo cards */
+[data-theme="dark"] .demo-card {
+  background-color: var(--card-color);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .demo-title {
+  color: var(--secondary-color);
+}
+
+[data-theme="dark"] .demo-category {
+  background-color: var(--secondary-color);
+}
+
+[data-theme="dark"] .demo-label {
+  background-color: rgba(246, 130, 31, 0.15);
+}
+
+/* Dark mode adjustments for filters */
+[data-theme="dark"] .dropdown-btn,
+[data-theme="dark"] .search-box input,
+[data-theme="dark"] .clear-filters {
+  background-color: var(--card-color);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .dropdown-content {
+  background-color: var(--card-color);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .checkbox-item:hover {
+  background-color: var(--hover-color);
+}
+
+/* Loading indicator dark mode */
+[data-theme="dark"] .loading-indicator {
+  background: rgba(45, 45, 45, 0.9);
+}
+
+[data-theme="dark"] .spinner {
+  border-color: rgba(70, 147, 255, 0.1);
+  border-left-color: var(--secondary-color);
+}
+
+/* Skeleton loading dark mode */
+[data-theme="dark"] .skeleton-card {
+  background-color: var(--card-color);
+}
+
+[data-theme="dark"] .skeleton-title,
+[data-theme="dark"] .skeleton-description,
+[data-theme="dark"] .skeleton-category,
+[data-theme="dark"] .skeleton-label {
+  background: linear-gradient(110deg, #2d2d2d 8%, #363636 18%, #2d2d2d 33%);
+}
+
+/* Improved focus styles for all interactive elements */
+.dropdown-btn:focus-visible,
+.search-box input:focus-visible,
+.clear-filters:focus-visible,
+.checkbox-item:focus-visible,
+.demo-card:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .filters {
+    margin-top: 1rem;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .demo-card,
+  .dropdown-btn,
+  .search-box input,
+  .clear-filters {
+    border: 1px solid CanvasText;
+  }
+
+  .demo-category,
+  .demo-label {
+    border: 1px solid CanvasText;
+    forced-color-adjust: none;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .demo-card,
+  .theme-toggle,
+  .dropdown-animate,
+  body {
+    transition: none;
+  }
+}
+
+/* Add to styles.css */
+[data-theme="dark"] pre,
+[data-theme="dark"] code {
+  background-color: #1a1a1a;
+  border-color: #404040;
+}
+
+[data-theme="dark"] .code-block {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Add to styles.css */
+@media (max-width: 768px) {
+  header .container {
+    padding: 0.5rem;
+  }
+
+  .home-button {
+    font-size: 0.9rem;
+  }
+
+  .theme-toggle {
+    margin-left: auto;
+  }
+}
+
+/* Add to styles.css */
+[data-theme="dark"] img {
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+[data-theme="dark"] img:hover {
+  opacity: 1;
+}
+
+/* Add to styles.css */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Add to styles.css */
+.last-updated {
+  font-style: italic;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+[data-theme="dark"] .last-updated {
+  opacity: 0.6;
 }
