@@ -16,6 +16,18 @@
 
 <body>
   <header>
+    <!-- Critical CSS inline -->
+    <style>
+      /* Add critical CSS here */
+      .theme-toggle.switching {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      html:not([data-theme]) {
+        visibility: hidden;
+      }
+    </style>
     <div class="container">
       <nav aria-label="Main navigation">
         <a href="/" class="home-button" aria-label="Return to homepage">
@@ -104,6 +116,17 @@
   <footer>
     <p>&copy; 2025 automatic-demo.com</p>
   </footer>
+  <!-- Theme switcher -->
+  <script type="module" src="../../js/theme.js"></script>
+  <script>
+    // Initialize theme immediately to prevent flash of wrong theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.dataset.theme = savedTheme;
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  </script>
 </body>
 
 </html>
