@@ -197,12 +197,28 @@ export class DemoRenderer {
     copyLinkBtn.innerHTML = copyLinkSvg;
     copyLinkBtn.appendChild(tooltipElement);
 
-    copyLinkBtn.addEventListener("click", (e) => {
+    copyLinkBtn.addEventListener("click", async (e) => {
       e.preventDefault();
       e.stopPropagation();
 
-      const success = copyToClipboard(demo.url);
-      tooltipElement.textContent = success ? "Copied!" : "Failed to copy";
+      try {
+        await navigator.clipboard.writeText(demo.url);
+        tooltipElement.textContent = "Copied!";
+      } catch (err) {
+        // Fallback for older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = demo.url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          tooltipElement.textContent = "Copied!";
+        } catch (err) {
+          tooltipElement.textContent = "Failed to copy";
+          console.error('Failed to copy:', err);
+        }
+        document.body.removeChild(textArea);
+      }
 
       setTimeout(() => {
         tooltipElement.textContent = "Copy link";
