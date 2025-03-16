@@ -3,7 +3,7 @@
     "id": 1,
     "title": "DNSSEC",
     "description": "DNSSEC adds an extra layer of authentication layer to DNS, making sure that visitors go to your domain instead of a spoofed domain. Additionally, you have access to DNS Analytics.",
-    "url": "/demos/performance/dnssec",
+    "url": "https://automatic-demo.com/demos/performance/dnssec",
     "category": "Application Performance",
     "labels": [
       "DNS",
@@ -14,7 +14,7 @@
     "id": 2,
     "title": "WAF Demo",
     "description": "Explore how the Cloudflare WAF protects your HTTP/S applications from common and new vulnerabilities.",
-    "url": "/demos/security/waf",
+    "url": "https://automatic-demo.com/demos/security/waf",
     "category": "Application Security",
     "labels": [
       "WAF",
@@ -25,7 +25,7 @@
     "id": 3,
     "title": "Stream Demo",
     "description": "Explore how the managed-video solution Cloudflare Stream can help you stream your on-demand and live videos.",
-    "url": "/demos/serverless/stream",
+    "url": "https://automatic-demo.com/demos/serverless/stream",
     "category": "Developer Platform",
     "labels": [
       "Stream",
@@ -36,7 +36,7 @@
     "id": 4,
     "title": "Images Demo",
     "description": "Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery.",
-    "url": "/demos/performance/images",
+    "url": "https://automatic-demo.com/demos/performance/images",
     "category": "Application Performance",
     "labels": [
       "Images"
@@ -46,7 +46,7 @@
     "id": 5,
     "title": "Images Transformations Demo",
     "description": "Transform images on the fly with Image Transformations: via URL - usually also used with srcset -, or programmatically via Workers.",
-    "url": "/demos/performance/image-transformation",
+    "url": "https://automatic-demo.com/demos/performance/image-transformation",
     "category": "Application Performance",
     "labels": [
       "Images",
@@ -78,7 +78,7 @@
     "id": 8,
     "title": "Waiting Room Demo",
     "description": "Waiting Room helps manage surges in website traffic, especially during high-demand events like Black Friday.",
-    "url": "/demos/performance/waiting-room",
+    "url": "https://automatic-demo.com/demos/performance/waiting-room",
     "category": "Application Performance",
     "labels": [
       "Waiting Room"
@@ -88,7 +88,7 @@
     "id": 9,
     "title": "Gateway Demo",
     "description": "See how Cloudflare Gateway secures your organization's Internet traffic.",
-    "url": "https://automatic-demo.com/gateway-demo",
+    "url": "https://automatic-demo.com/demos/sase/gateway",
     "category": "Cloudflare One (SASE & Zero Trust)",
     "labels": [
       "Gateway"
@@ -98,7 +98,7 @@
     "id": 10,
     "title": "AI Platform Demo",
     "description": "Explore Cloudflare's AI platform capabilities to build and deploy AI-powered applications.",
-    "url": "https://automatic-demo.com/ai-demo",
+    "url": "https://automatic-demo.com/demos/ai/ai-platform",
     "category": "Artificial Intelligence (AI)",
     "labels": [
       "R2"
