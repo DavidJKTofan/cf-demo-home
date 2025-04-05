@@ -4,7 +4,7 @@
     "title": "DNSSEC",
     "description": "DNSSEC adds an extra layer of authentication layer to DNS, making sure that visitors go to your domain instead of a spoofed domain. Additionally, you have access to DNS Analytics.",
     "url": "https://automatic-demo.com/demos/performance/dnssec",
-    "category": "Application Performance",
+    "category": "Application Security",
     "labels": ["DNS", "DNSSEC"]
   },
   {
