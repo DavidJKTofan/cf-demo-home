@@ -5,10 +5,7 @@
     "description": "DNSSEC adds an extra layer of authentication layer to DNS, making sure that visitors go to your domain instead of a spoofed domain. Additionally, you have access to DNS Analytics.",
     "url": "https://automatic-demo.com/demos/performance/dnssec",
     "category": "Application Performance",
-    "labels": [
-      "DNS",
-      "DNSSEC"
-    ]
+    "labels": ["DNS", "DNSSEC"]
   },
   {
     "id": 2,
@@ -16,10 +13,7 @@
     "description": "Explore how the Cloudflare WAF protects your HTTP/S applications from common and new vulnerabilities.",
     "url": "https://automatic-demo.com/demos/security/waf",
     "category": "Application Security",
-    "labels": [
-      "WAF",
-      "Firewall"
-    ]
+    "labels": ["WAF", "Firewall", "Security"]
   },
   {
     "id": 3,
@@ -27,10 +21,7 @@
     "description": "Explore how the managed-video solution Cloudflare Stream can help you stream your on-demand and live videos.",
     "url": "https://automatic-demo.com/demos/serverless/stream",
     "category": "Developer Platform",
-    "labels": [
-      "Stream",
-      "Video"
-    ]
+    "labels": ["Stream", "Video", "VOD", "Live Streaming"]
   },
   {
     "id": 4,
@@ -38,32 +29,23 @@
     "description": "Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery.",
     "url": "https://automatic-demo.com/demos/performance/images",
     "category": "Application Performance",
-    "labels": [
-      "Images", "Image Optimization", "Image Storage"
-    ]
+    "labels": ["Images", "Image Optimization", "Image Storage"]
   },
   {
     "id": 5,
-    "title": "Images Transformations Demo",
-    "description": "Transform images on the fly with Image Transformations: via URL - usually also used with srcset -, or programmatically via Workers.",
+    "title": "Image Transformation Demo",
+    "description": "Transform images on the fly with Images Transformations: via URL - usually also used with srcset -, or programmatically via Workers.",
     "url": "https://automatic-demo.com/demos/performance/image-transformation",
     "category": "Application Performance",
-    "labels": [
-      "Images",
-      "Images Transformations",
-      "Workers"
-    ]
+    "labels": ["Images", "Image Transformations", "Workers"]
   },
   {
     "id": 6,
     "title": "Turnstile Demo",
     "description": "Experience Cloudflare Turnstile, the privacy-friendly CAPTCHA alternative.",
-    "url": "https://security.cf-testing.com/turnstile",
+    "url": "https://turnstile.cf-testing.com/",
     "category": "Application Security",
-    "labels": [
-      "Turnstile",
-      "CAPTCHA Alternative"
-    ]
+    "labels": ["Turnstile", "CAPTCHA Alternative"]
   },
   {
     "id": 7,
@@ -71,9 +53,7 @@
     "description": "See how Cloudflare helps maintain compliance with regional data regulations.",
     "url": "https://demo.dlsdemo.com/",
     "category": "Platform",
-    "labels": [
-      "Data Localization Suite"
-    ]
+    "labels": ["Data Localization Suite", "Compliance"]
   },
   {
     "id": 8,
@@ -81,9 +61,7 @@
     "description": "Waiting Room helps manage surges in website traffic, especially during high-demand events like Black Friday.",
     "url": "https://automatic-demo.com/demos/performance/waiting-room",
     "category": "Application Performance",
-    "labels": [
-      "Waiting Room"
-    ]
+    "labels": ["Waiting Room"]
   },
   {
     "id": 9,
@@ -91,11 +69,7 @@
     "description": "Cloudflare Workers is a serverless platform that allows you to run your code at the edge.",
     "url": "https://petstore.automatic-demo.com/",
     "category": "Developer Platform",
-    "labels": [
-      "Workers",
-      "Serverless",
-      "Edge Computing"
-    ]
+    "labels": ["Workers", "Serverless", "Edge Computing"]
   },
   {
     "id": 10,
@@ -103,9 +77,6 @@
     "description": "Explore Cloudflare R2, a scalable, durable, and fast object storage service.",
     "url": "https://automatic-demo.com/demos/serverless/r2",
     "category": "Developer Platform",
-    "labels": [
-      "R2",
-      "Object Storage"
-    ]
+    "labels": ["R2", "Object Storage"]
   }
 ]
