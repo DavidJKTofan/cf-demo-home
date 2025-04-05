@@ -1,118 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Images - Demo</title>
+    <meta
+      name="description"
+      content="Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery."
+    />
+    <meta
+      name="keywords"
+      content="Cloudflare, Application Performance, Images"
+    />
+    <meta property="og:title" content="Images - Demo" />
+    <meta
+      property="og:description"
+      content="Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery."
+    />
+    <link rel="stylesheet" href="../../css/styles.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Images - Demo</title>
-  <meta name="description"
-    content="Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery.">
-  <meta name="keywords" content="Cloudflare, Application Performance, Images">
-  <meta property="og:title" content="Images - Demo">
-  <meta property="og:description"
-    content="Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery.">
-  <link rel="stylesheet" href="../../css/styles.css" />
-</head>
+  <body>
+    <header>
+      <!-- Critical CSS inline -->
+      <style>
+        /* Add critical CSS here */
+        .theme-toggle.switching {
+          opacity: 0.5;
+          pointer-events: none;
+        }
 
-<body>
-  <header>
-    <!-- Critical CSS inline -->
-    <style>
-      /* Add critical CSS here */
-      .theme-toggle.switching {
-        opacity: 0.5;
-        pointer-events: none;
-      }
+        html:not([data-theme]) {
+          visibility: hidden;
+        }
+      </style>
+      <div class="container">
+        <nav aria-label="Main navigation">
+          <a href="/" class="home-button" aria-label="Return to homepage">
+            <svg
+              class="home-icon"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              aria-hidden="true"
+            >
+              <path d="M12 2L1 12h3v9h7v-6h2v6h7v-9h3L12 2z" />
+            </svg>
+            <span>Home</span>
+          </a>
+          <button
+            class="theme-toggle"
+            aria-label="Toggle theme"
+            title="Toggle light/dark theme"
+          >
+            <svg
+              class="sun-icon"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"
+              />
+            </svg>
+            <svg
+              class="moon-icon"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"
+              />
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
 
-      html:not([data-theme]) {
-        visibility: hidden;
-      }
-    </style>
-    <div class="container">
-      <nav aria-label="Main navigation">
-        <a href="/" class="home-button" aria-label="Return to homepage">
-          <svg class="home-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-            <path d="M12 2L1 12h3v9h7v-6h2v6h7v-9h3L12 2z" />
-          </svg>
-          <span>Home</span>
-        </a>
-        <button class="theme-toggle" aria-label="Toggle theme" title="Toggle light/dark theme">
-          <svg class="sun-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-            <path
-              d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z" />
-          </svg>
-          <svg class="moon-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-            <path
-              d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z" />
-          </svg>
-        </button>
-      </nav>
-    </div>
-  </header>
+    <main class="container">
+      <h1>Demo: Images</h1>
 
-  <main class="container">
-    <h1>Demo: Images</h1>
+      <div
+        class="demo-card"
+        style="
+          cursor: auto;
+          border-radius: 8px;
+          padding: 1.5rem;
+          margin-bottom: 2rem;
+          background-color: var(--card-color);
+          border: 1px solid var(--border-color);
+        "
+      >
+        <div class="demo-meta">
+          <span
+            class="demo-category"
+            style="margin-bottom: 1rem; display: inline-block"
+            >Application Performance</span
+          >
+          <div class="demo-labels" style="margin: 1rem 0">
+            <span class="demo-label" style="margin-right: 0.5rem">Images</span>
+            <span class="demo-label" style="margin-right: 0.5rem"
+              >Image Transformation</span
+            >
+          </div>
+        </div>
 
-    <div class="demo-card"
-      style="cursor: auto; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; background-color: var(--card-color); border: 1px solid var(--border-color);">
-      <div class="demo-meta">
-        <span class="demo-category" style="margin-bottom: 1rem; display: inline-block;">Application Performance</span>
-        <div class="demo-labels" style="margin: 1rem 0;">
-          <span class="demo-label" style="margin-right: 0.5rem;">Images</span>
-          <span class="demo-label" style="margin-right: 0.5rem;">Image Transformation</span>
+        <div style="margin-bottom: 1.5rem">
+          <h3 style="margin: 1rem 0; color: var(--secondary-color)">
+            Description
+          </h3>
+          <p>
+            Cloudflare Images is a managed-images hosting service that
+            automatically optimizes images on-demand. Some relevant features
+            are:
+          </p>
+          <ul style="margin-left: 1.5rem">
+            <li>
+              <a
+                href="https://developers.cloudflare.com/images/upload-images/direct-creator-upload/"
+                target="_blank"
+                rel="noopener noreferrer external"
+                ><b>Accept user-uploaded images</b></a
+              >
+              with a one-time upload URL.
+            </li>
+            <li>
+              <a
+                href="https://developers.cloudflare.com/images/manage-images/create-variants/"
+                target="_blank"
+                rel="noopener noreferrer external"
+                ><b>Create variants</b></a
+              >
+              of images on-demand.
+            </li>
+            <li>
+              <a
+                href="https://developers.cloudflare.com/images/manage-images/enable-flexible-variants/"
+                target="_blank"
+                rel="noopener noreferrer external"
+                ><b>Enable flexible variants</b></a
+              >
+              to apply more customizable
+              <a
+                href="https://developers.cloudflare.com/images/transform-images/transform-via-url/#options"
+                target="_blank"
+                rel="noopener noreferrer external"
+                >transformation parameters</a
+              >, similar to the
+              <a
+                href="/demos/performance/image-transformation"
+                target="_blank"
+                rel="noopener noreferrer external"
+                >Image Transformation</a
+              >
+              service.
+            </li>
+            <li>
+              <a
+                href="https://developers.cloudflare.com/images/manage-images/serve-images/serve-private-images/"
+                target="_blank"
+                rel="noopener noreferrer external"
+                ><b>Serve private images</b></a
+              >
+              by using signed URL tokens.
+            </li>
+          </ul>
+          <br />
+          <p>
+            Alternatively, for other hosting options, check out
+            <a
+              href="https://developers.cloudflare.com/workers/platform/storage-options/"
+              target="_blank"
+              rel="noopener noreferrer external"
+              >Cloudflare's Developer Platform</a
+            >.
+          </p>
+        </div>
+
+        <div style="margin-top: 1.5rem">
+          <a
+            href="https://automatic-demo.com/cdn-cgi/imagedelivery/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
+            target="_blank"
+            style="
+              display: inline-block;
+              padding: 0.6rem 1.2rem;
+              background-color: var(--secondary-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 4px;
+              font-weight: bold;
+            "
+          >
+            Images Demo
+          </a>
+        </div>
+
+        <div class="last-updated-container">
+          <p>Last Updated: <span id="last-updated">March 2025</span></p>
         </div>
       </div>
 
-      <div style="margin-bottom: 1.5rem;">
-        <h3 style="margin: 1rem 0; color: var(--secondary-color);">Description</h3>
-        <p>Cloudflare Images is a managed-images hosting service that automatically optimizes images on-demand. Some
-          relevant features are:</p>
-        <ul style="margin-left: 1.5rem;">
-          <li>
-            <a href="https://developers.cloudflare.com/images/upload-images/direct-creator-upload/" target="_blank"
-              rel="noopener noreferrer external"><b>accept user-uploaded images</b></a> with a one-time upload URL.
-          </li>
-          <li>
-            <a href="https://developers.cloudflare.com/images/manage-images/create-variants/" target="_blank"
-              rel="noopener noreferrer external"><b>Create variants</b></a> of images on-demand.
-          </li>
-          <li>
-            <a href="https://developers.cloudflare.com/images/manage-images/enable-flexible-variants/" target="_blank"
-              rel="noopener noreferrer external"><b>Enable flexible variants</b></a> to apply more customizable <a
-              href="https://developers.cloudflare.com/images/transform-images/transform-via-url/#options"
-              target="_blank" rel="noopener noreferrer external">transformation parameters</a>, similar to the <a
-              href="/demos/performance/image-transformation" target="_blank" rel="noopener noreferrer external">Image
-              Transformation</a> service.
-          </li>
-          <li>
-            <a href="https://developers.cloudflare.com/images/manage-images/serve-images/serve-private-images/"
-              target="_blank" rel="noopener noreferrer external"><b>Serve private images</b></a>by using signed URL
-            tokens.
-          </li>
-        </ul><br>
-        <p>Alternatively, for other hosting options, check out <a
-            href="https://developers.cloudflare.com/workers/platform/storage-options/" target="_blank"
-            rel="noopener noreferrer external">Cloudflare's Developer Platform</a>.</p>
-      </div>
-
-
-      <div style="margin-top: 1.5rem;">
-        <a rel="noopener noreferrer external"
-          href="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
-          target="_blank"
-          style="display: inline-block; padding: 0.6rem 1.2rem; background-color: var(--secondary-color); color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
-          Images Demo
-        </a>
-      </div>
-
-      <div class="last-updated-container">
-        <p>Last Updated: <span id="last-updated">March 2025</span></p>
-      </div>
-
-    </div>
-
-    <h2>Code Snippet</h2>
-    <pre>
+      <h2>Code Snippet</h2>
+      <pre>
       <p style="line-height: 0.5;">Cloudflare Images standard URL:</p>
       <code>
       https://imagedelivery.net/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;
@@ -122,62 +214,95 @@
       https://example.com/cdn-cgi/imagedelivery/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;
       </code>
     </pre>
+      <br />
 
-    <br>
-
-    <h2>Images Demo</h2>
-    <p>Image hosted on Cloudflare Images.</p>
-    <img src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
-      alt="Demo Image for Cloudflare Images" style="
+      <h2>Images Demo</h2>
+      <p>Image hosted on Cloudflare Images.</p>
+      <code>
+        https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public
+      </code>
+      <code>
+        https://automatic-demo.com/cdn-cgi/imagedelivery/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public
+      </code>
+      <img
+        src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
+        alt="Demo Image for Cloudflare Images"
+        style="
           max-width: 100%;
           height: 500px;
           border-radius: 6px;
           border: 1px solid var(--border-color);
           border: 3px solid #0051c3;
-        " />
+        "
+      />
 
-    <div class="responsive-grid">
-      <div>
-        <h3>Variant of an Image</h3>
-        <img src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/contain"
-          alt="Demo Image for Image Transformations"
-          style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
+      <div class="responsive-grid">
+        <div>
+          <h3>Variant of an Image</h3>
+          <img
+            src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/contain"
+            alt="Demo Image for Image Transformations"
+            style="
+              max-width: 100%;
+              height: auto;
+              border-radius: 6px;
+              border: 3px solid #0051c3;
+            "
+          />
+          <p>
+            <code>
+              https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/contain
+            </code>
+          </p>
+        </div>
+        <div>
+          <h3>Flexible Variant of an Image</h3>
+          <img
+            src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=300,quality=50,rotate=180"
+            alt="Demo Image for Image Transformations"
+            style="
+              max-width: 100%;
+              height: auto;
+              border-radius: 6px;
+              border: 3px solid #0051c3;
+            "
+          />
+          <p>
+            <code>
+              https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=300,quality=50,rotate=180
+            </code>
+          </p>
+        </div>
       </div>
-      <div>
-        <h3>Flexible Variant of an Image</h3>
-        </p>
-        <img
-          src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=300,quality=50,rotate=180"
-          alt="Demo Image for Image Transformations"
-          style="max-width: 100%; height: auto; border-radius: 6px; border: 3px solid #0051c3;" />
-      </div>
-    </div>
-    <br>
+      <br />
 
-    <h2>Images Dashboard View</h2>
-    <img src="img/cf-account-images.png" alt="Zone Image Transformation Dashboard Settings" style="
-      max-width: 100%;
-      height: auto;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      border: 3px solid #0051c3;
-    " />
-  </main>
+      <h2>Images Dashboard View</h2>
+      <img
+        src="img/cf-account-images.png"
+        alt="Zone Image Transformation Dashboard Settings"
+        style="
+          max-width: 100%;
+          height: auto;
+          border-radius: 6px;
+          border: 1px solid var(--border-color);
+          border: 3px solid #0051c3;
+        "
+      />
+    </main>
 
-  <footer>
-    <p>&copy; 2025 automatic-demo.com</p>
-  </footer>
-  <!-- Theme switcher -->
-  <script type="module" src="../../js/theme.js"></script>
-  <script>
-    // Initialize theme immediately to prevent flash of wrong theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      document.documentElement.dataset.theme = savedTheme;
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.documentElement.dataset.theme = 'dark';
-    }
-  </script>
-</body>
-
+    <footer>
+      <p>&copy; 2025 automatic-demo.com</p>
+    </footer>
+    <!-- Theme switcher -->
+    <script type="module" src="../../js/theme.js"></script>
+    <script>
+      // Initialize theme immediately to prevent flash of wrong theme
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.dataset.theme = savedTheme;
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    </script>
+  </body>
 </html>

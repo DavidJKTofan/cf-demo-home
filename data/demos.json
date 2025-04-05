@@ -56,19 +56,20 @@
   },
   {
     "id": 6,
-    "title": "CAPTCHA Alternative Demo",
+    "title": "Turnstile Demo",
     "description": "Experience Cloudflare Turnstile, the privacy-friendly CAPTCHA alternative.",
     "url": "https://automatic-demo.com/turnstile-demo",
     "category": "Application Security",
     "labels": [
-      "Turnstile"
+      "Turnstile",
+      "CAPTCHA Alternative"
     ]
   },
   {
     "id": 7,
-    "title": "Data Localization Demo",
+    "title": "Data Localization Suite (DLS) Demo",
     "description": "See how Cloudflare helps maintain compliance with regional data regulations.",
-    "url": "https://automatic-demo.com/data-localization-demo",
+    "url": "https://demo.dlsdemo.com/",
     "category": "Platform",
     "labels": [
       "Data Localization Suite"
@@ -96,12 +97,13 @@
   },
   {
     "id": 10,
-    "title": "AI Platform Demo",
-    "description": "Explore Cloudflare's AI platform capabilities to build and deploy AI-powered applications.",
-    "url": "https://automatic-demo.com/demos/ai/ai-platform",
-    "category": "Artificial Intelligence (AI)",
+    "title": "R2 Object Storage Demo",
+    "description": "Explore Cloudflare R2, a scalable, durable, and fast object storage service.",
+    "url": "https://automatic-demo.com/demos/serverless/r2",
+    "category": "Developer Platform",
     "labels": [
-      "R2"
+      "R2",
+      "Object Storage"
     ]
   }
 ]
