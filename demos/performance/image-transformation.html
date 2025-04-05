@@ -112,7 +112,7 @@
           <h3 style="margin: 1rem 0; color: var(--secondary-color)">
             Description
           </h3>
-          <p>There are two main methods to transform images:</p>
+          <p>There are three main methods to transform images:</p>
           <ul style="margin-left: 1.5rem">
             <li>
               <a
@@ -137,16 +137,25 @@
                 ><b>via Workers</b></a
               >
             </li>
+            <li>
+              <a
+                href="https://blog.cloudflare.com/improve-your-media-pipelines-with-the-images-binding-for-cloudflare-workers/"
+                target="_blank"
+                rel="noopener noreferrer external"
+                ><b>via Images Binding to Workers</b></a
+              >
+            </li>
           </ul>
           <br />
           <p>
             The Workers method allows for more programmatic customization, as
-            well as more complex transformations, such as <a
-            href="https://developers.cloudflare.com/images/transform-images/draw-overlays/"
-            target="_blank"
-            rel="noopener noreferrer external"
-            ><b>drawing overlays and watermarks</b></a
-          >.
+            well as more complex transformations, such as
+            <a
+              href="https://developers.cloudflare.com/images/transform-images/draw-overlays/"
+              target="_blank"
+              rel="noopener noreferrer external"
+              ><b>drawing overlays and watermarks</b></a
+            >.
           </p>
           <p>
             The URL method is simpler to implement, such as using
@@ -156,18 +165,30 @@
           </p>
           <br />
           <p>
-            Alternatively, for a managed-service with images hosting
-            capabilites, check out
+            Each of these three methods assumes the original images are hosted
+            on an external origin server (e.g., Amazon S3) or in
+            <a
+              href="https://developers.cloudflare.com/r2/"
+              target="_blank"
+              rel="noopener noreferrer external"
+              >Cloudflare R2</a
+            >.
+          </p>
+          <p>
+            Alternatively, if you're looking for a managed service with built-in
+            image hosting capabilities, consider using
             <a
               href="/demos/performance/images"
               target="_blank"
               rel="noopener noreferrer external"
-              >Images</a
+              >Cloudflare Images</a
             >.
           </p>
         </div>
 
-        <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+        <div
+          style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap"
+        >
           <a
             rel="noopener noreferrer external"
             href="https://gist.github.com/DavidJKTofan/31a3b6164dfdc6961c6910f7da9b9bf3"
@@ -209,66 +230,186 @@
         </div>
 
         <div class="last-updated-container">
-          <p>Last Updated: <span id="last-updated">March 2025</span></p>
+          <p>Last Updated: <span id="last-updated">April 2025</span></p>
         </div>
       </div>
 
-      <h2>Image Transformation Demo</h2>
+      <h2>Image Transformation via URL Demo</h2>
       <p>
-        Original Image with characteristics: 3 MB in size, 2419w x 3226h px, 72
-        resolution.
+        <a
+          href="/demos/performance/img/munich-original-img.jpeg"
+          target="_blank"
+          >Original Image</a
+        >
+        with characteristics: 3 MB in size, 2419w x 3226h px, 72 resolution.
       </p>
-      <img
-        src="img/munich-original-img.jpeg"
-        alt="Demo Image for Image Transformations"
-        style="
-          max-width: 100%;
-          height: 500px;
-          border-radius: 6px;
-          border: 1px solid var(--border-color);
-          border: 3px solid #0051c3;
-        "
-      />
+      <div class="transform-demo">
+        <form
+          id="transformForm"
+          class="transform-controls"
+          style="
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--card-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+          "
+        >
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 1rem;
+            "
+          >
+            <div>
+              <label for="width">Width:</label>
+              <input
+                type="number"
+                id="width"
+                name="width"
+                min="1"
+                max="3000"
+                value="800"
+                style="width: 100%; padding: 0.5rem"
+              />
+            </div>
+            <div>
+              <label for="height">Height:</label>
+              <input
+                type="number"
+                id="height"
+                name="height"
+                min="1"
+                max="3000"
+                value=""
+                style="width: 100%; padding: 0.5rem"
+              />
+            </div>
+            <div>
+              <label for="quality">Quality (1-100):</label>
+              <input
+                type="number"
+                id="quality"
+                name="quality"
+                min="1"
+                max="100"
+                value="75"
+                style="width: 100%; padding: 0.5rem"
+              />
+            </div>
+            <div>
+              <label for="blur">Blur (1-250):</label>
+              <input
+                type="number"
+                id="blur"
+                name="blur"
+                min="1"
+                max="250"
+                value=""
+                style="width: 100%; padding: 0.5rem"
+              />
+            </div>
+            <div>
+              <label for="rotate">Rotate (degrees):</label>
+              <select
+                id="rotate"
+                name="rotate"
+                style="width: 100%; padding: 0.5rem"
+              >
+                <option value="">None</option>
+                <option value="90">90°</option>
+                <option value="180">180°</option>
+                <option value="270">270°</option>
+              </select>
+            </div>
+            <div>
+              <label for="fit">Fit:</label>
+              <select id="fit" name="fit" style="width: 100%; padding: 0.5rem">
+                <option value="scale-down">scale-down</option>
+                <option value="contain">contain</option>
+                <option value="cover">cover</option>
+                <option value="crop">crop</option>
+                <option value="pad">pad</option>
+              </select>
+            </div>
+            <div>
+              <p>
+                There are more
+                <a
+                  href="https://developers.cloudflare.com/images/transform-images/transform-via-url/#options"
+                  target="_blank"
+                  rel="noopener noreferrer external"
+                  >options</a
+                >.
+              </p>
+            </div>
+          </div>
+        </form>
 
-      <div class="responsive-grid">
-        <div>
-          <h3>Transformed Image</h3>
-          <p>
-            <code
-              >/cdn-cgi/image/width=250,quality=75/demos/performance/img/munich-original-img.jpeg</code
-            >
-          </p>
-          <img
-            src="/cdn-cgi/image/width=250,quality=75/demos/performance/img/munich-original-img.jpeg"
-            alt="Demo Image for Image Transformations"
+        <div style="margin-top: 2rem">
+          <h3>Transform URL:</h3>
+          <code
+            id="transformUrl"
             style="
-              max-width: 100%;
-              height: auto;
-              border-radius: 6px;
-              border: 3px solid #0051c3;
+              word-break: break-all;
+              display: block;
+              padding: 1rem;
+              background: var(--code-bg);
+              border-radius: 4px;
+              margin-bottom: 1rem;
             "
-          />
-        </div>
-        <div>
-          <h3>Transformed Image</h3>
-          <p>
-            <code
-              >/cdn-cgi/image/fit=cover,g=0.5x0.5,w=100,h=280/demos/performance/img/munich-original-img.jpeg</code
-            >
-          </p>
-          <img
-            src="/cdn-cgi/image/fit=cover,g=0.5x0.5,w=100,h=280/demos/performance/img/munich-original-img.jpeg"
-            alt="Demo Image for Image Transformations"
+          ></code>
+
+          <div
             style="
-              max-width: 100%;
-              height: auto;
-              border-radius: 6px;
               border: 3px solid #0051c3;
+              border-radius: 6px;
+              overflow: hidden;
             "
-          />
+          >
+            <img
+              id="transformedImage"
+              src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg"
+              alt="Interactive Demo Image for Image Transformations"
+              style="max-width: 100%; height: auto; display: block"
+            />
+          </div>
         </div>
       </div>
-      <br />
+
+      <script>
+        const form = document.getElementById("transformForm");
+        const transformUrl = document.getElementById("transformUrl");
+        const transformedImage = document.getElementById("transformedImage");
+        const baseImagePath = "/demos/performance/img/munich-original-img.jpeg";
+
+        function updateImage() {
+          const formData = new FormData(form);
+          const params = [];
+
+          for (const [key, value] of formData.entries()) {
+            if (value) {
+              params.push(`${key}=${value}`);
+            }
+          }
+
+          const transformString = params.join(",");
+          const fullUrl = `/cdn-cgi/image/${transformString}${baseImagePath}`;
+
+          transformUrl.textContent = fullUrl;
+          transformedImage.src = fullUrl;
+        }
+
+        // Add event listeners to all form inputs
+        form.querySelectorAll("input, select").forEach((input) => {
+          input.addEventListener("change", updateImage);
+          input.addEventListener("input", updateImage);
+        });
+
+        // Initial update
+        updateImage();
+      </script>
 
       <h2>Image Transformation Settings</h2>
       <img

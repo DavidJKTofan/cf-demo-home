@@ -103,45 +103,51 @@
           <div class="demo-labels" style="margin: 1rem 0">
             <span class="demo-label" style="margin-right: 0.5rem">Images</span>
             <span class="demo-label" style="margin-right: 0.5rem"
-              >Image Transformation</span
+              >Image Optimization</span
             >
+            <span class="demo-label">Image Storage</span>
           </div>
         </div>
 
-        <div style="margin-bottom: 1.5rem">
+        <section style="margin-bottom: 1.5rem">
           <h3 style="margin: 1rem 0; color: var(--secondary-color)">
             Description
           </h3>
           <p>
-            Cloudflare Images is a managed-images hosting service that
-            automatically optimizes images on-demand. Some relevant features
-            are:
+            Cloudflare Images is an end-to-end image management solution that
+            lets you store, resize, optimize and deliver images in a fast and
+            secure way.
           </p>
+
+          <h4 style="margin: 1rem 0">Key Features:</h4>
           <ul style="margin-left: 1.5rem">
             <li>
+              <strong>Image Upload:</strong>
               <a
                 href="https://developers.cloudflare.com/images/upload-images/direct-creator-upload/"
                 target="_blank"
                 rel="noopener noreferrer external"
-                ><b>Accept user-uploaded images</b></a
+                >Direct creator uploads</a
               >
-              with a one-time upload URL.
+              with one-time upload URLs
             </li>
             <li>
+              <strong>Image Variants:</strong>
               <a
                 href="https://developers.cloudflare.com/images/manage-images/create-variants/"
                 target="_blank"
                 rel="noopener noreferrer external"
-                ><b>Create variants</b></a
+                >Create preset variants</a
               >
-              of images on-demand.
+              for different use cases
             </li>
             <li>
+              <strong>Flexible Transformations:</strong>
               <a
                 href="https://developers.cloudflare.com/images/manage-images/enable-flexible-variants/"
                 target="_blank"
                 rel="noopener noreferrer external"
-                ><b>Enable flexible variants</b></a
+                >Enable flexible variants</a
               >
               to apply more customizable
               <a
@@ -149,23 +155,20 @@
                 target="_blank"
                 rel="noopener noreferrer external"
                 >transformation parameters</a
-              >, similar to the
-              <a
-                href="/demos/performance/image-transformation"
-                target="_blank"
-                rel="noopener noreferrer external"
-                >Image Transformation</a
-              >
-              service.
+              >, similar to
+              <a href="/demos/performance/image-transformation" target="_blank"
+                ><b>Image Transformation</b></a
+              >.
             </li>
             <li>
+              <strong>Privacy Controls:</strong>
               <a
                 href="https://developers.cloudflare.com/images/manage-images/serve-images/serve-private-images/"
                 target="_blank"
                 rel="noopener noreferrer external"
-                ><b>Serve private images</b></a
+                >Serve private images</a
               >
-              by using signed URL tokens.
+              using signed URL tokens
             </li>
           </ul>
           <br />
@@ -178,7 +181,7 @@
               >Cloudflare's Developer Platform</a
             >.
           </p>
-        </div>
+        </section>
 
         <div style="margin-top: 1.5rem">
           <a
@@ -194,54 +197,45 @@
               font-weight: bold;
             "
           >
-            Images Demo
+            Images Demo with Custom Domain
           </a>
         </div>
 
         <div class="last-updated-container">
-          <p>Last Updated: <span id="last-updated">March 2025</span></p>
+          <p>Last Updated: <span id="last-updated">April 2025</span></p>
         </div>
       </div>
 
-      <h2>Code Snippet</h2>
-      <pre>
-      <p style="line-height: 0.5;">Cloudflare Images standard URL:</p>
-      <code>
-      https://imagedelivery.net/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;
-      </code>
-      <p style="line-height: 0.5;">Cloudflare Images custom domain:</p>
-      <code>
-      https://example.com/cdn-cgi/imagedelivery/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;
-      </code>
-    </pre>
-      <br />
+      <section>
+        <h2>Image URL Format</h2>
+        <div
+          style="
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+          "
+        >
+          <h4>Standard Domain:</h4>
+          <code
+            >https://imagedelivery.net/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;</code
+          >
 
-      <h2>Images Demo</h2>
-      <p>Image hosted on Cloudflare Images.</p>
-      <code>
-        https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public
-      </code>
-      <code>
-        https://automatic-demo.com/cdn-cgi/imagedelivery/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public
-      </code>
-      <img
-        src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
-        alt="Demo Image for Cloudflare Images"
-        style="
-          max-width: 100%;
-          height: 500px;
-          border-radius: 6px;
-          border: 1px solid var(--border-color);
-          border: 3px solid #0051c3;
-        "
-      />
+          <h4 style="margin-top: 1rem">Custom Domain:</h4>
+          <code
+            >https://example.com/cdn-cgi/imagedelivery/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;</code
+          >
+        </div>
+      </section>
 
-      <div class="responsive-grid">
-        <div>
-          <h3>Variant of an Image</h3>
+      <section>
+        <h2>Demo Examples</h2>
+
+        <h3>Original Image</h3>
+        <div style="margin: 1rem 0">
           <img
-            src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/contain"
-            alt="Demo Image for Image Transformations"
+            src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
+            alt="Original demo image"
             style="
               max-width: 100%;
               height: auto;
@@ -249,45 +243,63 @@
               border: 3px solid #0051c3;
             "
           />
-          <p>
-            <code>
+          <code
+            style="display: block; margin-top: 0.5rem; word-break: break-all"
+          >
+            https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public
+          </code>
+        </div>
+
+        <div class="responsive-grid">
+          <div>
+            <h3>Preset Variant</h3>
+            <img
+              src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/contain"
+              alt="Preset variant example"
+              style="
+                max-width: 100%;
+                height: auto;
+                border-radius: 6px;
+                border: 3px solid #0051c3;
+              "
+            />
+            <code style="display: block; margin-top: 0.2rem">
               https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/contain
             </code>
-          </p>
-        </div>
-        <div>
-          <h3>Flexible Variant of an Image</h3>
-          <img
-            src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=300,quality=50,rotate=180"
-            alt="Demo Image for Image Transformations"
-            style="
-              max-width: 100%;
-              height: auto;
-              border-radius: 6px;
-              border: 3px solid #0051c3;
-            "
-          />
-          <p>
-            <code>
-              https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=300,quality=50,rotate=180
-            </code>
-          </p>
-        </div>
-      </div>
-      <br />
+          </div>
 
-      <h2>Images Dashboard View</h2>
-      <img
-        src="img/cf-account-images.png"
-        alt="Zone Image Transformation Dashboard Settings"
-        style="
-          max-width: 100%;
-          height: auto;
-          border-radius: 6px;
-          border: 1px solid var(--border-color);
-          border: 3px solid #0051c3;
-        "
-      />
+          <div>
+            <h3>Flexible Variant</h3>
+            <img
+              src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=250,quality=50,rotate=180"
+              alt="Custom transformation example"
+              style="
+                max-width: 100%;
+                height: auto;
+                border-radius: 6px;
+                border: 3px solid #0051c3;
+              "
+            />
+            <code style="display: block; margin-top: 0.2rem">
+              https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=250,quality=50,rotate=180
+            </code>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-top: 2rem">
+        <h2>Dashboard Configuration</h2>
+        <img
+          src="img/cf-account-images.png"
+          alt="Cloudflare Images Dashboard"
+          style="
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #0051c3;
+          "
+        />
+      </section>
     </main>
 
     <footer>

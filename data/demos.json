@@ -39,7 +39,7 @@
     "url": "https://automatic-demo.com/demos/performance/images",
     "category": "Application Performance",
     "labels": [
-      "Images"
+      "Images", "Image Optimization", "Image Storage"
     ]
   },
   {
@@ -58,7 +58,7 @@
     "id": 6,
     "title": "Turnstile Demo",
     "description": "Experience Cloudflare Turnstile, the privacy-friendly CAPTCHA alternative.",
-    "url": "https://automatic-demo.com/turnstile-demo",
+    "url": "https://security.cf-testing.com/turnstile",
     "category": "Application Security",
     "labels": [
       "Turnstile",
@@ -87,12 +87,14 @@
   },
   {
     "id": 9,
-    "title": "Gateway Demo",
-    "description": "See how Cloudflare Gateway secures your organization's Internet traffic.",
-    "url": "https://automatic-demo.com/demos/sase/gateway",
-    "category": "Cloudflare One (SASE & Zero Trust)",
+    "title": "Workers",
+    "description": "Cloudflare Workers is a serverless platform that allows you to run your code at the edge.",
+    "url": "https://petstore.automatic-demo.com/",
+    "category": "Developer Platform",
     "labels": [
-      "Gateway"
+      "Workers",
+      "Serverless",
+      "Edge Computing"
     ]
   },
   {
