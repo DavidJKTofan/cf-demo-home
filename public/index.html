@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Essential Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloudflare Demos | Explore Cloudflare Solutions & Features</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Discover interactive Cloudflare solution demos showcasing security, performance, and developer tools."
+    />
+    <meta
+      name="keywords"
+      content="Cloudflare, security, performance, CDN, WAF, Zero Trust, networking, developer tools"
+    />
+    <meta name="author" content="DavidJKTofan" />
+    <meta
+      name="robots"
+      content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <link rel="canonical" href="https://automatic-demo.com/" />
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta
+      property="og:title"
+      content="Cloudflare Demos | Explore Cloudflare Solutions & Features"
+    />
+    <meta
+      property="og:description"
+      content="Explore Cloudflare solution demos and learn about security, performance, and developer tools."
+    />
+    <meta
+      property="og:image"
+      content="https://automatic-demo.com/thumbnail.png"
+    />
+    <meta property="og:url" content="/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Cloudflare Demos | Explore Cloudflare Solutions & Features"
+    />
+    <meta
+      name="twitter:description"
+      content="Discover Cloudflare solution demos showcasing security, performance, and developer tools."
+    />
+    <meta
+      name="twitter:image"
+      content="https://automatic-demo.com/thumbnail.png"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <!-- Resource Hints -->
+    <link rel="preload" href="css/styles.css" as="style" />
+
+    <!-- Critical CSS inline -->
+    <style>
+      /* Add critical CSS here */
+      :root {
+        --primary-color: #f6821f;
+        --secondary-color: #0051c3;
+        /* Set default dark theme colors */
+        --background-color: #1a1a1a;
+        --card-color: #2d2d2d;
+        --text-color: #e0e0e0;
+        --border-color: #404040;
+        --hover-color: #363636;
+      }
+      body {
+        margin: 0;
+        background: var(--background-color);
+      }
+      .loading-indicator {
+        display: none;
+      }
+      .theme-toggle.switching {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      html:not([data-theme]) {
+        visibility: hidden;
+      }
+    </style>
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="data/demos.json" as="fetch" crossorigin />
+    <link rel="preload" href="data/categories.json" as="fetch" crossorigin />
+    <link rel="preload" href="data/labels.json" as="fetch" crossorigin />
+
+    <!-- Theme -->
+    <script>
+      // Apply theme immediately before page renders
+      (function () {
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+        const savedTheme = localStorage.getItem("theme");
+
+        // Set dark theme as default if no saved theme
+        if (savedTheme) {
+          document.documentElement.dataset.theme = savedTheme;
+        } else {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+
+    <!-- Defer non-critical CSS -->
+    <link
+      rel="stylesheet"
+      href="css/styles.css"
+      media="print"
+      onload="this.media='all'"
+    />
+
+    <!-- modulepreload tags -->
+    <link rel="modulepreload" href="js/utils.js" crossorigin="anonymous" />
+    <link
+      rel="modulepreload"
+      href="js/DemoRenderer.js"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="modulepreload"
+      href="js/FilterManager.js"
+      crossorigin="anonymous"
+    />
+    <link rel="modulepreload" href="js/main.js" crossorigin="anonymous" />
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1>Cloudflare Demos</h1>
+          <button
+            class="theme-toggle"
+            aria-label="Toggle theme"
+            title="Toggle light/dark theme"
+          >
+            <svg
+              class="sun-icon"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"
+              />
+            </svg>
+            <svg
+              class="moon-icon"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="filters" aria-label="Filter controls">
+          <div class="search-box">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search demos..."
+              aria-label="Search demos"
+              role="searchbox"
+              autocomplete="off"
+            />
+          </div>
+          <div class="filter-dropdown">
+            <button
+              class="dropdown-btn"
+              id="categoryFilterBtn"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style="width: 100%"
+            >
+              Filter by Category
+            </button>
+            <div
+              class="dropdown-content"
+              id="categoryFilterContent"
+              role="menu"
+              style="width: 100%"
+            >
+              <!-- Categories will be dynamically added here -->
+            </div>
+          </div>
+          <div class="filter-dropdown">
+            <button
+              class="dropdown-btn"
+              id="labelFilterBtn"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style="width: 100%"
+            >
+              Filter by Product
+            </button>
+            <div
+              class="dropdown-content"
+              id="labelFilterContent"
+              role="menu"
+              style="width: 100%"
+            >
+              <!-- Labels will be dynamically added here -->
+            </div>
+          </div>
+          <button class="clear-filters" id="clearFilters">Clear Filters</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div
+        id="loadingIndicator"
+        class="loading-indicator"
+        role="alert"
+        aria-live="polite"
+      >
+        <div
+          class="spinner"
+          role="progressbar"
+          aria-label="Loading demos"
+        ></div>
+        <p>Loading demos...</p>
+      </div>
+      <div class="demo-grid" id="demoGrid" role="main" aria-live="polite">
+        <!-- Demo cards will be dynamically added here -->
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p>© 2025 automatic-demo.com</p>
+        <p class="disclaimer">
+          This is an unofficial demonstration website. Not affiliated with or
+          endorsed by Cloudflare. All product names, logos, and brands are
+          property of Cloudflare. This site is for informational purposes only
+          and comes with no warranty or guarantee of accuracy.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Add these script tags right before </body> -->
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/DemoRenderer.js"></script>
+    <script type="module" src="js/FilterManager.js"></script>
+    <script type="module" src="js/main.js"></script>
+
+    <!-- Add after <body> -->
+    <noscript>
+      <div class="container">
+        <p style="text-align: center; padding: 2rem">
+          Please enable JavaScript to view Cloudflare Demos.
+        </p>
+      </div>
+    </noscript>
+
+    <!-- Add before closing </body> tag -->
+    <script type="module" src="js/theme.js"></script>
+  </body>
+</html>
