@@ -6,7 +6,7 @@ This repository contains a collection of simple demos and examples to showcase t
 
 ## Available Demos 📚
 
-Explore a wide variety of demos, from basic to advanced, designed to help you better understand and utilize Cloudflare's services. You can view all the currently available demos in the [`demos.json`](/data/demos.json) file.
+Explore a wide variety of demos, from basic to advanced, designed to help you better understand and utilize Cloudflare's services. You can view all the currently available demos in the [`demos.json`](/public/data/demos.json) file.
 
 Each demo includes code samples, configuration instructions, or descriptions to get you started quickly.
 
