@@ -35,3 +35,4 @@ demos/generate_landing_pages.py
 demos/template.html
 .cursorrules
 .cursorignore
+/.wrangler

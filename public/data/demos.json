@@ -43,7 +43,7 @@
     "id": 6,
     "title": "Turnstile Demo",
     "description": "Experience Cloudflare Turnstile, the privacy-friendly CAPTCHA alternative.",
-    "url": "https://turnstile.cf-testing.com/",
+    "url": "https://turnstile.automatic-demo.com/",
     "category": "Application Security",
     "labels": ["Turnstile", "CAPTCHA Alternative"]
   },
