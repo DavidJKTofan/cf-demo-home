@@ -78,5 +78,13 @@
     "url": "https://automatic-demo.com/demos/serverless/r2",
     "category": "Developer Platform",
     "labels": ["R2", "Object Storage"]
+  },
+  {
+    "id": 11,
+    "title": "SSL / TLS",
+    "description": "Automate SSL/TLS certificate management with Cloudflare",
+    "url": "https://automatic-demo.com/demos/security/ssl-tls",
+    "category": "Application Security",
+    "labels": ["SSL/TLS", "Certificate Management"]
   }
 ]
