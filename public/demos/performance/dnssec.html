@@ -106,8 +106,53 @@
           </div>
         </div>
 
-        <h3 style="margin: 1rem 0; color: var(--secondary-color);">Description</h3>
-        <p style="margin-bottom: 1.5rem;">Cloudflare offers comprehensive DNS solutions including <a href="https://developers.cloudflare.com/dns/zone-setups/full-setup/" target="_blank" rel="noopener noreferrer external">Full DNS Setup</a>, <a href="https://developers.cloudflare.com/dns/zone-setups/partial-setup/" target="_blank" rel="noopener noreferrer external">CNAME Setup</a>, and <a href="https://developers.cloudflare.com/dns/zone-setups/zone-transfers/cloudflare-as-secondary/" target="_blank" rel="noopener noreferrer external">Secondary DNS</a>. The globally distributed Anycast network consistently ranks among the <a href="https://www.dnsperf.com/" target="_blank" rel="noopener noreferrer external">fastest DNS providers worldwide</a>. Additionally, <a href="https://developers.cloudflare.com/dns/dnssec/" target="_blank" rel="noopener noreferrer external">DNSSEC</a> adds an extra layer of authentication to DNS, preventing domain spoofing, while <a href="https://developers.cloudflare.com/dns/additional-options/analytics/" target="_blank" rel="noopener noreferrer external">DNS Analytics</a> provides detailed insights into your DNS traffic.</p>
+        <h3 style="margin: 1rem 0; color: var(--secondary-color)">
+          Description
+        </h3>
+        <p style="margin-bottom: 1.5rem">
+          Cloudflare offers comprehensive DNS solutions as an Authoritative DNS
+          Provider including
+          <a
+            href="https://developers.cloudflare.com/dns/zone-setups/full-setup/"
+            target="_blank"
+            rel="noopener noreferrer external"
+            >Full DNS Setup</a
+          >,
+          <a
+            href="https://developers.cloudflare.com/dns/zone-setups/partial-setup/"
+            target="_blank"
+            rel="noopener noreferrer external"
+            >CNAME Setup</a
+          >, and
+          <a
+            href="https://developers.cloudflare.com/dns/zone-setups/zone-transfers/cloudflare-as-secondary/"
+            target="_blank"
+            rel="noopener noreferrer external"
+            >Secondary DNS</a
+          >. The globally distributed Anycast network consistently ranks among
+          the
+          <a
+            href="https://www.dnsperf.com/"
+            target="_blank"
+            rel="noopener noreferrer external"
+            >fastest DNS providers worldwide</a
+          >. Additionally,
+          <a
+            href="https://developers.cloudflare.com/dns/dnssec/"
+            target="_blank"
+            rel="noopener noreferrer external"
+            >DNSSEC</a
+          >
+          adds an extra layer of authentication to DNS, preventing domain
+          spoofing, while
+          <a
+            href="https://developers.cloudflare.com/dns/additional-options/analytics/"
+            target="_blank"
+            rel="noopener noreferrer external"
+            >DNS Analytics</a
+          >
+          provides detailed insights into your DNS traffic.
+        </p>
 
         <h3 style="margin: 1rem 0; color: var(--secondary-color)">NSEC3</h3>
         <p style="margin-bottom: 1.5rem">
@@ -194,6 +239,52 @@
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
           allowfullscreen="true"
         ></iframe>
+      </div>
+      <br />
+
+      <h2>Public DNS Resolver - Query Examples</h2>
+      <p>
+        Cloudflare also offers a public DNS resolver
+        <a
+          href="https://one.one.one.one/"
+          target="_blank"
+          rel="external noopener noreferrer"
+          >1.1.1.1</a
+        >.
+      </p>
+      <div class="code-examples" style="margin: 2rem 0">
+        <h3 style="margin: 1rem 0">
+          DNS Query via
+          <a
+            href="https://developers.cloudflare.com/1.1.1.1/encryption/dns-over-https/make-api-requests/"
+            target="_blank"
+            rel="external noopener noreferrer"
+            >DNS over HTTPS (DoH)</a
+          >
+          - JSON Response
+        </h3>
+        <pre
+          style="
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 0.5rem 0 1.5rem;
+          "
+        ><code>curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?name=automatic-demo.com&type=A' | jq .</code></pre>
+
+        <h3 style="margin: 1rem 0">DNS Query via DoH - Headers Response</h3>
+        <pre
+          style="
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 0.5rem 0 1.5rem;
+          "
+        ><code>curl -I --doh-url https://cloudflare-dns.com/dns-query https://automatic-demo.com</code></pre>
       </div>
     </main>
 
