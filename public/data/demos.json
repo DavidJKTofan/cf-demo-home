@@ -85,6 +85,6 @@
     "description": "Automate SSL/TLS certificate management with Cloudflare",
     "url": "https://automatic-demo.com/demos/security/ssl-tls",
     "category": "Application Security",
-    "labels": ["SSL/TLS", "Certificate Management"]
+    "labels": ["SSL/TLS", "Certificate Management", "Cloudflare for SaaS"]
   }
 ]
