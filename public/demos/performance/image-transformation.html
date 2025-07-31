@@ -161,7 +161,13 @@
             The URL method is simpler to implement, such as using
             <code style="display: inline; color: #d63384">width=auto</code> to
             automatically resize the image based on the available browser and
-            device information.
+            device information. Optimize images for mobile devices by using
+            <a
+              href="https://developers.cloudflare.com/images/tutorials/optimize-mobile-viewing/"
+              target="_blank"
+              rel="noopener noreferrer external"
+              >lazy loading or eager loading</a
+            >.
           </p>
           <br />
           <p>
@@ -410,6 +416,104 @@
         // Initial update
         updateImage();
       </script>
+
+      <h2>Lazy Loading Demo</h2>
+      <p>Images below only load when they come into view:</p>
+      <div style="display: grid; gap: 2rem; margin: 2rem 0">
+        <img
+          loading="lazy"
+          src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg"
+          alt="Lazy loaded image 1"
+          style="
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #0051c3;
+          "
+        />
+        <img
+          loading="lazy"
+          src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg"
+          alt="Lazy loaded image 2"
+          style="
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #0051c3;
+          "
+        />
+        <img
+          loading="lazy"
+          src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg"
+          alt="Lazy loaded image 3"
+          style="
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 3px solid #0051c3;
+          "
+        />
+      </div>
+
+      <h2>Responsive Images Demo</h2>
+      <p>
+        This image automatically adjusts its size based on the viewport width:
+      </p>
+      <img
+        srcset="
+          /cdn-cgi/image/width=320,quality=75/demos/performance/img/munich-original-img.jpeg   320w,
+          /cdn-cgi/image/width=480,quality=75/demos/performance/img/munich-original-img.jpeg   480w,
+          /cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg   800w,
+          /cdn-cgi/image/width=1200,quality=75/demos/performance/img/munich-original-img.jpeg 1200w
+        "
+        sizes="(max-width: 320px) 280px,
+               (max-width: 480px) 440px,
+               (max-width: 800px) 760px,
+               1000px"
+        src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg"
+        alt="Responsive image demo"
+        style="
+          max-width: 100%;
+          height: auto;
+          border-radius: 6px;
+          border: 3px solid #0051c3;
+        "
+      />
+
+      <div
+        style="
+          margin: 2rem 0;
+          padding: 1rem;
+          background: var(--card-color);
+          border-radius: 8px;
+          border: 1px solid var(--border-color);
+        "
+      >
+        <h3 style="margin-top: 0">How it works:</h3>
+        <ul style="margin-left: 1.5rem">
+          <li>
+            The
+            <code style="display: inline; color: #d63384">loading="lazy"</code>
+            attribute defers loading images until they enter the viewport
+          </li>
+          <li>
+            The
+            <code style="display: inline; color: #d63384">srcset</code>
+            attribute provides multiple image sizes for different viewport
+            widths
+          </li>
+          <li>
+            The
+            <code style="display: inline; color: #d63384">sizes</code> attribute
+            tells the browser what image size to use at different viewport
+            widths
+          </li>
+          <li>
+            Cloudflare automatically generates the correctly sized images
+            on-the-fly
+          </li>
+        </ul>
+      </div>
 
       <h2>Image Transformation Settings</h2>
       <img
