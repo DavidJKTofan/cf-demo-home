@@ -36,3 +36,5 @@ demos/template.html
 .cursorrules
 .cursorignore
 /.wrangler
+/demo-triggers/cf-report.html
+/demo-triggers/cf_diagnostics
