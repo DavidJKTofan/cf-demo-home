@@ -279,6 +279,27 @@ bypass2_status: status
 bypass2_ray: header "Cf-Ray"
 
 # =============================================================================
+# HMAC-SIGNED DOWNLOADS - explicit host tests
+# =============================================================================
+# Signed HMAC download: BIN (100MB)
+GET https://hmac.automatic-demo.com/downloads/100MB.bin
+User-Agent: Hurl-HMAC-Download-100MB/1.0
+
+HTTP *
+[Captures]
+hmac_bin_status: status
+hmac_bin_ray: header "Cf-Ray"
+
+# Signed HMAC download: EICAR PDF
+GET https://hmac.automatic-demo.com/downloads/eicar_com.pdf
+User-Agent: Hurl-HMAC-Download-EICAR/1.0
+
+HTTP *
+[Captures]
+hmac_eicar_status: status
+hmac_eicar_ray: header "Cf-Ray"
+
+# =============================================================================
 # SUMMARY REQUEST
 # =============================================================================
 
