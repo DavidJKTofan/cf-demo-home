@@ -300,6 +300,23 @@ hmac_eicar_status: status
 hmac_eicar_ray: header "Cf-Ray"
 
 # =============================================================================
+# FIREWALL FOR AI API TEST
+# =============================================================================
+
+POST https://dls-ai.dlsdemo.com
+User-Agent: Hurl-DLS-Firewall-for-AI-Test/1.0
+Content-Type: application/json
+
+{
+  "prompt": "user@example.com"
+}
+
+HTTP *
+[Captures]
+dls_ai_status: status
+dls_ai_ray: header "Cf-Ray"
+
+# =============================================================================
 # SUMMARY REQUEST
 # =============================================================================
 
