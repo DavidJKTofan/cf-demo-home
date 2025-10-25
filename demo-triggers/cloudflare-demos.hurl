@@ -170,6 +170,14 @@ HTTP *
 img4_status: status
 img4_content_type: header "Content-Type"
 
+GET https://{{domain}}/cdn-cgi/imagedelivery/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public
+User-Agent: Hurl-CF-Images-Test-0/1.0
+
+HTTP *
+[Captures]
+img0_status: status
+img0_content_type: header "Content-Type"
+
 # =============================================================================
 # CLOUDFLARE IMAGE TRANSFORMATIONS (cdn-cgi/image) on your domain
 # =============================================================================
@@ -315,6 +323,30 @@ HTTP *
 [Captures]
 dls_ai_status: status
 dls_ai_ray: header "Cf-Ray"
+
+# =============================================================================
+# R2 AND PERFORMANCE DEMOS
+# =============================================================================
+
+GET https://r2.automatic-demo.com/cdn-cgi/image/width=250/cat-pic.jpg
+User-Agent: Hurl-R2-Images-Test-1/1.0
+
+HTTP *
+[Captures]
+r2_status: status
+r2_content_type: header "Content-Type"
+
+# =============================================================================
+# WAITING ROOM DEMOS
+# =============================================================================
+
+GET https://performance.cf-testing.com/cloudflare-waiting-room-demo.html
+User-Agent: Hurl-Waiting-Room-Test-1/1.0
+
+HTTP *
+[Captures]
+perf_status: status
+perf_content_type: header "Content-Type"
 
 # =============================================================================
 # SUMMARY REQUEST

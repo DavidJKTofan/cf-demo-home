@@ -15,7 +15,7 @@ hurl --variable domain=example.com cloudflare-diagnostics.hurl --report-html cf-
 ./cf-diagnostics.sh -d example.com
 
 # Run Security Demo
-hurl --variable domain=example.com cloudflare-demos.hurl --report-html cf-report.html
+hurl --variable domain=automatic-demo.com cloudflare-demos.hurl --report-html cf-report.html
 ```
 
 ### Note
