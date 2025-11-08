@@ -180,7 +180,7 @@ export class DemoRenderer {
     const copyLinkSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
 
     const tooltipElement = createElement("span", {
-      className: "tooltip",
+      className: "tooltip-text",
       textContent: "Copy link",
       role: "tooltip",
       id: `tooltip-${demo.id}`,
@@ -195,7 +195,13 @@ export class DemoRenderer {
     });
 
     copyLinkBtn.innerHTML = copyLinkSvg;
-    copyLinkBtn.appendChild(tooltipElement);
+    
+    const tooltipContainer = createElement("div", {
+        className: "tooltip-container"
+    });
+
+    tooltipContainer.appendChild(tooltipElement);
+    copyLinkBtn.appendChild(tooltipContainer);
 
     copyLinkBtn.addEventListener("click", async (e) => {
       e.preventDefault();
@@ -225,6 +231,12 @@ export class DemoRenderer {
       }, 3000);
     });
 
+    // Create "View Demo" button
+    // const demoCta = createElement("div", {
+    //   className: "demo-cta",
+    //   textContent: "View Demo",
+    // });
+
     // Create content container
     const contentContainer = createElement(
       "div",
@@ -246,25 +258,11 @@ export class DemoRenderer {
         "aria-label": `${demo.title} - ${demo.description}`,
         style: "opacity: 0; transform: translateY(20px);", // Start with opacity 0 for animation
       },
-      [contentContainer, copyLinkBtn]
+      [contentContainer, copyLinkBtn] //demoCta
     );
 
     // Add transition for animation
     card.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-
-    // Set fixed dimensions before adding content
-    card.style.height = '250px'; // Match CSS min-height
-    card.style.opacity = '0';
-    
-    // Add content after setting dimensions
-    card.appendChild(contentContainer);
-    card.appendChild(copyLinkBtn);
-    
-    // Fade in smoothly
-    requestAnimationFrame(() => {
-      card.style.opacity = '1';
-      card.style.transition = 'opacity 0.3s ease';
-    });
 
     // Observe the card if we have an observer
     if (this.observer) {

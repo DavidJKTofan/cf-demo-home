@@ -38,3 +38,6 @@ demos/template.html
 /.wrangler
 /demo-triggers/cf-report.html
 /demo-triggers/cf_diagnostics
+GEMINI.md
+demo-triggers/data.json
+demo-triggers/input.txt

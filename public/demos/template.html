@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0051c3">
-    <title>Minimalistic Landing Page</title>
+    <title>{{ DEMO_NAME }} - Cloudflare Demo</title>
+    <meta name="description" content="{{ DEMO_DESCRIPTION }}">
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="preload" href="../../css/styles.css" as="style">
   </head>
@@ -40,7 +41,7 @@
       </nav>
 
       <div class="demo-header">
-        <h1>Demo: {{ LABEL_NAME_HERE }}</h1>
+        <h1>{{ DEMO_NAME }}</h1>
         <div class="demo-meta-tags">
           <span class="demo-category">{{ CATEGORY }}</span>
           <div class="demo-labels">
@@ -49,13 +50,16 @@
         </div>
       </div>
 
+      <div class="demo-actions">
+        <a href="{{ DEMO_URL }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View Demo</a>
+        <a href="/" class="btn">Back to Demos</a>
+      </div>
+
       <div class="image-container">
         <img 
-          src="img/example.jpg" 
-          alt="Description"
+          src="{{ DEMO_IMAGE }}" 
+          alt="{{ DEMO_NAME }}"
           loading="lazy"
-          width="800"
-          height="400"
         >
       </div>
 
@@ -66,37 +70,12 @@
           <span class="copy-text">Copy</span>
         </button>
       </div>
-
-      <h2>Sample Image</h2>
-      <img
-        src="https://via.placeholder.com/800x400"
-        alt="Sample"
-        style="
-          max-width: 100%;
-          height: auto;
-          border-radius: 6px;
-          border: 1px solid var(--border-color);
-        "
-      />
-
-      <h2>Sample Video</h2>
-      <video
-        controls
-        style="
-          max-width: 100%;
-          border-radius: 6px;
-          border: 1px solid var(--border-color);
-        "
-      >
-        <source src="sample-video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
     </main>
 
     <footer>
       <div class="container">
         <p>&copy; 2025 automatic-demo.com</p>
-        <p class="last-updated">Last Updated: <time datetime="2025-03">March 2025</time></p>
+        <p class="last-updated">Last Updated: <time datetime="{{ LAST_UPDATED }}">{{ LAST_UPDATED }}</time></p>
       </div>
     </footer>
   </body>

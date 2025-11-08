@@ -1,13 +1,26 @@
 :root {
   --primary-color: #f6821f;
   --secondary-color: #0051c3;
-  --background-color: #f6f7f8;
+  --background-color: #f7f8fa;
   --card-color: #ffffff;
-  --text-color: #333333;
-  --border-color: #e5e7eb;
-  --hover-color: #f0f0f0;
-  --focus-color: rgba(0, 81, 195, 0.3);
+  --text-color: #212529;
+  --border-color: #dee2e6;
+  --hover-color: #f1f3f5;
+  --focus-color: rgba(0, 81, 195, 0.25);
   --link-color: #0051c3;
+  --link-hover-color: #f6821f;
+}
+
+:root[data-theme="dark"] {
+  --primary-color: #f6821f;
+  --secondary-color: #4dabf7;
+  --background-color: #121212;
+  --card-color: #1e1e1e;
+  --text-color: #e9ecef;
+  --border-color: #343a40;
+  --hover-color: #2c2c2c;
+  --focus-color: rgba(77, 171, 247, 0.3);
+  --link-color: #4dabf7;
   --link-hover-color: #f6821f;
 }
 
@@ -17,23 +30,37 @@
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a, button {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    opacity 0.2s ease, transform 0.2s ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.demo-card:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--focus-color);
 }
 
 header {
   background-color: var(--card-color);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  min-height: 120px;
 }
 
 .container {
@@ -46,7 +73,7 @@ header {
 
 h1 {
   color: var(--secondary-color);
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   font-size: 1.8rem;
 }
 
@@ -79,8 +106,15 @@ code {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
   align-items: center;
+}
+
+/* Responsive adjustments for filters */
+@media (min-width: 769px) {
+  .filters {
+    flex-wrap: nowrap;
+  }
 }
 
 .search-box {
@@ -197,65 +231,73 @@ code {
 }
 
 .demo-grid {
-  min-height: 400px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+@media (max-width: 480px) {
+  .demo-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 .demo-card {
   background-color: var(--card-color);
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  height: 100%;
   text-decoration: none;
   color: var(--text-color);
   border: 1px solid var(--border-color);
   position: relative;
-  /* aspect-ratio: 3/2; */
-  min-height: 250px;
-  opacity: 1;
-  transform: none;
+  min-height: 240px;
 }
 
 .demo-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
 }
 
-.demo-card:focus {
+.demo-card:focus-within {
   outline: none;
-  box-shadow: 0 0 0 3px var(--focus-color), 0 5px 15px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
+  box-shadow: 0 0 0 3px var(--focus-color), 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  border-color: var(--primary-color);
 }
 
 .demo-content {
-  padding: 1.2rem;
+  padding: 1.5rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
 .demo-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
   color: var(--secondary-color);
 }
 
 .demo-description {
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
   flex-grow: 1;
+  line-height: 1.5;
 }
 
 .demo-meta {
   margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
 }
 
 .demo-category {
@@ -281,6 +323,26 @@ code {
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+.demo-cta {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.demo-card:hover .demo-cta {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .copy-link-btn {
@@ -320,7 +382,11 @@ code {
   fill: var(--text-color);
 }
 
-.tooltip {
+.tooltip-container {
+  position: relative;
+}
+
+.tooltip-text {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -336,8 +402,8 @@ code {
   transition: opacity 0.2s;
 }
 
-.copy-link-btn:hover .tooltip,
-.copy-link-btn:focus .tooltip {
+.copy-link-btn:hover .tooltip-text,
+.copy-link-btn:focus .tooltip-text {
   opacity: 1;
 }
 
@@ -966,9 +1032,53 @@ body {
 /* Header layout improvements */
 .header-content {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.filters {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.search-box {
+  flex: 1 1 200px;
+}
+
+.filter-dropdown {
+  flex: 1 1 180px;
+}
+
+.clear-filters {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  h1 {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .filters {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .theme-toggle {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
 }
 
 /* Dark mode adjustments for demo cards */

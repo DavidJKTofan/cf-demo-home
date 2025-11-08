@@ -137,6 +137,57 @@
       <div class="container">
         <div class="header-content">
           <h1>Cloudflare Demos</h1>
+          <div class="filters" aria-label="Filter controls">
+            <div class="search-box">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search demos..."
+                aria-label="Search demos"
+                role="searchbox"
+                autocomplete="off"
+              />
+            </div>
+            <div class="filter-dropdown">
+              <button
+                class="dropdown-btn"
+                id="categoryFilterBtn"
+                aria-haspopup="true"
+                aria-expanded="false"
+                style="width: 100%"
+              >
+                Filter by Category
+              </button>
+              <div
+                class="dropdown-content"
+                id="categoryFilterContent"
+                role="menu"
+                style="width: 100%"
+              >
+                <!-- Categories will be dynamically added here -->
+              </div>
+            </div>
+            <div class="filter-dropdown">
+              <button
+                class="dropdown-btn"
+                id="labelFilterBtn"
+                aria-haspopup="true"
+                aria-expanded="false"
+                style="width: 100%"
+              >
+                Filter by Product
+              </button>
+              <div
+                class="dropdown-content"
+                id="labelFilterContent"
+                role="menu"
+                style="width: 100%"
+              >
+                <!-- Labels will be dynamically added here -->
+              </div>
+            </div>
+            <button class="clear-filters" id="clearFilters">Clear Filters</button>
+          </div>
           <button
             class="theme-toggle"
             aria-label="Toggle theme"
@@ -165,57 +216,6 @@
               />
             </svg>
           </button>
-        </div>
-        <div class="filters" aria-label="Filter controls">
-          <div class="search-box">
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search demos..."
-              aria-label="Search demos"
-              role="searchbox"
-              autocomplete="off"
-            />
-          </div>
-          <div class="filter-dropdown">
-            <button
-              class="dropdown-btn"
-              id="categoryFilterBtn"
-              aria-haspopup="true"
-              aria-expanded="false"
-              style="width: 100%"
-            >
-              Filter by Category
-            </button>
-            <div
-              class="dropdown-content"
-              id="categoryFilterContent"
-              role="menu"
-              style="width: 100%"
-            >
-              <!-- Categories will be dynamically added here -->
-            </div>
-          </div>
-          <div class="filter-dropdown">
-            <button
-              class="dropdown-btn"
-              id="labelFilterBtn"
-              aria-haspopup="true"
-              aria-expanded="false"
-              style="width: 100%"
-            >
-              Filter by Product
-            </button>
-            <div
-              class="dropdown-content"
-              id="labelFilterContent"
-              role="menu"
-              style="width: 100%"
-            >
-              <!-- Labels will be dynamically added here -->
-            </div>
-          </div>
-          <button class="clear-filters" id="clearFilters">Clear Filters</button>
         </div>
       </div>
     </header>
