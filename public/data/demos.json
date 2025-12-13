@@ -86,5 +86,13 @@
     "url": "demos/security/ssl-tls",
     "category": "Application Security",
     "labels": ["SSL/TLS", "Certificate Management", "Cloudflare for SaaS"]
+  },
+  {
+    "id": 12,
+    "title": "Onboarding Guide",
+    "description": "Domain migration guide to Cloudflare with zero downtime",
+    "url": "https://onboarding.automatic-demo.com/",
+    "category": "Platform",
+    "labels": ["Platform", "Onboarding", "Get Started"]
   }
 ]
