@@ -25,19 +25,11 @@
   },
   {
     "id": 4,
-    "title": "Images Demo",
-    "description": "Cloudflare Images is a managed-images service that automatically optimizes images on-demand for web delivery.",
-    "url": "demos/performance/images",
+    "title": "Image Optimization Demo",
+    "description": "Cloudflare offers two solutions: Images Transformations for on-the-fly optimization of externally-hosted images via URL or Workers, and Cloudflare Images as a managed service with integrated storage that automatically optimizes images for web delivery.",
+    "url": "demos/performance/image-optimization",
     "category": "Application Performance",
-    "labels": ["Images", "Image Optimization", "Image Storage"]
-  },
-  {
-    "id": 5,
-    "title": "Image Transformation Demo",
-    "description": "Transform images on the fly with Images Transformations: via URL - usually also used with srcset -, or programmatically via Workers.",
-    "url": "demos/performance/image-transformation",
-    "category": "Application Performance",
-    "labels": ["Images", "Image Transformations", "Workers"]
+    "labels": ["Images", "Image Optimization", "Image Storage", "Image Transformations", "Workers"]
   },
   {
     "id": 6,
