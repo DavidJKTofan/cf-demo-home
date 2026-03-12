@@ -140,5 +140,29 @@
       "Onboarding",
       "Get Started"
     ]
+  },
+  {
+    "id": 13,
+    "title": "Compliance-aware Serverless Setup",
+    "description": "Cloudflare Developer Platform with compliance requirements",
+    "url": "https://serverless.automatic-demo.com/",
+    "category": "Platform",
+    "labels": [
+      "Platform",
+      "Serverless",
+      "Compliance"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "AI Security Visualization",
+    "description": "Visualize AI security use cases with Cloudflare's offering",
+    "url": "https://ai-security.automatic-demo.com/",
+    "category": "Platform",
+    "labels": [
+      "Platform",
+      "AI Security",
+      "Visualization"
+    ]
   }
 ]
