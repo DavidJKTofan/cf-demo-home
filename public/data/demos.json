@@ -164,5 +164,18 @@
       "AI Security",
       "Visualization"
     ]
+  },
+  {
+    "id": 15,
+    "title": "Cloudflare One (CF1) Connectivity",
+    "description": "Visual interactive Cloudflare One (SASE) architecture builder and demo",
+    "url": "https://connectivity.automatic-demo.com/",
+    "category": "Platform",
+    "labels": [
+      "Platform",
+      "Cloudflare One",
+      "Zero Trust",
+      "SASE"
+    ]
   }
 ]
