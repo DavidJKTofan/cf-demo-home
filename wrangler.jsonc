@@ -10,6 +10,11 @@
 		"nodejs_compat",
 		"global_fetch_strictly_public"
 	],
+	// Run `astro build` automatically before `wrangler deploy` when using `npx wrangler deploy` directly.
+	// This is required when the CI deploy command is `npx wrangler deploy` (not `npm run deploy`).
+	"build": {
+		"command": "npm run build"
+	},
 	// Disable the workers.dev subdomain — serve only via the custom domain
 	"workers_dev": false,
 	// Disable per-deployment preview URLs
