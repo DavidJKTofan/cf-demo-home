@@ -1,0 +1,260 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+---
+
+<DemoLayout
+  title="R2 Object Storage"
+  description="The Cloudflare R2 object storage is a low-cost, high-performance object storage solution that helps you store and serve your data."
+  category="Developer Platform"
+  labels={["R2", "Object Storage"]}
+  lastUpdated="April 2025"
+>
+
+  <!-- Overview Card -->
+  <section class="card" aria-labelledby="overview-heading">
+    <h2 id="overview-heading">Overview</h2>
+    <p>
+      Cloudflare R2 is a low-cost, high-performance object storage solution that helps you store and serve any type
+      of data. The two main ways of interacting with R2 are via the{' '}
+      <a href="https://developers.cloudflare.com/r2/api/s3/" target="_blank" rel="noopener noreferrer external">
+        <strong>S3 API</strong>
+      </a>
+      {' '}or{' '}
+      <a href="https://developers.cloudflare.com/r2/api/workers/" target="_blank" rel="noopener noreferrer external">
+        <strong>Workers API</strong>
+      </a>,
+      benefiting from zero egress fees and making it easy to integrate with existing applications and workflows.
+    </p>
+
+    <p>Some relevant features:</p>
+    <ul class="feature-list">
+      <li>
+        <a href="https://developers.cloudflare.com/r2/data-migration/" target="_blank" rel="noopener noreferrer external">
+          <strong>Easy data migration</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/r2/buckets/object-lifecycles/" target="_blank" rel="noopener noreferrer external">
+          <strong>Object lifecycles</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/r2/buckets/public-buckets/" target="_blank" rel="noopener noreferrer external">
+          <strong>Public buckets</strong>
+        </a>
+        {' '}(private by default, configurable with{' '}
+        <a href="https://developers.cloudflare.com/r2/buckets/public-buckets/#access-control" target="_blank" rel="noopener noreferrer external">
+          Access control
+        </a>)
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/r2/api/s3/presigned-urls/" target="_blank" rel="noopener noreferrer external">
+          <strong>Presigned URLs</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions" target="_blank" rel="noopener noreferrer external">
+          <strong>Jurisdictional Restrictions</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/r2/platform/metrics-analytics/" target="_blank" rel="noopener noreferrer external">
+          <strong>Metrics &amp; Analytics</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/r2/platform/audit-logs/" target="_blank" rel="noopener noreferrer external">
+          <strong>Audit Logs</strong>
+        </a>
+      </li>
+    </ul>
+
+    <div class="btn-row mt-1">
+      <a
+        href="https://developers.cloudflare.com/r2/demos/"
+        target="_blank"
+        rel="noopener noreferrer external"
+        class="btn btn-secondary"
+      >
+        Visit R2 Demos
+      </a>
+      <a
+        href="https://files.automatic-demo.com/"
+        target="_blank"
+        rel="noopener noreferrer external"
+        class="btn btn-secondary"
+      >
+        File Sharing Platform Demo
+      </a>
+    </div>
+    <p class="file-hint">
+      <em>SECRET File ID: 89f129f5-c2d9-4579-bdde-61e5fc75e75c</em>
+    </p>
+  </section>
+
+  <!-- R2 Public Custom Domain -->
+  <section aria-labelledby="public-domain-heading">
+    <h2 id="public-domain-heading">R2 Public Custom Domain</h2>
+    <div class="link-list">
+      <p>
+        <a href="https://r2.automatic-demo.com/cat-pic.jpg" target="_blank" rel="noopener noreferrer external">
+          /cat-pic.jpg
+        </a>
+      </p>
+      <p>
+        <a href="https://r2.automatic-demo.com/cdn-cgi/image/width=250/cat-pic.jpg" target="_blank" rel="noopener noreferrer external">
+          /cdn-cgi/image/width=250/cat-pic.jpg
+        </a>
+        {' '}with <a href="/demos/performance/image-optimization">Image Transformation</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- R2 for Static Web Assets -->
+  <section aria-labelledby="web-assets-heading">
+    <h2 id="web-assets-heading">R2 Public Custom Domain for Web Assets Hosting</h2>
+    <p>
+      Similarly to AWS S3, R2 can also host static web assets and with a custom domain expose that website publicly:{' '}
+      <a href="https://r2web.cf-testing.com/under-construction-customer1/index.html" target="_blank" rel="noopener noreferrer external">
+        example
+      </a>.
+    </p>
+    <p>
+      However, it is strongly recommended to use{' '}
+      <a href="https://developers.cloudflare.com/workers/static-assets/compatibility-matrix/" target="_blank" rel="noopener noreferrer external">
+        Cloudflare Workers or Pages
+      </a>
+      {' '}to host and deploy websites or applications on Cloudflare instead.
+    </p>
+    <div class="img-container mt-1">
+      <img
+        src="/demos/serverless/img/cf-account-r2-objects.png"
+        alt="Cloudflare R2 Object Storage Dashboard"
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <!-- R2 Metrics -->
+  <section aria-labelledby="metrics-heading">
+    <h2 id="metrics-heading">R2 Metrics</h2>
+    <div class="img-container">
+      <img
+        src="/demos/serverless/img/cf-account-r2-analytics.png"
+        alt="Cloudflare R2 Analytics Dashboard"
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+</DemoLayout>
+
+<style>
+  /* ===== Section spacing ===== */
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section > h2 {
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ===== Card ===== */
+  .card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .card h2 {
+    border-bottom-color: var(--border);
+  }
+
+  .card p, section > p {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Feature list ===== */
+  .feature-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 0.75rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Link list ===== */
+  .link-list p {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+
+  /* ===== File hint ===== */
+  .file-hint {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    color: #888;
+  }
+
+  /* ===== Utility ===== */
+  .mt-1 { margin-top: 1rem; }
+
+  /* ===== Button Row ===== */
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    border-bottom: none !important;
+  }
+
+  .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    border-bottom: none !important;
+  }
+
+  .btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+  }
+
+  /* ===== Image Container ===== */
+  .img-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--secondary);
+  }
+
+  .img-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 600px) {
+    .btn-row { flex-direction: column; }
+    .btn { text-align: center; }
+  }
+</style>

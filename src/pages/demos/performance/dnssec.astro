@@ -1,0 +1,230 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+---
+
+<DemoLayout
+  title="DNSSEC"
+  description="DNSSEC adds an extra layer of authentication layer to DNS, making sure that visitors go to your domain instead of a spoofed domain."
+  category="Application Security"
+  labels={["DNS", "DNSSEC"]}
+  lastUpdated="April 2025"
+>
+
+  <!-- Overview Card -->
+  <section class="card" aria-labelledby="overview-heading">
+    <h2 id="overview-heading">Overview</h2>
+    <p>
+      Cloudflare offers comprehensive DNS solutions as an Authoritative DNS Provider including{' '}
+      <a href="https://developers.cloudflare.com/dns/zone-setups/full-setup/" target="_blank" rel="noopener noreferrer external">Full DNS Setup</a>,{' '}
+      <a href="https://developers.cloudflare.com/dns/zone-setups/partial-setup/" target="_blank" rel="noopener noreferrer external">CNAME Setup</a>,
+      and{' '}
+      <a href="https://developers.cloudflare.com/dns/zone-setups/zone-transfers/cloudflare-as-secondary/" target="_blank" rel="noopener noreferrer external">Secondary DNS</a>.
+      The globally distributed Anycast network consistently ranks among the{' '}
+      <a href="https://www.dnsperf.com/" target="_blank" rel="noopener noreferrer external">fastest DNS providers worldwide</a>.
+      Additionally,{' '}
+      <a href="https://developers.cloudflare.com/dns/dnssec/" target="_blank" rel="noopener noreferrer external">DNSSEC</a>
+      {' '}adds an extra layer of authentication to DNS, preventing domain spoofing, while{' '}
+      <a href="https://developers.cloudflare.com/dns/additional-options/analytics/" target="_blank" rel="noopener noreferrer external">DNS Analytics</a>
+      {' '}provides detailed insights into your DNS traffic.
+    </p>
+
+    <h3 class="subsection-heading">NSEC3</h3>
+    <p>
+      Cloudflare's implementation of negative answers with NSEC is protected against zone walking. This implementation
+      removes the need for{' '}
+      <a href="https://dnsinstitute.com/documentation/dnssec-guide/ch06s02.html" target="_blank" rel="external noopener noreferrer">NSEC3</a>
+      {' '}and has been{' '}
+      <a href="https://datatracker.ietf.org/doc/draft-ietf-dnsop-compact-denial-of-existence/" target="_blank" rel="noopener noreferrer external">proposed as an IETF standard</a>.
+      If you must use NSEC3 for compliance reasons, you can{' '}
+      <a href="https://developers.cloudflare.com/api/resources/dns/subresources/dnssec/methods/edit/" target="_blank" rel="noopener noreferrer external">enable it via API</a>.
+    </p>
+
+    <div class="btn-row">
+      <a
+        href="https://dnsviz.net/d/automatic-demo.com/analyze/"
+        target="_blank"
+        rel="noopener noreferrer external"
+        class="btn btn-secondary"
+      >
+        Visit Demo
+      </a>
+    </div>
+  </section>
+
+  <!-- DNSSEC Settings Screenshot -->
+  <section aria-labelledby="settings-heading">
+    <h2 id="settings-heading">DNSSEC Settings</h2>
+    <div class="img-container">
+      <img
+        src="/demos/performance/img/cf-zone-dnssec.png"
+        alt="Zone DNSSEC Dashboard Settings"
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <!-- DNS Analytics Video -->
+  <section aria-labelledby="analytics-heading">
+    <h2 id="analytics-heading">DNS Analytics</h2>
+    <div class="video-container">
+      <iframe
+        src="https://customer-px4ru5rucxtgoo68.cloudflarestream.com/f92a7e38dfe749b6c2a532e7dcd0a831/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-px4ru5rucxtgoo68.cloudflarestream.com%2Ff92a7e38dfe749b6c2a532e7dcd0a831%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&title=Zone+DNS+Analytics"
+        loading="lazy"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen
+        title="Zone DNS Analytics"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- DoH Examples -->
+  <section aria-labelledby="doh-heading">
+    <h2 id="doh-heading">Public DNS Resolver - Query Examples</h2>
+    <p>
+      Cloudflare also offers a public DNS resolver{' '}
+      <a href="https://one.one.one.one/" target="_blank" rel="external noopener noreferrer">1.1.1.1</a>.
+    </p>
+
+    <div class="code-block mt-1">
+      <h3 class="code-label">
+        DNS Query via{' '}
+        <a href="https://developers.cloudflare.com/1.1.1.1/encryption/dns-over-https/make-api-requests/" target="_blank" rel="external noopener noreferrer">
+          DNS over HTTPS (DoH)
+        </a>
+        {' '}- JSON Response
+      </h3>
+      <pre><code>curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?name=automatic-demo.com&type=A' | jq .</code></pre>
+    </div>
+
+    <div class="code-block mt-1">
+      <h3 class="code-label">DNS Query via DoH - Headers Response</h3>
+      <pre><code>curl -I --doh-url https://cloudflare-dns.com/dns-query https://automatic-demo.com</code></pre>
+    </div>
+  </section>
+
+</DemoLayout>
+
+<style>
+  /* ===== Section spacing ===== */
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section > h2 {
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ===== Card ===== */
+  .card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .card h2 {
+    border-bottom-color: var(--border);
+  }
+
+  .card p, section > p {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Subsection heading ===== */
+  .subsection-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  /* ===== Utility ===== */
+  .mt-1 { margin-top: 1rem; }
+
+  /* ===== Button Row ===== */
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    border-bottom: none !important;
+  }
+
+  .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    border-bottom: none !important;
+  }
+
+  .btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+  }
+
+  /* ===== Image Container ===== */
+  .img-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--secondary);
+  }
+
+  .img-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ===== Video Container ===== */
+  .video-container {
+    position: relative;
+    padding-top: 56.67%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--secondary);
+  }
+
+  .video-container iframe {
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* ===== Code Block ===== */
+  .code-block {
+    margin-bottom: 1.5rem;
+  }
+
+  .code-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 600px) {
+    .btn-row { flex-direction: column; }
+    .btn { text-align: center; }
+  }
+</style>

@@ -1,0 +1,208 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+---
+
+<DemoLayout
+  title="SSL / TLS"
+  description="Cloudflare's Advanced Certificate Management (ACM) solution provides robust SSL/TLS security with customizable options for cipher suites and certificate transparency monitoring."
+  category="Application Security"
+  labels={["SSL/TLS", "Certificates", "ACM"]}
+  lastUpdated="April 2025"
+>
+
+  <!-- Overview Card -->
+  <section class="card" aria-labelledby="overview-heading">
+    <h2 id="overview-heading">Overview</h2>
+    <p>
+      <a href="https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/" target="_blank" rel="noopener noreferrer external">
+        Advanced Certificate Manager (ACM)
+      </a>
+      {' '}provides enhanced SSL/TLS certificate management with customizable options for certificate management,
+      automatic renewals, and{' '}
+      <a href="https://developers.cloudflare.com/ssl/edge-certificates/additional-options/cipher-suites/" target="_blank" rel="external noopener noreferrer">
+        cipher suite
+      </a>
+      {' '}configurations. This is the recommended solution for managing SSL/TLS certificates on Cloudflare.
+    </p>
+
+    <h3 class="subsection-heading">Core SSL/TLS Features</h3>
+    <ul class="feature-list">
+      <li>
+        <a href="https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/" target="_blank" rel="noopener noreferrer external">
+          <strong>Custom Certificates</strong>
+        </a>
+        {' '}- Upload and manage your own SSL certificates
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/" target="_blank" rel="noopener noreferrer external">
+          <strong>Universal SSL</strong>
+        </a>
+        {' '}- Free SSL certificates for all domains
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/ssl/edge-certificates/additional-options/minimum-tls/" target="_blank" rel="noopener noreferrer external">
+          <strong>Minimum TLS Version</strong>
+        </a>
+        {' '}- Control TLS version requirements
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https/" target="_blank" rel="noopener noreferrer external">
+          <strong>Always Use HTTPS</strong>
+        </a>
+        {' '}- Recommended setting for secure connections and preventing HTTP plaintext
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/ssl/edge-certificates/additional-options/total-tls/" target="_blank" rel="noopener noreferrer external">
+          <strong>Total TLS</strong>
+        </a>
+        {' '}- Generally recommended for enhanced security
+      </li>
+    </ul>
+
+    <h3 class="subsection-heading">Additional Resources</h3>
+    <ul class="feature-list">
+      <li>
+        <a href="https://crt.sh/" target="_blank" rel="noopener noreferrer external">
+          <strong>Certificate Search</strong>
+        </a>
+        {' '}- Public certificate database and monitoring
+      </li>
+      <li>
+        <a href="https://certificate.transparency.dev/" target="_blank" rel="noopener noreferrer external">
+          <strong>Certificate Transparency</strong>
+        </a>
+        {' '}- Open framework for monitoring certificates
+      </li>
+      <li>
+        <a href="https://ct.cloudflare.com/" target="_blank" rel="noopener noreferrer external">
+          <strong>Cloudflare CT Logs</strong>
+        </a>
+        {' '}- Certificate Transparency (CT) log service, built on{' '}
+        <a href="https://blog.cloudflare.com/azul-certificate-transparency-log/" target="_blank" rel="noopener noreferrer external">
+          Cloudflare Workers
+        </a>
+      </li>
+      <li>
+        <a href="https://pq.cloudflareresearch.com/" target="_blank" rel="noopener noreferrer external">
+          <strong>Post-Quantum Cryptography (PQC)</strong>
+        </a>
+        {' '}- Future-proof encryption. Visit the site to check if your Browser supports PQC, or view adoption
+        trends on{' '}
+        <a href="https://radar.cloudflare.com/adoption-and-usage#post-quantum-encryption-adoption" target="_blank" rel="external noopener noreferrer">
+          Cloudflare Radar
+        </a>
+      </li>
+    </ul>
+
+    <h3 class="subsection-heading">Cloudflare for SaaS</h3>
+    <p>
+      If you are a SaaS provider or platform, similar to{' '}
+      <a href="https://www.cloudflare.com/case-studies/shopify/" target="_blank" rel="extend noopener noreferrer">Shopify</a>
+      {' '}or{' '}
+      <a href="https://www.cloudflare.com/case-studies/porsche-informatik/" target="_blank" rel="extend noopener noreferrer">Porsche Informatik</a>,
+      then we recommend using{' '}
+      <a href="https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/" target="_blank" rel="noopener noreferrer external">
+        Cloudflare for SaaS
+      </a>,
+      which enables you to extend Cloudflare's security and performance features to your customers through custom
+      hostnames or vanity domains. You can review individual usage through the{' '}
+      <a href="https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/" target="_blank" rel="external noopener noreferrer">
+        Analytics
+      </a>.
+    </p>
+    <p class="mt-1">
+      Here is a{' '}
+      <a href="https://developers.cloudflare.com/reference-architecture/static/example-cloudflare-saas-migration-plan.pdf" target="_blank" rel="external noopener noreferrer">
+        high-level migration guide
+      </a>
+      {' '}to get started with Cloudflare for SaaS.
+    </p>
+  </section>
+
+  <!-- SSL/TLS Video Demo -->
+  <section aria-labelledby="settings-heading">
+    <h2 id="settings-heading">SSL/TLS Edge Certificates Dashboard Settings</h2>
+    <div class="video-container">
+      <iframe
+        src="https://customer-px4ru5rucxtgoo68.cloudflarestream.com/5801922ba9c1f3e80b64763afb4462cd/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-px4ru5rucxtgoo68.cloudflarestream.com%2F5801922ba9c1f3e80b64763afb4462cd%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+        loading="lazy"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen
+        title="SSL/TLS Edge Certificates Dashboard Settings"
+      ></iframe>
+    </div>
+  </section>
+
+</DemoLayout>
+
+<style>
+  /* ===== Section spacing ===== */
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section > h2 {
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ===== Card ===== */
+  .card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .card h2 {
+    border-bottom-color: var(--border);
+  }
+
+  .card p, section > p {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Subsection headings ===== */
+  .subsection-heading {
+    font-size: 1rem;
+    color: var(--secondary);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  /* ===== Feature list ===== */
+  .feature-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 0.75rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Utility ===== */
+  .mt-1 { margin-top: 1rem; }
+
+  /* ===== Video Container ===== */
+  .video-container {
+    position: relative;
+    padding-top: 56.94%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--secondary);
+  }
+
+  .video-container iframe {
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+</style>

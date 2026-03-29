@@ -1,0 +1,149 @@
+---
+interface Props {
+  id: number;
+  title: string;
+  description: string;
+  url: string;
+  category: string;
+  labels: string[];
+}
+
+const { title, description, url, category, labels } = Astro.props;
+
+// Determine if the URL is external (absolute) or internal (relative)
+const isExternal = url.startsWith("http://") || url.startsWith("https://");
+const href = isExternal ? url : `/${url}`;
+const target = isExternal ? "_blank" : "_self";
+const rel = isExternal ? "noopener noreferrer external" : undefined;
+---
+
+<a
+  class="demo-card"
+  href={href}
+  target={target}
+  rel={rel}
+  data-category={category}
+  data-labels={labels.join(",")}
+  aria-label={`${title}: ${description}`}
+>
+  <div class="demo-content">
+    <h2 class="demo-title">{title}</h2>
+    <p class="demo-description">{description}</p>
+    <div class="demo-meta">
+      <span class="demo-category">{category}</span>
+      <div class="demo-labels" aria-label="Tags">
+        {labels.map((label) => (
+          <span class="demo-label">{label}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+  {isExternal && (
+    <span class="external-icon" aria-hidden="true">
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+        <path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+        <path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+      </svg>
+    </span>
+  )}
+</a>
+
+<style>
+  .demo-card {
+    background-color: var(--card);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid var(--border);
+    position: relative;
+    min-height: 240px;
+  }
+
+  .demo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px var(--shadow);
+    border-color: var(--primary);
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .demo-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 480px) {
+    .demo-content { padding: 1rem; }
+  }
+
+  .demo-title {
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--secondary);
+    line-height: 1.3;
+  }
+
+  .demo-description {
+    font-size: clamp(0.875rem, 2vw, 0.95rem);
+    flex-grow: 1;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .demo-meta {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .demo-category {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    background-color: var(--secondary);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.01em;
+  }
+
+  .demo-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .demo-label {
+    padding: 0.18rem 0.5rem;
+    background-color: rgba(246, 130, 31, 0.12);
+    color: var(--primary);
+    border-radius: 4px;
+    font-size: 0.74rem;
+    font-weight: 500;
+    border: 1px solid rgba(246, 130, 31, 0.25);
+  }
+
+  .external-icon {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    color: var(--border);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .demo-card:hover .external-icon {
+    opacity: 1;
+    color: var(--primary);
+  }
+</style>

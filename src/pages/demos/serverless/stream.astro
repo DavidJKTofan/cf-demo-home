@@ -1,0 +1,221 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+---
+
+<DemoLayout
+  title="Stream"
+  description="The Cloudflare Stream is a managed-video solution that helps you stream your on-demand and live videos."
+  category="Developer Platform"
+  labels={["Stream", "Video"]}
+  lastUpdated="March 2025"
+>
+
+  <!-- Overview Card -->
+  <section class="card" aria-labelledby="overview-heading">
+    <h2 id="overview-heading">Overview</h2>
+    <p>
+      The Cloudflare Stream is a managed-video solution that helps you stream your on-demand and live videos with
+      adaptive bitrate streaming and more capabilities.
+    </p>
+
+    <p>Take advantage of several features, such as:</p>
+    <ul class="feature-list">
+      <li>
+        <a href="https://developers.cloudflare.com/stream/viewing-videos/using-own-player/" target="_blank" rel="noopener noreferrer external">
+          <strong>Use your own player</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/stream/webrtc-beta/" target="_blank" rel="noopener noreferrer external">
+          <strong>WebRTC for sub-second latency live streaming</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/" target="_blank" rel="noopener noreferrer external">
+          <strong>Signed URLs</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/stream/stream-live/" target="_blank" rel="noopener noreferrer external">
+          <strong>Live streaming and broadcast</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/stream/transform-videos/" target="_blank" rel="noopener noreferrer external">
+          <strong>Media transformations on the fly</strong>
+        </a>
+      </li>
+      <li>
+        <a href="https://developers.cloudflare.com/stream/edit-videos/adding-captions/#generate-a-caption" target="_blank" rel="noopener noreferrer external">
+          <strong>Generate captions using AI-based speech-to-text</strong>
+        </a>
+      </li>
+    </ul>
+
+    <div class="btn-row mt-1">
+      <a
+        href="https://davidtofan.com/projects/webinars/"
+        target="_blank"
+        rel="noopener noreferrer external"
+        class="btn btn-secondary"
+      >
+        Visit Demo
+      </a>
+      <a
+        href="https://cf-stream-demo.cf-testing.workers.dev/"
+        target="_blank"
+        rel="noopener noreferrer external"
+        class="btn btn-primary"
+      >
+        Stream Demo
+      </a>
+    </div>
+  </section>
+
+  <!-- Stream Settings Screenshot -->
+  <section aria-labelledby="settings-heading">
+    <h2 id="settings-heading">Stream Video Settings</h2>
+    <div class="img-container">
+      <img
+        src="/demos/serverless/img/cf-account-stream-settings.png"
+        alt="Cloudflare Stream Video Dashboard Settings"
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <!-- Stream VOD Demo -->
+  <section aria-labelledby="vod-heading">
+    <h2 id="vod-heading">Stream Video-On-Demand Demo</h2>
+    <div class="video-container">
+      <iframe
+        src="https://customer-px4ru5rucxtgoo68.cloudflarestream.com/f92a7e38dfe749b6c2a532e7dcd0a831/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-px4ru5rucxtgoo68.cloudflarestream.com%2Ff92a7e38dfe749b6c2a532e7dcd0a831%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&title=Stream+Video-On-Demand+Demo"
+        loading="lazy"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen
+        title="Stream Video-On-Demand Demo"
+      ></iframe>
+    </div>
+  </section>
+
+</DemoLayout>
+
+<style>
+  /* ===== Section spacing ===== */
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section > h2 {
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ===== Card ===== */
+  .card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .card h2 {
+    border-bottom-color: var(--border);
+  }
+
+  .card p, section > p {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Feature list ===== */
+  .feature-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 0.75rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Utility ===== */
+  .mt-1 { margin-top: 1rem; }
+
+  /* ===== Button Row ===== */
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    border-bottom: none !important;
+  }
+
+  .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    border-bottom: none !important;
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+  }
+
+  /* ===== Image Container ===== */
+  .img-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--secondary);
+  }
+
+  .img-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ===== Video Container ===== */
+  .video-container {
+    position: relative;
+    padding-top: 56.67%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--secondary);
+  }
+
+  .video-container iframe {
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 600px) {
+    .btn-row { flex-direction: column; }
+    .btn { text-align: center; }
+  }
+</style>

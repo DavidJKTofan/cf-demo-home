@@ -1,0 +1,205 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+---
+
+<DemoLayout
+  title="Cloudflare Workers"
+  description="Build, deploy, and scale apps across Cloudflare's global network with Workers - a serverless platform with no infrastructure to manage."
+  category="Developer Platform"
+  labels={["Workers", "Serverless", "Edge Computing", "Compute"]}
+  lastUpdated="November 2025"
+>
+
+  <!-- Overview Card -->
+  <section class="card" aria-labelledby="overview-heading">
+    <h2 id="overview-heading">Overview</h2>
+    <p>
+      Cloudflare Workers is a serverless platform for building, deploying, and scaling applications across
+      Cloudflare's global network with a single command — no infrastructure to manage, no complex configuration.
+    </p>
+
+    <h3 class="subsection-heading">What You Get</h3>
+    <ul class="feature-list">
+      <li>Fast performance with high reliability on Cloudflare's global network</li>
+      <li>Support for JavaScript, TypeScript, Python, Rust, and more</li>
+      <li>Integration with popular frameworks like React, Next.js, Astro, and Vue</li>
+      <li>Free tier with flexible pricing that scales with your needs</li>
+    </ul>
+
+    <h3 class="subsection-heading">Common Use Cases</h3>
+    <ul class="feature-list">
+      <li>
+        Full-stack applications with static assets and APIs ({' '}
+        <a href="https://developers.cloudflare.com/workers/runtime-apis/bindings/" target="_blank" rel="external noopener noreferrer">Bindings</a>)
+      </li>
+      <li>Serverless AI inference with Workers AI</li>
+      <li>Background jobs and scheduled tasks</li>
+      <li>Real-time collaboration and chat applications</li>
+    </ul>
+
+    <h3 class="subsection-heading">
+      <a href="https://developers.cloudflare.com/workers/platform/storage-options/" target="_blank" rel="external noopener noreferrer">
+        Storage &amp; Data Options
+      </a>
+    </h3>
+    <p>Integrate seamlessly with Cloudflare's data products:</p>
+    <ul class="feature-list">
+      <li><strong>KV:</strong> Low-latency key-value storage for configuration and session data</li>
+      <li><strong>D1:</strong> Serverless SQL database for structured data</li>
+      <li><strong>R2:</strong> Object storage with zero egress fees</li>
+      <li><strong>Durable Objects:</strong> Stateful coordination with strong consistency</li>
+      <li><strong>Queues:</strong> Message queuing for reliable background processing</li>
+    </ul>
+  </section>
+
+  <!-- Demos Grid -->
+  <section aria-labelledby="demos-heading">
+    <h2 id="demos-heading">Serverless Demos</h2>
+    <div class="demos-grid">
+      <a href="https://developers.cloudflare.com/workers/playground/" target="_blank" rel="noopener noreferrer external" class="demo-link">
+        Workers Playground
+      </a>
+      <a href="https://petstore.automatic-demo.com/" target="_blank" rel="noopener noreferrer external" class="demo-link">
+        Petstore API Demo
+      </a>
+      <a href="https://graphql.automatic-demo.com/" target="_blank" rel="noopener noreferrer external" class="demo-link">
+        GraphQL API Demo
+      </a>
+      <a href="https://github.com/DavidJKTofan/cf-workers-httpbin" target="_blank" rel="noopener noreferrer external" class="demo-link">
+        HTTPBin Service
+      </a>
+      <a href="https://davidtofan.com/articles/cloudflare-logpush/" target="_blank" rel="noopener noreferrer external" class="demo-link">
+        Logpush Guide
+      </a>
+    </div>
+
+    <div class="btn-row mt-2">
+      <a
+        href="https://developers.cloudflare.com/workers/"
+        target="_blank"
+        rel="noopener noreferrer external"
+        class="btn btn-outline"
+      >
+        View Documentation
+      </a>
+    </div>
+  </section>
+
+</DemoLayout>
+
+<style>
+  /* ===== Section spacing ===== */
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section > h2 {
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ===== Card ===== */
+  .card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .card h2 {
+    border-bottom-color: var(--border);
+  }
+
+  .card p, section > p {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Subsection heading ===== */
+  .subsection-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  /* ===== Feature list ===== */
+  .feature-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    line-height: 1.7;
+  }
+
+  /* ===== Demos Grid ===== */
+  .demos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .demo-link {
+    display: block;
+    padding: 0.8rem 1rem;
+    background-color: var(--secondary);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center;
+    transition: opacity 0.2s, transform 0.15s;
+    border-bottom: none !important;
+  }
+
+  .demo-link:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    color: white;
+    border-bottom: none !important;
+  }
+
+  /* ===== Button Row ===== */
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    border-bottom: none !important;
+  }
+
+  .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    border-bottom: none !important;
+  }
+
+  .btn-outline {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-outline:hover {
+    background-color: var(--hover);
+  }
+
+  /* ===== Utility ===== */
+  .mt-2 { margin-top: 1.5rem; }
+</style>

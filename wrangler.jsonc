@@ -1,22 +1,42 @@
 {
-  "name": "cf-demo-home",
-  "main": "src/index.js",
-  "compatibility_date": "2025-04-09",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "./public",
-    "not_found_handling": "404-page"
-  },
-  "workers_dev": false,
-  "preview_urls": false,
-  "routes": [
-    {
-      "pattern": "automatic-demo.com",
-      "custom_domain": true
-    }
-  ],
-  "observability": {
-    "enabled": true
-  }
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cf-demo-home",
+	"main": "@astrojs/cloudflare/entrypoints/server",
+	"compatibility_date": "2026-03-29",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	// Run `astro build` automatically before every `wrangler deploy` or `wrangler dev`
+	"build": {
+		"command": "npm run build",
+		"watch_dir": [
+			"src",
+			"public"
+		]
+	},
+	// Disable the workers.dev subdomain — serve only via the custom domain
+	"workers_dev": false,
+	// Disable per-deployment preview URLs
+	"preview_urls": false,
+	// Custom domain routing
+	"routes": [
+		{
+			"pattern": "automatic-demo.com",
+			"custom_domain": true
+		}
+	],
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		// Return the nearest 404.html for unmatched static-asset routes
+		"not_found_handling": "404-page"
+	},
+	"observability": {
+		"enabled": true,
+		"logs": {
+			// Capture 100% of requests in production
+			"head_sampling_rate": 1
+		}
+	}
 }

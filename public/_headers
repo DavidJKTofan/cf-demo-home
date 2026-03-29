@@ -1,2 +1,14 @@
-https://cf-demo-home.pages.dev/*
+# Prevent workers.dev preview URLs from being indexed
+https://:subdomain.workers.dev/*
   X-Robots-Tag: noindex
+
+# Security headers for all routes
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: document-domain=()
+
+# Aggressive caching for hashed/fingerprinted static assets
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

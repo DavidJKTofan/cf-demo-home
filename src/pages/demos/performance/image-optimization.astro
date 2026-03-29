@@ -1,0 +1,779 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+---
+
+<DemoLayout
+  title="Cloudflare Images Solutions"
+  description="Cloudflare offers two solutions: Images Transformations for on-the-fly optimization of externally-hosted images via URL or Workers, and Cloudflare Images as a managed service with integrated storage that automatically optimizes images for web delivery."
+  category="Application Performance"
+  labels={["Images", "Image Optimization", "Image Storage"]}
+  lastUpdated="December 2025"
+>
+
+  <!-- Solution Overview -->
+  <section class="card" aria-labelledby="overview-heading">
+    <h2 id="overview-heading">Solution Overview</h2>
+    <p>Cloudflare offers two distinct approaches for <strong>image optimization</strong>:</p>
+
+    <div class="solution-grid mt-1">
+      <div class="solution-card solution-secondary">
+        <h3>Cloudflare Images</h3>
+        <p>
+          <strong>Managed hosting service</strong> with Cloudflare-managed backend storage. Upload images to
+          Cloudflare and use it as your image hosting provider.
+        </p>
+        <p class="use-case">Best for: New projects, complete image management solution</p>
+      </div>
+      <div class="solution-card solution-primary">
+        <h3>Image Transformations</h3>
+        <p>
+          <strong>Optimization service</strong> for images hosted externally (Amazon S3, Cloudflare R2, or any
+          origin server). Transform and resize on-demand.
+        </p>
+        <p class="use-case">Best for: Existing image infrastructure, external storage</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cloudflare Images Section -->
+  <section aria-labelledby="cf-images-heading">
+    <h2 id="cf-images-heading">Cloudflare Images</h2>
+
+    <div class="card">
+      <h3>Key Features</h3>
+
+      <h4 class="subsection-heading">Storage &amp; Upload Options</h4>
+      <ul class="feature-list">
+        <li><strong>Upload via custom path:</strong> Recommended for general use with API integration</li>
+        <li><strong>Batch API upload:</strong> Efficient for large quantities of images</li>
+        <li>
+          <strong>
+            <a href="https://developers.cloudflare.com/images/upload-images/direct-creator-upload/" target="_blank" rel="noopener noreferrer external">
+              Direct creator uploads
+            </a>:
+          </strong>
+          {' '}One-time upload URLs for end-users and clients
+        </li>
+        <li><strong>Dashboard upload:</strong> Quick testing and manual uploads</li>
+        <li><strong>Workers upload:</strong> Integration with Cloudflare Developer Platform</li>
+      </ul>
+
+      <h4 class="subsection-heading">Delivery Options</h4>
+      <ul class="feature-list">
+        <li>
+          <strong>
+            <a href="https://developers.cloudflare.com/images/manage-images/create-variants/" target="_blank" rel="noopener noreferrer external">
+              Image Variants
+            </a>:
+          </strong>
+          {' '}Create preset configurations for different use cases
+        </li>
+        <li>
+          <strong>
+            <a href="https://developers.cloudflare.com/images/manage-images/enable-flexible-variants/" target="_blank" rel="noopener noreferrer external">
+              Flexible Variants
+            </a>:
+          </strong>
+          {' '}Apply customizable transformation parameters on-demand
+        </li>
+        <li>
+          <strong>
+            <a href="https://developers.cloudflare.com/images/manage-images/serve-images/serve-private-images/" target="_blank" rel="noopener noreferrer external">
+              Private Images
+            </a>:
+          </strong>
+          {' '}Serve images using signed URL tokens for access control
+        </li>
+        <li><strong>Custom Domains:</strong> Serve images from your own domain</li>
+      </ul>
+
+      <h4 class="subsection-heading">URL Format</h4>
+      <div class="url-format-block">
+        <p><strong>Standard Domain:</strong></p>
+        <code>https://imagedelivery.net/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;</code>
+        <p class="mt-1"><strong>Custom Domain:</strong></p>
+        <code>https://example.com/cdn-cgi/imagedelivery/&lt;ACCOUNT_HASH&gt;/&lt;IMAGE_ID&gt;/&lt;VARIANT_NAME&gt;</code>
+      </div>
+
+      <h4 class="subsection-heading">Dashboard Configuration</h4>
+      <div class="img-container">
+        <img
+          src="/demos/performance/img/cf-account-images.png"
+          alt="Cloudflare Images Dashboard Configuration"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <!-- Live Examples -->
+    <div class="card">
+      <h3>Live Examples</h3>
+
+      <h4 class="subsection-heading">Original Image (Public Variant)</h4>
+      <div class="img-container">
+        <img
+          src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
+          alt="Original demo image - public variant"
+          loading="lazy"
+        />
+      </div>
+      <code class="url-display">https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public</code>
+      <div class="btn-row mt-1">
+        <a
+          href="https://automatic-demo.com/cdn-cgi/imagedelivery/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/public"
+          target="_blank"
+          rel="noopener noreferrer external"
+          class="btn btn-primary"
+        >
+          View with Custom Domain
+        </a>
+      </div>
+
+      <div class="responsive-grid mt-2">
+        <div>
+          <h4 class="subsection-heading">Preset Variant Example</h4>
+          <div class="img-container">
+            <img
+              src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/contain"
+              alt="Preset variant example - contain fit"
+              loading="lazy"
+            />
+          </div>
+          <code class="url-display">.../contain</code>
+        </div>
+        <div>
+          <h4 class="subsection-heading">Flexible Variant Example</h4>
+          <div class="img-container">
+            <img
+              src="https://imagedelivery.net/2sbFr08YIps0arOTfjTqvQ/315f4dee-cba5-4b44-b12c-b77cccc79a00/w=250,quality=50,rotate=180"
+              alt="Flexible variant example - width 250, quality 50, rotated 180 degrees"
+              loading="lazy"
+            />
+          </div>
+          <code class="url-display">.../w=250,quality=50,rotate=180</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Transformations Section -->
+  <section aria-labelledby="transforms-heading">
+    <h2 id="transforms-heading">Image Transformations</h2>
+
+    <div class="card">
+      <p>
+        Transform and optimize images stored on external origin servers (Amazon S3, Cloudflare R2, etc.) without
+        migrating your storage.
+      </p>
+
+      <h3 class="subsection-heading">Three Transformation Methods</h3>
+
+      <div class="method-card method-secondary">
+        <h4>
+          1.{' '}
+          <a href="https://developers.cloudflare.com/images/transform-images/transform-via-url/" target="_blank" rel="noopener noreferrer external">
+            Transform via URL
+          </a>
+        </h4>
+        <p>Simple URL-based transformations. Add parameters to your image URLs for on-the-fly optimization.</p>
+        <ul class="feature-list">
+          <li>
+            Use <code class="inline-code">width=auto</code> for automatic sizing based on browser/device (Chromium only)
+          </li>
+          <li>
+            Combine with <code class="inline-code">srcset</code> for{' '}
+            <a href="https://developers.cloudflare.com/images/transform-images/make-responsive-images/" target="_blank" rel="noopener noreferrer external">
+              responsive images
+            </a>
+          </li>
+          <li>
+            Use <code class="inline-code">loading="lazy"</code> or{' '}
+            <a href="https://developers.cloudflare.com/images/tutorials/optimize-mobile-viewing/" target="_blank" rel="noopener noreferrer external">
+              eager loading
+            </a>
+            {' '}for mobile optimization
+          </li>
+        </ul>
+        <p class="mt-1"><strong>URL Format:</strong></p>
+        <code>https://&lt;ZONE&gt;/cdn-cgi/image/&lt;OPTIONS&gt;/&lt;SOURCE-IMAGE&gt;</code>
+      </div>
+
+      <div class="method-card method-primary">
+        <h4>
+          2.{' '}
+          <a href="https://developers.cloudflare.com/images/transform-images/transform-via-workers/" target="_blank" rel="noopener noreferrer external">
+            Transform via Workers
+          </a>
+        </h4>
+        <p>
+          Maximum flexibility with programmatic control. Enables complex transformations including{' '}
+          <a href="https://developers.cloudflare.com/images/transform-images/draw-overlays/" target="_blank" rel="noopener noreferrer external">
+            overlays and watermarks
+          </a>.
+        </p>
+        <ul class="feature-list">
+          <li>Authentication and access control (Basic Auth, headers, cookies)</li>
+          <li>Conditional logic (user-agent, HTTP method, request.cf properties)</li>
+          <li>Multiple transformations in sequence</li>
+          <li>API automation with tokens, SDKs, or Terraform</li>
+        </ul>
+      </div>
+
+      <div class="method-card method-secondary">
+        <h4>
+          3.{' '}
+          <a href="https://blog.cloudflare.com/improve-your-media-pipelines-with-the-images-binding-for-cloudflare-workers/" target="_blank" rel="noopener noreferrer external">
+            Transform via Images Binding
+          </a>
+        </h4>
+        <p>
+          Alternative to{' '}
+          <a href="https://developers.cloudflare.com/images/transform-images/transform-via-workers/#fetch-options" target="_blank" rel="noopener noreferrer external">
+            <em>fetch()</em>
+          </a>
+          {' '}for tighter integration with Cloudflare Developer Platform.
+        </p>
+        <p>Useful for multiple transformations and advanced workflows.</p>
+      </div>
+
+      <h4 class="subsection-heading">Code Examples</h4>
+      <div class="btn-row">
+        <a href="https://gist.github.com/DavidJKTofan/31a3b6164dfdc6961c6910f7da9b9bf3" target="_blank" rel="noopener noreferrer external" class="btn btn-secondary">
+          Resizing Example
+        </a>
+        <a href="https://gist.github.com/DavidJKTofan/405690937e86e517771f54c701ae48da" target="_blank" rel="noopener noreferrer external" class="btn btn-secondary">
+          Overlay Example
+        </a>
+        <a href="https://exif.automatic-demo.com/" target="_blank" rel="noopener noreferrer external" class="btn btn-primary">
+          EXIF Protector Demo
+        </a>
+      </div>
+    </div>
+
+    <!-- Interactive Demo -->
+    <div class="card">
+      <h3>Interactive Transformation Demo</h3>
+      <p>
+        <a href="/demos/performance/img/munich-original-img.jpeg" target="_blank" rel="noopener noreferrer">
+          Original Image
+        </a>: 3 MB, 2419w &times; 3226h px, 72 DPI
+      </p>
+
+      <form id="transformForm" class="transform-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="width">Width:</label>
+            <input type="number" id="width" name="width" min="1" max="3000" value="800" />
+          </div>
+          <div class="form-group">
+            <label for="height">Height:</label>
+            <input type="number" id="height" name="height" min="1" max="3000" placeholder="Auto" />
+          </div>
+          <div class="form-group">
+            <label for="quality">Quality (1-100):</label>
+            <input type="number" id="quality" name="quality" min="1" max="100" value="75" />
+          </div>
+          <div class="form-group">
+            <label for="blur">Blur (1-250):</label>
+            <input type="number" id="blur" name="blur" min="1" max="250" placeholder="None" />
+          </div>
+          <div class="form-group">
+            <label for="rotate">Rotate:</label>
+            <select id="rotate" name="rotate">
+              <option value="">None</option>
+              <option value="90">90&deg;</option>
+              <option value="180">180&deg;</option>
+              <option value="270">270&deg;</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fit">Fit:</label>
+            <select id="fit" name="fit">
+              <option value="scale-down">scale-down</option>
+              <option value="contain">contain</option>
+              <option value="cover">cover</option>
+              <option value="crop">crop</option>
+              <option value="pad">pad</option>
+            </select>
+          </div>
+        </div>
+        <p class="form-hint">
+          <a href="https://developers.cloudflare.com/images/transform-images/transform-via-url/#options" target="_blank" rel="noopener noreferrer external">
+            View all available options
+          </a>
+        </p>
+      </form>
+
+      <div class="mt-1">
+        <h4 class="subsection-heading">Transform URL:</h4>
+        <code id="transformUrl" class="transform-url-display"></code>
+        <div class="img-container mt-1">
+          <img
+            id="transformedImage"
+            src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg"
+            alt="Interactive transformation demo showing real-time parameter changes"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced Examples -->
+    <div class="card">
+      <h3>Advanced Transformation Examples</h3>
+      <div class="responsive-grid mt-1">
+        <div>
+          <h4 class="subsection-heading">Background Removal &amp; Zoom</h4>
+          <div class="img-container">
+            <img
+              src="https://automatic-demo.com/cdn-cgi/image/gravity=auto,zoom=0.5,segment=foreground,background=white/demos/performance/img/munich-original-img.jpeg"
+              alt="Advanced transformation - foreground segmentation with background removal and zoom"
+              loading="lazy"
+            />
+          </div>
+          <code class="url-display">gravity=auto,zoom=0.5,segment=foreground,background=white</code>
+          <div class="btn-row mt-1">
+            <a
+              href="https://automatic-demo.com/cdn-cgi/image/gravity=auto,zoom=0.5,segment=foreground,background=white/demos/performance/img/munich-original-img.jpeg"
+              target="_blank"
+              rel="noopener noreferrer external"
+              class="btn btn-secondary"
+            >
+              View Full Resolution
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 class="subsection-heading">How It Works</h4>
+          <ul class="feature-list">
+            <li><strong>gravity=auto:</strong> Automatically detects and focuses on the main subject</li>
+            <li><strong>zoom=0.5:</strong> Zooms into the subject at 50% magnification</li>
+            <li><strong>segment=foreground:</strong> Separates the foreground subject from background</li>
+            <li><strong>background=white:</strong> Replaces the background with white color</li>
+          </ul>
+          <p class="hint-text">
+            Perfect for product photography, profile pictures, and content featuring people or objects.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsive Images -->
+    <div class="card">
+      <h3>Responsive Images Demo</h3>
+      <p>
+        Uses <code class="inline-code">srcset</code> to serve different sizes based on viewport:
+      </p>
+      <div class="img-container mt-1">
+        <img
+          srcset="/cdn-cgi/image/width=320,quality=75/demos/performance/img/munich-original-img.jpeg 320w,
+                  /cdn-cgi/image/width=480,quality=75/demos/performance/img/munich-original-img.jpeg 480w,
+                  /cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg 800w,
+                  /cdn-cgi/image/width=1200,quality=75/demos/performance/img/munich-original-img.jpeg 1200w"
+          sizes="(max-width: 320px) 280px, (max-width: 480px) 440px, (max-width: 800px) 760px, 1000px"
+          src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg"
+          alt="Responsive image demo automatically adjusting to viewport size"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <!-- Lazy Loading -->
+    <div class="card">
+      <h3>Lazy Loading Demo</h3>
+      <p>
+        Images load only when entering viewport using <code class="inline-code">loading="lazy"</code>:
+      </p>
+      <div class="lazy-grid mt-1">
+        <div class="img-container">
+          <img loading="lazy" src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg" alt="Lazy loaded image example 1" />
+        </div>
+        <div class="img-container">
+          <img loading="lazy" src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg" alt="Lazy loaded image example 2" />
+        </div>
+        <div class="img-container">
+          <img loading="lazy" src="/cdn-cgi/image/width=800,quality=75/demos/performance/img/munich-original-img.jpeg" alt="Lazy loaded image example 3" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Considerations -->
+  <section class="card" aria-labelledby="technical-heading">
+    <h2 id="technical-heading">Technical Considerations</h2>
+
+    <h3 class="subsection-heading">Configuration Requirements</h3>
+    <ul class="feature-list">
+      <li><strong>Custom Domains/Routes:</strong> Image Transformations require Workers Custom Domains or Routes</li>
+      <li>
+        <strong>Polish:</strong> Disable{' '}
+        <a href="https://developers.cloudflare.com/images/polish/" target="_blank" rel="noopener noreferrer external">Polish</a>
+        {' '}for Zones using Image Transformations, or use{' '}
+        <a href="https://developers.cloudflare.com/rules/configuration-rules/" target="_blank" rel="noopener noreferrer external">Configuration Rules</a>
+        {' '}for selective disabling
+      </li>
+      <li><strong>Zone Requirement:</strong> Transformations only apply to customer Zones, not Cloudflare domains (e.g., workers.dev)</li>
+      <li><strong>Encryption:</strong> Set encryption mode to Full (minimum)</li>
+    </ul>
+
+    <h3 class="subsection-heading">Caching &amp; Performance</h3>
+    <ul class="feature-list">
+      <li>
+        Images{' '}
+        <a href="https://developers.cloudflare.com/cache/concepts/default-cache-behavior/" target="_blank" rel="noopener noreferrer external">cache by default</a>
+        {' '}or via Cache Rules/Cache-Control headers
+      </li>
+      <li>
+        Review{' '}
+        <a href="https://developers.cloudflare.com/cache/how-to/purge-cache/" target="_blank" rel="noopener noreferrer external">purging options</a>
+        {' '}when updates are needed
+      </li>
+      <li>
+        Check{' '}
+        <a href="https://developers.cloudflare.com/images/transform-images/#supported-formats-and-limitations" target="_blank" rel="noopener noreferrer external">
+          supported formats and limitations
+        </a>
+      </li>
+    </ul>
+
+    <h3 class="subsection-heading">Alternative Storage Options</h3>
+    <p>
+      For other hosting options beyond Cloudflare Images, explore{' '}
+      <a href="https://developers.cloudflare.com/workers/platform/storage-options/" target="_blank" rel="noopener noreferrer external">
+        Cloudflare's storage solutions
+      </a>
+      {' '}including R2 Object Storage.
+    </p>
+  </section>
+
+  <!-- Additional Resources -->
+  <section class="card resources-card" aria-labelledby="resources-heading">
+    <h2 id="resources-heading">Additional Resources</h2>
+    <ul class="feature-list">
+      <li><a href="https://developers.cloudflare.com/images/" target="_blank" rel="noopener noreferrer external">Cloudflare Images Documentation</a></li>
+      <li><a href="https://developers.cloudflare.com/workers/examples/images-workers/" target="_blank" rel="noopener noreferrer external">Workers Example: Custom Domain with Images</a></li>
+      <li><a href="https://developers.cloudflare.com/reference-architecture/diagrams/storage/storing-user-generated-content/" target="_blank" rel="noopener noreferrer external">Storing user generated content</a></li>
+      <li><a href="https://developers.cloudflare.com/reference-architecture/diagrams/content-delivery/optimizing-image-delivery-with-cloudflare-image-resizing-and-r2/" target="_blank" rel="noopener noreferrer external">Optimizing image delivery with Cloudflare image resizing and R2</a></li>
+      <li><a href="https://developers.cloudflare.com/reference-architecture/diagrams/serverless/serverless-image-content-management/" target="_blank" rel="noopener noreferrer external">Serverless image content management</a></li>
+    </ul>
+  </section>
+
+</DemoLayout>
+
+<style>
+  /* ===== Section spacing ===== */
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section > h2 {
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ===== Card ===== */
+  .card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card h2, .card h3 {
+    color: var(--secondary);
+  }
+
+  .card p, section > p {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  .resources-card {
+    background-color: rgba(0, 81, 195, 0.05);
+    border-left: 4px solid var(--secondary);
+  }
+
+  /* ===== Solution Grid ===== */
+  .solution-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 600px) {
+    .solution-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .solution-card {
+    padding: 1rem;
+    border-radius: 6px;
+  }
+
+  .solution-card h3 { margin-top: 0; color: var(--secondary); }
+
+  .solution-secondary {
+    background: rgba(0, 81, 195, 0.05);
+    border-left: 4px solid var(--secondary);
+  }
+
+  .solution-primary {
+    background: rgba(246, 130, 31, 0.05);
+    border-left: 4px solid var(--primary);
+  }
+
+  .use-case {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 0.5rem !important;
+  }
+
+  /* ===== Method cards ===== */
+  .method-card {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 6px;
+  }
+
+  .method-card h4 { margin-top: 0; color: var(--secondary); }
+
+  .method-secondary {
+    background: rgba(0, 81, 195, 0.05);
+    border-left: 4px solid var(--secondary);
+  }
+
+  .method-primary {
+    background: rgba(246, 130, 31, 0.05);
+    border-left: 4px solid var(--primary);
+  }
+
+  /* ===== Subsection headings ===== */
+  .subsection-heading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  /* ===== Feature list ===== */
+  .feature-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    line-height: 1.7;
+  }
+
+  /* ===== URL format block ===== */
+  .url-format-block {
+    background: var(--code-bg);
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 0.75rem 0;
+  }
+
+  .url-format-block p { margin-bottom: 0.4rem !important; }
+
+  .url-format-block code {
+    display: block;
+    margin-bottom: 0;
+    word-break: break-all;
+  }
+
+  /* ===== URL display code ===== */
+  .url-display {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    word-break: break-all;
+  }
+
+  /* ===== Image Container ===== */
+  .img-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--secondary);
+  }
+
+  .img-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ===== Responsive Grid ===== */
+  .responsive-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 600px) {
+    .responsive-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ===== Lazy Grid ===== */
+  .lazy-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* ===== Transform form ===== */
+  .transform-form {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px var(--focus);
+  }
+
+  .form-hint {
+    font-size: 0.9rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0 !important;
+  }
+
+  /* ===== Transform URL display ===== */
+  .transform-url-display {
+    display: block;
+    padding: 0.75rem;
+    background: var(--code-bg);
+    border-radius: 4px;
+    word-break: break-all;
+    font-size: 0.85rem;
+  }
+
+  /* ===== Inline code ===== */
+  .inline-code {
+    display: inline;
+    font-size: 0.9em;
+    padding: 0.1rem 0.35rem;
+    background: var(--code-bg);
+    border-radius: 3px;
+    color: #d63384;
+  }
+
+  /* ===== Hint text ===== */
+  .hint-text {
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 1rem;
+  }
+
+  /* ===== Button Row ===== */
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    border-bottom: none !important;
+    min-width: 160px;
+    text-align: center;
+  }
+
+  .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    border-bottom: none !important;
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+  }
+
+  /* ===== Utility ===== */
+  .mt-1 { margin-top: 1rem; }
+  .mt-2 { margin-top: 1.5rem; }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 600px) {
+    .btn-row { flex-direction: column; }
+    .btn { min-width: unset; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('transformForm') as HTMLFormElement | null;
+  const transformUrl = document.getElementById('transformUrl');
+  const transformedImage = document.getElementById('transformedImage') as HTMLImageElement | null;
+  const baseImagePath = '/demos/performance/img/munich-original-img.jpeg';
+
+  function updateImage() {
+    if (!form || !transformUrl || !transformedImage) return;
+    const formData = new FormData(form);
+    const params: string[] = [];
+
+    for (const [key, value] of formData.entries()) {
+      if (value) params.push(`${key}=${value}`);
+    }
+
+    const transformString = params.join(',');
+    const fullUrl = `/cdn-cgi/image/${transformString}${baseImagePath}`;
+    transformUrl.textContent = fullUrl;
+    transformedImage.src = fullUrl;
+  }
+
+  form?.querySelectorAll('input, select').forEach((input) => {
+    input.addEventListener('change', updateImage);
+    input.addEventListener('input', updateImage);
+  });
+
+  updateImage();
+</script>
