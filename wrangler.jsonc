@@ -1,20 +1,15 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "cf-demo-home",
-	"main": "@astrojs/cloudflare/entrypoints/server",
+	// Entry point: the compiled Worker output from `astro build`
+	// Use `@astrojs/cloudflare/entrypoints/server` only for `astro dev` (Vite resolves it from node_modules).
+	// For `wrangler deploy`, point to the actual built file.
+	"main": "dist/server/entry.mjs",
 	"compatibility_date": "2026-03-29",
 	"compatibility_flags": [
 		"nodejs_compat",
 		"global_fetch_strictly_public"
 	],
-	// Run `astro build` automatically before every `wrangler deploy` or `wrangler dev`
-	"build": {
-		"command": "npm run build",
-		"watch_dir": [
-			"src",
-			"public"
-		]
-	},
 	// Disable the workers.dev subdomain — serve only via the custom domain
 	"workers_dev": false,
 	// Disable per-deployment preview URLs
@@ -27,7 +22,8 @@
 		}
 	],
 	"assets": {
-		"directory": "./dist",
+		// astro build outputs static assets to dist/client (server Worker to dist/server)
+		"directory": "./dist/client",
 		"binding": "ASSETS",
 		// Return the nearest 404.html for unmatched static-asset routes
 		"not_found_handling": "404-page"
