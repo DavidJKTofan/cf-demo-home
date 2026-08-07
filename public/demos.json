@@ -177,5 +177,37 @@
       "Zero Trust",
       "SASE"
     ]
+  },
+  {
+    "id": 16,
+    "title": "AI Gateway Demo",
+    "description": "An authenticated Cloudflare Workers demo showing how AI Gateway adds observability, data protection, content safety, dynamic routing, and identity-aware controls to Workers AI requests.",
+    "url": "https://ai.automatic-demo.com/",
+    "category": "Developer Platform",
+    "labels": [
+      "AI Gateway",
+      "Workers AI",
+      "Observability",
+      "DLP",
+      "Guardrails",
+      "Dynamic Routing",
+      "Identity"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "MCP Server Portal Demo",
+    "description": "A guided, security-first presenter console for demonstrating how Cloudflare governs enterprise Model Context Protocol (MCP) usage from identity to data protection.",
+    "url": "https://mcp-server-portal.automatic-demo.com/",
+    "category": "Developer Platform",
+    "labels": [
+      "MCP",
+      "Server Portal",
+      "Access",
+      "OAuth",
+      "Gateway",
+      "DLP",
+      "AI"
+    ]
   }
 ]
