@@ -209,5 +209,17 @@
       "DLP",
       "AI"
     ]
+  },
+  {
+    "id": 18,
+    "title": "Client-Side Security",
+    "description": "See how Cloudflare Client-Side Security (formerly Page Shield) monitors browser-side scripts and a safe, synthetic cross-zone test signal.",
+    "url": "demos/security/client-side-security",
+    "category": "Application Security",
+    "labels": [
+      "Client-Side Security",
+      "Page Shield",
+      "CSP"
+    ]
   }
 ]

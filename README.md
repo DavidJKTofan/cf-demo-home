@@ -1,6 +1,6 @@
 # CF Demo Home
 
-Welcome to my personal home of Cloudflare solution demos, built with on Cloudflare Workers and Astro.
+Welcome to my personal home of Cloudflare solution demos, built with Astro and Cloudflare Workers.
 
 This repository is a collection of interactive demos and examples showcasing the capabilities and use cases of Cloudflare solutions — from application security and performance to the developer platform.
 
@@ -10,19 +10,40 @@ All demos are listed in [`public/demos.json`](/public/demos.json). Demos may lin
 
 | Category | Demo |
 | :--- | :--- |
-| Application Security | WAF, SSL/TLS, DNSSEC |
+| Application Security | Client-Side Security, WAF, SSL/TLS, DNSSEC |
 | Application Performance | Image Optimization, Waiting Room |
 | Developer Platform | Workers, R2 Object Storage, Stream |
 | Platform | Resilience Matrix, Turnstile, DLS, Onboarding Guide, and more |
 
 ## Architecture
 
-This project is a server-side rendered (SSR) Astro application deployed on **Cloudflare Workers** with **Static Assets**.
+This Astro application is deployed on **Cloudflare Workers** with **Static Assets**. Prerendered pages and other files are served as static assets; dynamic Astro endpoints run in the Worker.
 
 - **Framework**: [Astro](https://astro.build) with the [`@astrojs/cloudflare`](https://docs.astro.build/en/guides/integrations-guide/cloudflare/) adapter
-- **Runtime**: Cloudflare Workers (SSR entrypoint via `@astrojs/cloudflare/entrypoints/server`)
-- **Static Assets**: Served via the `ASSETS` binding with `not_found_handling: "404-page"`
+- **Runtime**: Cloudflare Workers (entrypoint via `@astrojs/cloudflare/entrypoints/server`)
+- **Static Assets**: Served through the `ASSETS` binding; unmatched asset requests use the nearest `404.html`
+- **Client-Side Security demo**: Uses the `BROWSER` Browser Run binding and a `BROWSER_RUN_LIMITER` rate-limit binding
 - **Observability**: Workers Logs enabled with 100% head sampling rate
+
+## Client-Side Security demo
+
+The [Client-Side Security demo](https://automatic-demo.com/demos/security/client-side-security) offers a repeatable Browser Run sequence: baseline script, changed script, and an optional Cloudflare test script. The changed script uses only fixed synthetic form values. Its server-side Browser Run endpoint is `src/pages/api/client-side-security/browser-run.ts`; the stable test-script endpoint is `src/pages/demos/security/client-side-security-change-test.js.ts`.
+
+The run controls are production-origin-only. Browser Run Quick Actions require remote mode when used with `wrangler dev`; this project does not enable a remote Browser Run binding for local development.
+
+If a Precursor Configuration Rule challenges requests on `automatic-demo.com`, excluding only the demo document is not enough for the interactive flow. Also exempt the Browser Run API, the dynamic test-script endpoint, and the built CSS under `/_astro/`. For example:
+
+```text
+(http.host eq "automatic-demo.com" and not (
+  http.request.uri.path in {
+    "/demos/security/client-side-security"
+    "/demos/security/client-side-security/"
+    "/api/client-side-security/browser-run"
+    "/demos/security/client-side-security-change-test.js"
+  }
+  or starts_with(http.request.uri.path, "/_astro/")
+))
+```
 
 ## Project Layout
 
@@ -46,15 +67,21 @@ This project is a server-side rendered (SSR) Astro application deployed on **Clo
 │   ├── layouts/
 │   │   ├── Layout.astro    # Base HTML layout (meta tags, global CSS, theme)
 │   │   └── DemoLayout.astro # Layout for individual demo pages (nav, header, footer)
+│   ├── env.d.ts             # Astro/Cloudflare runtime type augmentation
 │   └── pages/
 │       ├── index.astro                          # Homepage — filterable demo grid
 │       ├── 404.astro                            # 404 Not Found error page
+│       ├── api/
+│       │   └── client-side-security/
+│       │       └── browser-run.ts                # Same-origin Browser Run API
 │       └── demos/
 │           ├── performance/
 │           │   ├── dnssec.astro
 │           │   ├── image-optimization.astro
 │           │   └── waiting-room.astro
 │           ├── security/
+│           │   ├── client-side-security.astro
+│           │   ├── client-side-security-change-test.js.ts
 │           │   ├── ssl-tls.astro
 │           │   └── waf.astro
 │           └── serverless/
@@ -62,8 +89,11 @@ This project is a server-side rendered (SSR) Astro application deployed on **Clo
 │               ├── stream.astro
 │               └── workers.astro
 ├── astro.config.mjs
-├── wrangler.jsonc          # Cloudflare Workers configuration
-└── package.json
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── worker-configuration.d.ts # Generated Cloudflare binding/runtime types
+└── wrangler.jsonc          # Cloudflare Workers configuration
 ```
 
 ## Commands
@@ -72,17 +102,17 @@ All commands run from the project root:
 
 | Command | Action |
 | :--- | :--- |
-| `npm install` | Install dependencies |
-| `npm run dev` | Start Astro dev server at `localhost:4321` (fast, no Workers runtime) |
+| `npm install` | Install dependencies, including the project-local Wrangler CLI |
+| `npm run dev` | Start Astro's development server at `localhost:4321` |
 | `npm run build` | Build Astro project for production to `./dist/` |
 | `npm run preview` | Preview the production build locally |
-| `npx wrangler check` | Validate `wrangler.jsonc` before deploying |
-| `npx wrangler types` | Regenerate `worker-configuration.d.ts` from `wrangler.jsonc` |
-| `npx wrangler dev` | Run locally with the Workers runtime (auto-runs `npm run build` first) |
-| `npx wrangler deploy` | Build and deploy to Cloudflare Workers (auto-runs `npm run build` first) |
-| `npx wrangler deploy --dry-run` | Validate the deploy bundle without publishing |
+| `npm install -D wrangler@latest` | Update the project-local Wrangler CLI to the latest release |
+| `npm run generate-types` | Regenerate `worker-configuration.d.ts` from `wrangler.jsonc` |
+| `npm run build && npx wrangler dev` | Build, then run the built Worker locally |
+| `npm run build && npx wrangler deploy --dry-run` | Build and validate the deployment bundle without publishing |
+| `npm run deploy` | Build and deploy to Cloudflare Workers |
 | `npx wrangler tail` | Stream live production logs |
-| `npx wrangler rollback` | Roll back to the previous deployed version |
+| `npx wrangler rollback [VERSION_ID]` | Roll back to the previous or specified deployed version |
 
 ## Contributing
 

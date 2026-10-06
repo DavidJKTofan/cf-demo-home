@@ -1,0 +1,800 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+---
+
+<DemoLayout
+  title="Client-Side Security"
+  description="See how Cloudflare Client-Side Security (formerly Page Shield) monitors browser-side scripts and the connections they make."
+  category="Application Security"
+  labels={["Client-Side Security", "Page Shield", "CSP"]}
+  lastUpdated="October 2026"
+>
+  <section class="card overview-card" aria-labelledby="overview-heading">
+    <div class="overview-copy">
+      <p class="eyebrow">Browser-side visibility</p>
+      <h2 id="overview-heading">See what your page trusts</h2>
+      <p>
+        Third-party JavaScript runs in a visitor's browser with access to the page. Client-Side Security
+        (formerly Page Shield) helps you inventory those scripts and, depending on your plan, their
+        outbound connections and detected changes.
+      </p>
+      <p>
+        Resource monitoring uses browser-native Content Security Policy reports. It is report-only:
+        this demo's monitoring setup does not block the page or its test request.
+      </p>
+    </div>
+    <div class="overview-stats" aria-label="What Client-Side Security can monitor">
+      <div class="stat-row">
+        <span class="stat-icon" aria-hidden="true">01</span>
+        <span><strong>Scripts</strong><small>What the browser loads</small></span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-icon" aria-hidden="true">02</span>
+        <span><strong>Connections</strong><small>Where scripts send requests</small></span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-icon" aria-hidden="true">03</span>
+        <span><strong>Changes</strong><small>New or modified resources</small></span>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="test-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Live browser test</p>
+        <h2 id="test-heading">A skimmer simulation—with fake data</h2>
+      </div>
+      <span class="test-badge"><span class="pulse-dot"></span> Stable script URL · 2 versions</span>
+    </div>
+
+    <div class="test-grid">
+      <article class="card checkout-card" aria-labelledby="checkout-heading">
+        <div class="checkout-topline">
+          <span class="checkout-mark" aria-hidden="true">AD</span>
+          <span>DEMO CHECKOUT <span class="checkout-lock" aria-hidden="true">◆</span></span>
+        </div>
+        <h3 id="checkout-heading">Payment details</h3>
+        <p class="checkout-note">This mock form contains fixed, non-real values. It cannot be submitted.</p>
+
+        <div class="field-group">
+          <label for="demo-name">Cardholder</label>
+          <input id="demo-name" name="cardholder" type="text" value="Demo Visitor" readonly autocomplete="off" />
+        </div>
+        <div class="field-group">
+          <label for="demo-card">Card number</label>
+          <input id="demo-card" name="cardnumber" type="text" value="0000 0000 0000 0000" readonly autocomplete="off" />
+        </div>
+        <div class="field-pair">
+          <div class="field-group">
+            <label for="demo-expiry">Expiry</label>
+            <input id="demo-expiry" name="expiry" type="text" value="12 / 30" readonly autocomplete="off" />
+          </div>
+          <div class="field-group">
+            <label for="demo-email">Email</label>
+            <input id="demo-email" name="email" type="text" value="demo@example.invalid" readonly autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="signal-status" role="status" aria-live="polite" aria-atomic="true">
+          <span class="status-light" aria-hidden="true"></span>
+          <span id="signal-status">Loading the baseline test script…</span>
+        </div>
+      </article>
+
+      <article class="card explain-card" aria-labelledby="signal-heading">
+        <div class="signal-label"><span aria-hidden="true">↗</span> TEST SIGNAL</div>
+        <h3 id="signal-heading">What the page does</h3>
+        <ol class="signal-steps">
+          <li>
+            <span class="step-index">1</span>
+            <span><strong>One stable script URL</strong><small>Baseline and changed modes return different code at the same URL.</small></span>
+          </li>
+          <li>
+            <span class="step-index">2</span>
+            <span><strong>Changed mode reads mock fields</strong><small>It sends only the read-only, synthetic values to <code>cf-testing.com</code>.</small></span>
+          </li>
+          <li>
+            <span class="step-index">3</span>
+            <span><strong>Optional malicious test asset</strong><small>A Cloudflare-hosted skimmer sample loads only in the explicit test mode.</small></span>
+          </li>
+        </ol>
+        <p class="synthetic-note">
+          <span aria-hidden="true">!</span>
+        The fields are read-only placeholders. No visitor-entered data is accepted or sent, and the CSP rule stays in Log mode.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="card browser-run-panel" aria-labelledby="browser-run-heading">
+    <div class="browser-run-header">
+      <div>
+        <p class="eyebrow">Repeatable signal run</p>
+        <h2 id="browser-run-heading">Run it with Cloudflare Browser Run</h2>
+        <p>
+          One click runs the baseline and changed versions in managed Chrome, using the same script URL.
+          The optional sample adds a Cloudflare-hosted malicious-script test.
+        </p>
+      </div>
+      <span class="browser-run-chip"><span class="pulse-dot"></span> Quick Actions · 1 per 10 sec</span>
+    </div>
+
+    <div class="browser-run-grid">
+      <div>
+        <ol class="browser-run-steps">
+          <li><span>01</span><p><strong>Baseline</strong><small>Registers the safe first version.</small></p></li>
+          <li><span>02</span><p><strong>Changed</strong><small>Loads changed code and sends fixed synthetic values to <code>cf-testing.com</code>.</small></p></li>
+          <li><span>03</span><p><strong>Optional sample</strong><small>Loads Cloudflare's test script to exercise malicious-resource detection.</small></p></li>
+        </ol>
+        <label class="browser-run-option" for="include-malicious-sample">
+          <input id="include-malicious-sample" type="checkbox" />
+          <span>Include the optional malicious-script sample</span>
+        </label>
+      </div>
+
+      <div class="browser-run-action">
+        <button id="browser-run-start" class="btn btn-primary" type="button">
+          Run baseline → changed <span aria-hidden="true">↗</span>
+        </button>
+        <p id="browser-run-status" role="status" aria-live="polite" aria-atomic="true">
+          Ready. Each Browser Run page visit is rate-limited to once every 10 seconds.
+        </p>
+      </div>
+    </div>
+
+    <ol id="browser-run-results" class="browser-run-results" aria-label="Browser Run results" aria-live="polite"></ol>
+
+    <details class="alert-expectations">
+      <summary>What the alerts should show</summary>
+      <p>
+        New resources and new hosts alert on first observation. Code-change detection compares script structure
+        over time, while malicious-script and malicious-domain alerts depend on Cloudflare classification. These
+        signals are not guaranteed to send a notification on every repeat run. Browser Run is automated Chrome;
+        Cloudflare may omit the report-only CSP header for automated traffic, and Chrome can batch reports.
+      </p>
+      <p class="alert-destinations">Configured for this zone: new resources, new hosts, code changes, malicious scripts, and malicious domains.</p>
+    </details>
+  </section>
+
+  <section class="card presenter-card" aria-labelledby="present-heading">
+    <div class="presenter-copy">
+      <p class="eyebrow">Presenter flow</p>
+      <h2 id="present-heading">Manual browser fallback</h2>
+      <ol class="presenter-steps">
+        <li><span>1</span><p>Use Firefox if Browser Run does not receive the report-only CSP header.</p></li>
+        <li><span>2</span><p>Open baseline first, then the changed URL after the first version appears in Client-Side Resources.</p></li>
+        <li><span>3</span><p>Load the Cloudflare test payload only when you want to exercise malicious-script detection.</p></li>
+        <li><span>4</span><p>Review scripts, connections, alert history, and the Log-mode rule.</p></li>
+      </ol>
+      <p class="browser-tip">
+        <strong>Note:</strong> allow some time for Cloudflare to process reports and alert conditions. The run
+        panel reports whether Browser Run saw the CSP header, not whether an alert was delivered.
+      </p>
+    </div>
+    <div class="presenter-actions">
+      <a class="btn btn-primary" href="https://automatic-demo.com/demos/security/client-side-security?pageshieldforcecsp&amp;variant=baseline">
+        1. Load baseline <span aria-hidden="true">↗</span>
+      </a>
+      <a class="btn btn-secondary" href="https://automatic-demo.com/demos/security/client-side-security?pageshieldforcecsp&amp;variant=changed">
+        2. Trigger script change <span aria-hidden="true">↗</span>
+      </a>
+      <a class="btn btn-secondary" href="https://automatic-demo.com/demos/security/client-side-security?pageshieldforcecsp&amp;variant=changed&amp;malicious=1">
+        3. Add malicious test signal <span aria-hidden="true">↗</span>
+      </a>
+      <a class="btn btn-secondary" href="https://dash.cloudflare.com/?to=/:account/:zone/security/web-assets/monitor/script" target="_blank" rel="noopener noreferrer">
+        View client-side resources <span aria-hidden="true">↗</span>
+      </a>
+      <a class="text-link" href="https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules" target="_blank" rel="noopener noreferrer">
+        Review content security rules <span aria-hidden="true">↗</span>
+      </a>
+      <a class="text-link" href="https://dash.cloudflare.com/?to=/:account/notifications" target="_blank" rel="noopener noreferrer">
+        Review alert policies and history <span aria-hidden="true">↗</span>
+      </a>
+      <a class="text-link" href="https://dash.cloudflare.com/?to=/:account/workers/browser-run" target="_blank" rel="noopener noreferrer">
+        Review Browser Run usage <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <p class="plan-note">
+    Script monitoring is available on all plans. Code-change and malicious-script classification require
+    Client-Side Security Advanced; detection results can vary. Content security rules also require Advanced.
+  </p>
+</DemoLayout>
+
+<style>
+  section { margin-bottom: 2.5rem; }
+
+  section > h2,
+  .section-heading h2 {
+    margin: 0;
+    color: var(--secondary);
+    font-size: clamp(1.2rem, 3vw, 1.55rem);
+    line-height: 1.25;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: clamp(1.15rem, 3vw, 1.75rem);
+  }
+
+  .overview-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(230px, 0.8fr);
+    gap: clamp(1.5rem, 5vw, 4rem);
+    align-items: center;
+    border-top: 3px solid var(--primary);
+  }
+
+  .eyebrow {
+    margin: 0 0 0.55rem;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .overview-copy h2,
+  .presenter-copy h2 {
+    margin: 0 0 0.8rem;
+    color: var(--secondary);
+    font-size: clamp(1.35rem, 3.4vw, 1.85rem);
+    letter-spacing: -0.025em;
+  }
+
+  .overview-copy p:not(.eyebrow) {
+    max-width: 68ch;
+    margin: 0.7rem 0 0;
+    line-height: 1.7;
+  }
+
+  .overview-stats {
+    display: grid;
+    gap: 0.8rem;
+    padding-left: clamp(0rem, 2vw, 1.5rem);
+    border-left: 1px solid var(--border);
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .stat-icon,
+  .step-index {
+    display: grid;
+    flex: 0 0 2rem;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid rgba(246, 130, 31, 0.35);
+    border-radius: 50%;
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 800;
+  }
+
+  .stat-row strong,
+  .stat-row small,
+  .signal-steps strong,
+  .signal-steps small { display: block; }
+
+  .stat-row strong { font-size: 0.92rem; }
+  .stat-row small { margin-top: 0.16rem; color: var(--text-muted, #858b94); font-size: 0.8rem; }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .test-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex: 0 0 auto;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text);
+    font-size: 0.75rem;
+    font-weight: 650;
+  }
+
+  .pulse-dot,
+  .status-light {
+    width: 0.48rem;
+    height: 0.48rem;
+    border-radius: 50%;
+    background: #42a66c;
+    box-shadow: 0 0 0 3px rgba(66, 166, 108, 0.14);
+  }
+
+  .test-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 1rem;
+  }
+
+  .checkout-card { padding: 1.4rem; }
+
+  .checkout-topline {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-muted, #858b94);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+
+  .checkout-mark {
+    display: grid;
+    width: 1.7rem;
+    height: 1.7rem;
+    place-items: center;
+    border-radius: 5px;
+    background: var(--primary);
+    color: white;
+    font-size: 0.68rem;
+    letter-spacing: -0.04em;
+  }
+
+  .checkout-lock { margin-left: 0.2rem; color: #42a66c; font-size: 0.55rem; }
+  .checkout-card h3, .explain-card h3 { margin: 1rem 0 0.25rem; color: var(--secondary); font-size: 1.15rem; }
+  .checkout-note { margin: 0 0 1.15rem; color: var(--text-muted, #858b94); font-size: 0.82rem; line-height: 1.5; }
+
+  .field-group { display: grid; gap: 0.35rem; min-width: 0; margin-top: 0.75rem; }
+  .field-group label { color: var(--text-muted, #858b94); font-size: 0.72rem; font-weight: 650; }
+  .field-group input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 0.62rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.84rem;
+  }
+
+  .field-pair { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 0.75rem; }
+
+  .signal-status {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.8rem;
+    margin-top: 1.15rem;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .status-light { flex: 0 0 auto; }
+
+  .explain-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(145deg, var(--card), var(--hover));
+  }
+
+  .signal-label { color: var(--primary); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; }
+  .signal-label span { margin-right: 0.35rem; font-size: 1rem; }
+  .explain-card h3 { margin-top: 0.45rem; }
+
+  .signal-steps,
+  .presenter-steps { display: grid; gap: 0.85rem; margin: 1.2rem 0; padding: 0; list-style: none; }
+
+  .signal-steps li { display: flex; align-items: flex-start; gap: 0.7rem; }
+  .step-index { flex-basis: 1.65rem; width: 1.65rem; height: 1.65rem; font-size: 0.68rem; }
+  .signal-steps strong { padding-top: 0.05rem; font-size: 0.85rem; }
+  .signal-steps small { margin-top: 0.22rem; color: var(--text-muted, #858b94); font-size: 0.77rem; line-height: 1.5; }
+
+  code {
+    padding: 0.08rem 0.3rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+  }
+
+  .synthetic-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin: 0;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted, #858b94);
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .synthetic-note span { color: var(--primary); font-weight: 900; }
+
+  .presenter-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.8fr);
+    gap: clamp(1.5rem, 4vw, 3.25rem);
+    align-items: center;
+  }
+
+  .presenter-copy h2 { margin-bottom: 0; }
+  .presenter-steps { gap: 0.65rem; margin: 1.1rem 0; }
+  .presenter-steps li { display: flex; align-items: flex-start; gap: 0.65rem; }
+  .presenter-steps li > span {
+    display: grid;
+    flex: 0 0 1.4rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--secondary);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 800;
+  }
+  .presenter-steps p { margin: 0.1rem 0 0; font-size: 0.84rem; line-height: 1.55; }
+
+  .browser-tip {
+    margin: 1rem 0 0;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--primary);
+    color: var(--text-muted, #858b94);
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+
+  .presenter-actions { display: grid; gap: 0.65rem; }
+  .btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.72rem 0.9rem;
+    border: 0;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.83rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn:hover { transform: translateY(-1px); opacity: 0.92; border-bottom: 0; }
+  .btn-primary { background: var(--primary); }
+  .btn-secondary { background: var(--secondary); }
+
+  .text-link {
+    padding: 0.4rem 0.15rem;
+    color: var(--secondary);
+    font-size: 0.81rem;
+    font-weight: 650;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .plan-note {
+    max-width: 80ch;
+    margin: -1.35rem 0 0;
+    color: var(--text-muted, #858b94);
+    font-size: 0.76rem;
+    line-height: 1.6;
+  }
+
+  .browser-run-panel {
+    margin: 0 0 2.5rem;
+    border-top: 3px solid var(--secondary);
+    background:
+      radial-gradient(circle at 96% 2%, rgba(246, 130, 31, 0.14), transparent 28%),
+      var(--card);
+  }
+
+  .browser-run-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .browser-run-header h2 {
+    margin: 0;
+    color: var(--secondary);
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    letter-spacing: -0.025em;
+  }
+
+  .browser-run-header > div > p:last-child {
+    max-width: 68ch;
+    margin: 0.6rem 0 0;
+    color: var(--text-muted, #858b94);
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+
+  .browser-run-chip {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .browser-run-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 0.62fr);
+    gap: clamp(1rem, 4vw, 2.5rem);
+    align-items: center;
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .browser-run-steps {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .browser-run-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .browser-run-steps li > span {
+    display: grid;
+    flex: 0 0 2rem;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid rgba(246, 130, 31, 0.35);
+    border-radius: 50%;
+    color: var(--primary);
+    font-size: 0.64rem;
+    font-weight: 800;
+  }
+
+  .browser-run-steps p { margin: 0; }
+  .browser-run-steps strong { display: block; color: var(--secondary); font-size: 0.86rem; }
+  .browser-run-steps small { display: block; margin-top: 0.2rem; color: var(--text-muted, #858b94); font-size: 0.78rem; line-height: 1.45; }
+
+  .browser-run-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin-top: 1rem;
+    color: var(--text);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .browser-run-option input { margin: 0.16rem 0 0; accent-color: var(--primary); }
+
+  .browser-run-action {
+    display: grid;
+    gap: 0.75rem;
+    align-content: center;
+    min-height: 100%;
+    padding-left: clamp(0rem, 2vw, 1.5rem);
+    border-left: 1px solid var(--border);
+  }
+
+  .browser-run-action .btn { width: 100%; cursor: pointer; font: inherit; }
+  .browser-run-action .btn:disabled { cursor: wait; opacity: 0.58; transform: none; }
+
+  #browser-run-status {
+    min-height: 2.6em;
+    margin: 0;
+    color: var(--text-muted, #858b94);
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .browser-run-results {
+    display: grid;
+    gap: 0.55rem;
+    margin: 1.15rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .browser-run-results:empty { display: none; }
+
+  .browser-run-result {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem;
+    align-items: start;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .browser-run-result::before {
+    content: "✓";
+    color: #42a66c;
+    font-weight: 900;
+  }
+
+  .browser-run-result[data-state="error"]::before { content: "!"; color: var(--primary); }
+  .browser-run-result strong { display: block; color: var(--secondary); }
+  .browser-run-result span { display: block; color: var(--text-muted, #858b94); }
+
+  .alert-expectations {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted, #858b94);
+    font-size: 0.76rem;
+    line-height: 1.6;
+  }
+
+  .alert-expectations summary { width: fit-content; color: var(--secondary); font-weight: 700; cursor: pointer; }
+  .alert-expectations p { max-width: 90ch; margin: 0.7rem 0 0; }
+  .alert-expectations .alert-destinations { color: var(--text); }
+
+  @media (max-width: 760px) {
+    .overview-card, .test-grid, .presenter-card { grid-template-columns: 1fr; }
+    .overview-stats { padding: 1rem 0 0; border-top: 1px solid var(--border); border-left: 0; }
+    .section-heading { align-items: flex-start; flex-direction: column; }
+    .presenter-actions { max-width: 440px; }
+    .browser-run-grid { grid-template-columns: 1fr; }
+    .browser-run-action { padding: 1rem 0 0; border-top: 1px solid var(--border); border-left: 0; }
+  }
+
+  @media (max-width: 420px) {
+    .field-pair { grid-template-columns: 1fr; gap: 0; }
+    .test-badge { font-size: 0.7rem; }
+    .browser-run-header { flex-direction: column; }
+    .browser-run-chip { white-space: normal; }
+  }
+</style>
+
+<script is:inline src="/demos/security/client-side-security-change-test.js"></script>
+
+<script is:inline>
+  (() => {
+    const parameters = new URLSearchParams(window.location.search);
+    if (parameters.get('malicious') !== '1') return;
+
+    const status = document.querySelector('#signal-status');
+    const testScript = document.createElement('script');
+    testScript.src = 'https://examples.page-shield.workers.dev/0002.js';
+    testScript.onload = () => {
+      if (status) status.textContent = 'Cloudflare test payload loaded; inspect detected scripts and versions.';
+    };
+    testScript.onerror = () => {
+      if (status) status.textContent = 'The optional Cloudflare test payload did not load.';
+    };
+    document.head.appendChild(testScript);
+  })();
+</script>
+
+<script is:inline>
+  (() => {
+    const startButton = document.querySelector('#browser-run-start');
+    const includeMalicious = document.querySelector('#include-malicious-sample');
+    const status = document.querySelector('#browser-run-status');
+    const results = document.querySelector('#browser-run-results');
+
+    if (!(startButton instanceof HTMLButtonElement) || !(includeMalicious instanceof HTMLInputElement) ||
+        !(status instanceof HTMLElement) || !(results instanceof HTMLOListElement)) return;
+
+    const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
+
+    async function runScenario(scenario) {
+      const response = await fetch('/api/client-side-security/browser-run', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scenario }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.success) {
+        const error = typeof data.error === 'string' ? data.error : `Browser Run failed (${response.status}).`;
+        throw new Error(error);
+      }
+
+      const label = scenario === 'baseline' ? 'Baseline' : scenario === 'changed' ? 'Changed script' : 'Malicious test sample';
+      const header = data.reportOnlyHeaderPresent
+        ? 'Report-only CSP header detected'
+        : 'Report-only CSP header not seen';
+      const browserTime = Number.isFinite(data.browserMsUsed) ? ` · ${(data.browserMsUsed / 1000).toFixed(1)}s browser time` : '';
+      const sampleStatus = scenario === 'malicious'
+        ? data.maliciousPayloadLoaded
+          ? 'Cloudflare test script loaded'
+          : data.maliciousPayloadRequested
+            ? 'Cloudflare test script requested; load not confirmed'
+            : 'Cloudflare test script was not found in the page'
+        : null;
+      const detail = [data.signalText || 'The page loaded, but its signal text was not detected.', sampleStatus, header]
+        .filter(Boolean)
+        .join(' · ') + browserTime;
+
+      const item = document.createElement('li');
+      item.className = 'browser-run-result';
+      const summary = document.createElement('div');
+      const heading = document.createElement('strong');
+      heading.textContent = `${label} · HTTP ${data.pageStatus ?? 'unknown'}`;
+      const description = document.createElement('span');
+      description.textContent = detail;
+      summary.append(heading, description);
+      item.append(summary);
+      results.append(item);
+
+      return data;
+    }
+
+    startButton.addEventListener('click', async () => {
+      if (window.location.origin !== 'https://automatic-demo.com' || startButton.disabled) {
+        status.textContent = 'Browser Run controls are available on automatic-demo.com.';
+        return;
+      }
+
+      const scenarios = ['baseline', 'changed'];
+      if (includeMalicious.checked) scenarios.push('malicious');
+      let completed = 0;
+      results.replaceChildren();
+      startButton.disabled = true;
+      startButton.setAttribute('aria-busy', 'true');
+
+      try {
+        for (const scenario of scenarios) {
+          if (completed > 0) {
+            for (let seconds = 11; seconds > 0; seconds -= 1) {
+              status.textContent = `Cooling down for ${seconds}s before the next Browser Run action…`;
+              await wait(1000);
+            }
+          }
+
+          status.textContent = `Running ${scenario} in Cloudflare Browser Run…`;
+          await runScenario(scenario);
+          completed += 1;
+        }
+
+        status.textContent = 'Run complete. Check Client-Side Resources and alert history; detections and notifications can be asynchronous.';
+      } catch (error) {
+        const item = document.createElement('li');
+        item.className = 'browser-run-result';
+        item.dataset.state = 'error';
+        const description = document.createElement('span');
+        description.textContent = error instanceof Error ? error.message : 'Browser Run failed.';
+        item.append(description);
+        results.append(item);
+        status.textContent = 'The sequence stopped. Wait 10 seconds before trying again.';
+      } finally {
+        startButton.disabled = false;
+        startButton.removeAttribute('aria-busy');
+      }
+    });
+  })();
+</script>
