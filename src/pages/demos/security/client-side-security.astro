@@ -1,5 +1,6 @@
 ---
 import DemoLayout from '../../../layouts/DemoLayout.astro';
+import { CSP_REPORTER_SCRIPT } from '../../../lib/client-side-security/csp-reporter';
 ---
 
 <DemoLayout
@@ -9,6 +10,8 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
   labels={["Client-Side Security", "Page Shield", "CSP"]}
   lastUpdated="October 2026"
 >
+  <script is:inline set:html={CSP_REPORTER_SCRIPT}></script>
+  <script is:inline defer src="https://client-side-security.davebuilds.net/script.js"></script>
   <section class="card overview-card" aria-labelledby="overview-heading">
     <div class="overview-copy">
       <p class="eyebrow">Browser-side visibility</p>
@@ -45,7 +48,7 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
         <p class="eyebrow">Live browser test</p>
         <h2 id="test-heading">A skimmer simulation—with fake data</h2>
       </div>
-      <span class="test-badge"><span class="pulse-dot"></span> Stable script URL · 2 versions</span>
+      <span class="test-badge"><span class="pulse-dot"></span> Stable URL · Published versions</span>
     </div>
 
     <div class="test-grid">
@@ -80,6 +83,9 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
           <span class="status-light" aria-hidden="true"></span>
           <span id="signal-status">Loading the baseline test script…</span>
         </div>
+        <p class="checkout-note" role="status" aria-live="polite" aria-atomic="true" hidden id="sample-result">
+          <span id="sample-status">Hosted skimmer sample not requested.</span>
+        </p>
       </article>
 
       <article class="card explain-card" aria-labelledby="signal-heading">
@@ -88,7 +94,7 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
         <ol class="signal-steps">
           <li>
             <span class="step-index">1</span>
-            <span><strong>One stable script URL</strong><small>Baseline and changed modes return different code at the same URL.</small></span>
+            <span><strong>One stable script URL per run</strong><small>Publishing changes the code for every requester, including Cloudflare's scanner.</small></span>
           </li>
           <li>
             <span class="step-index">2</span>
@@ -96,9 +102,14 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
           </li>
           <li>
             <span class="step-index">3</span>
-            <span><strong>Optional malicious test asset</strong><small>A Cloudflare-hosted skimmer sample loads only in the explicit test mode.</small></span>
+            <span><strong>Hosted skimmer fixture</strong><small>A pinned test script loads in an isolated frame, with outbound exfiltration blocked.</small></span>
           </li>
         </ol>
+        <p class="checkout-note">
+          Every visit also loads <code>https://client-side-security.davebuilds.net/script.js</code>.
+          This harmless, skimmer-like script listens for input events and posts only field identifiers
+          and metadata—never values—to a same-origin demo endpoint.
+        </p>
         <p class="synthetic-note">
           <span aria-hidden="true">!</span>
         The fields are read-only placeholders. No visitor-entered data is accepted or sent, and the CSP rule stays in Log mode.
@@ -113,8 +124,8 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
         <p class="eyebrow">Repeatable signal run</p>
         <h2 id="browser-run-heading">Run it with Cloudflare Browser Run</h2>
         <p>
-          One click runs the baseline and changed versions in managed Chrome, using the same script URL.
-          The optional sample adds a Cloudflare-hosted malicious-script test.
+          First collect a baseline in managed Chrome. Once Cloudflare records its version, publish the
+          changed script at the same URL. Each action makes four real browser visits.
         </p>
       </div>
       <span class="browser-run-chip"><span class="pulse-dot"></span> Quick Actions · 1 per 10 sec</span>
@@ -123,23 +134,31 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
     <div class="browser-run-grid">
       <div>
         <ol class="browser-run-steps">
-          <li><span>01</span><p><strong>Baseline</strong><small>Registers the safe first version.</small></p></li>
-          <li><span>02</span><p><strong>Changed</strong><small>Loads changed code and sends fixed synthetic values to <code>cf-testing.com</code>.</small></p></li>
-          <li><span>03</span><p><strong>Optional sample</strong><small>Loads Cloudflare's test script to exercise malicious-resource detection.</small></p></li>
+          <li><span>01</span><p><strong>Collect baseline</strong><small>Creates an isolated run. Check its fetched version in Cloudflare before moving on.</small></p></li>
+          <li><span>02</span><p><strong>Publish changed code</strong><small>Persists the structural change globally and sends synthetic values to <code>cf-testing.com</code>.</small></p></li>
+          <li><span>03</span><p><strong>Load skimmer fixture</strong><small>Exercises script classification with a correctly served, sandboxed sample.</small></p></li>
         </ol>
         <label class="browser-run-option" for="include-malicious-sample">
           <input id="include-malicious-sample" type="checkbox" />
-          <span>Include the optional malicious-script sample</span>
+          <span>Include the sandboxed skimmer fixture when publishing</span>
+        </label>
+        <label class="browser-run-option" for="baseline-recorded">
+          <input id="baseline-recorded" type="checkbox" disabled />
+          <span>I confirmed this run's baseline has a fetched version in Cloudflare.</span>
         </label>
       </div>
 
       <div class="browser-run-action">
         <button id="browser-run-start" class="btn btn-primary" type="button">
-          Run baseline → changed <span aria-hidden="true">↗</span>
+          1. Collect new baseline <span aria-hidden="true">↗</span>
         </button>
+        <button id="browser-run-change" class="btn btn-secondary" type="button" disabled>2. Publish changed script ↗</button>
+        <button id="browser-run-sample" class="btn btn-secondary" type="button" disabled>3. Load hosted skimmer fixture ↗</button>
         <p id="browser-run-status" role="status" aria-live="polite" aria-atomic="true">
-          Ready. Each Browser Run page visit is rate-limited to once every 10 seconds.
+          Ready. Collect baseline, then wait for its fetched version in Cloudflare. Actions are limited to once per 10 seconds.
         </p>
+        <a id="browser-run-page" class="text-link" hidden target="_blank" rel="noopener noreferrer">Open this run in your browser ↗</a>
+        <a id="browser-run-script" class="text-link" hidden target="_blank" rel="noopener noreferrer">Inspect this run's stable script ↗</a>
       </div>
     </div>
 
@@ -153,6 +172,18 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
         signals are not guaranteed to send a notification on every repeat run. Browser Run is automated Chrome;
         Cloudflare may omit the report-only CSP header for automated traffic, and Chrome can batch reports.
       </p>
+      <p>
+        For repeatable collection, configure a demo-scoped Log rule to report every script and connection,
+        plus a second Log rule allowlisting the expected resources for scoped alerts. Native browser reports are
+        supplemented with forwarding of actual violation events to Cloudflare's signed endpoint.
+        Infrequent scripts appear under View all scripts; malicious-resource alerts require Active resources.
+      </p>
+      <p>
+        Each run retains its published version for seven days in a Durable Object. The script does not
+        depend on Referer or scanner cookies. Wait until the baseline has a fetched version before
+        publishing, then verify the second version and alert history. A successful browser action is
+        distinct from asynchronous Cloudflare classification and notification delivery.
+      </p>
       <p class="alert-destinations">Configured for this zone: new resources, new hosts, code changes, malicious scripts, and malicious domains.</p>
     </details>
   </section>
@@ -162,25 +193,24 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
       <p class="eyebrow">Presenter flow</p>
       <h2 id="present-heading">Manual browser fallback</h2>
       <ol class="presenter-steps">
-        <li><span>1</span><p>Use Firefox if Browser Run does not receive the report-only CSP header.</p></li>
-        <li><span>2</span><p>Open baseline first, then the changed URL after the first version appears in Client-Side Resources.</p></li>
-        <li><span>3</span><p>Load the Cloudflare test payload only when you want to exercise malicious-script detection.</p></li>
+        <li><span>1</span><p>Try Firefox if Browser Run does not receive the script-monitoring CSP header, and inspect the actual directives.</p></li>
+        <li><span>2</span><p>Collect baseline, open this run's browser link, and wait for its fetched version before publishing changed code.</p></li>
+        <li><span>3</span><p>Load the hosted fixture only when you want to exercise script classification.</p></li>
         <li><span>4</span><p>Review scripts, connections, alert history, and the Log-mode rule.</p></li>
       </ol>
       <p class="browser-tip">
-        <strong>Note:</strong> allow some time for Cloudflare to process reports and alert conditions. The run
-        panel reports whether Browser Run saw the CSP header, not whether an alert was delivered.
+        <strong>Note:</strong> Cloudflare samples traffic, so repeat browser visits may be needed before the
+        third-party script appears in the dashboard. Allow time for reports and alert conditions to process. The run
+        panel distinguishes script-monitoring and connection-reporting headers. Report delivery and alerts
+        must be verified in Cloudflare separately.
       </p>
     </div>
     <div class="presenter-actions">
-      <a class="btn btn-primary" href="https://automatic-demo.com/demos/security/client-side-security?pageshieldforcecsp&amp;variant=baseline">
+      <a class="btn btn-primary" href="https://automatic-demo.com/demos/security/client-side-security?pageshieldforcecsp">
         1. Load baseline <span aria-hidden="true">↗</span>
       </a>
-      <a class="btn btn-secondary" href="https://automatic-demo.com/demos/security/client-side-security?pageshieldforcecsp&amp;variant=changed">
-        2. Trigger script change <span aria-hidden="true">↗</span>
-      </a>
-      <a class="btn btn-secondary" href="https://automatic-demo.com/demos/security/client-side-security?pageshieldforcecsp&amp;variant=changed&amp;malicious=1">
-        3. Add malicious test signal <span aria-hidden="true">↗</span>
+      <a class="btn btn-secondary" href="https://automatic-demo.com/demos/security/client-side-security?pageshieldforcecsp&amp;malicious=1">
+        Load hosted skimmer fixture <span aria-hidden="true">↗</span>
       </a>
       <a class="btn btn-secondary" href="https://dash.cloudflare.com/?to=/:account/:zone/security/web-assets/monitor/script" target="_blank" rel="noopener noreferrer">
         View client-side resources <span aria-hidden="true">↗</span>
@@ -645,6 +675,7 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
   }
 
   .browser-run-result[data-state="error"]::before { content: "!"; color: var(--primary); }
+  .browser-run-result[data-state="warning"]::before { content: "!"; color: var(--primary); }
   .browser-run-result strong { display: block; color: var(--secondary); }
   .browser-run-result span { display: block; color: var(--text-muted, #858b94); }
 
@@ -678,123 +709,43 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
   }
 </style>
 
-<script is:inline src="/demos/security/client-side-security-change-test.js"></script>
+<script is:inline>
+  (() => {
+    const run = new URLSearchParams(location.search).get('run');
+    const script = document.createElement('script');
+    script.src = '/demos/security/client-side-security-change-test.js' +
+      (run && /^[a-f0-9]{32}$/.test(run) ? '?run=' + run : '');
+    script.onerror = () => {
+      document.querySelector('#signal-status').textContent = 'The published script could not load; the run may have expired.';
+    };
+    document.head.appendChild(script);
+  })();
+</script>
 
 <script is:inline>
   (() => {
     const parameters = new URLSearchParams(window.location.search);
     if (parameters.get('malicious') !== '1') return;
 
-    const status = document.querySelector('#signal-status');
-    const testScript = document.createElement('script');
-    testScript.src = 'https://examples.page-shield.workers.dev/0002.js';
-    testScript.onload = () => {
-      if (status) status.textContent = 'Cloudflare test payload loaded; inspect detected scripts and versions.';
-    };
-    testScript.onerror = () => {
-      if (status) status.textContent = 'The optional Cloudflare test payload did not load.';
-    };
-    document.head.appendChild(testScript);
+    const status = document.querySelector('#sample-status');
+    const result = document.querySelector('#sample-result');
+    if (result) result.hidden = false;
+    if (status) status.textContent = 'Hosted skimmer sample requested; waiting for load confirmation.';
+    const frame = document.createElement('iframe');
+    frame.src = '/_astro/client-side-security/sample';
+    frame.title = 'Isolated skimmer test with synthetic checkout values';
+    frame.setAttribute('sandbox', 'allow-scripts');
+    frame.style.cssText = 'width:100%;height:180px;border:1px solid var(--border);border-radius:6px;margin-top:12px';
+    window.addEventListener('message', (event) => {
+      if (event.source !== frame.contentWindow || event.data?.type !== 'client-side-security-sample') return;
+      if (event.data.state === 'loaded' && status) status.textContent = 'Hosted skimmer sample loaded in its isolated frame; inspect Cloudflare classification.';
+      if (event.data.state === 'error' && status) status.textContent = 'The hosted skimmer sample did not load.';
+    });
+    result.appendChild(frame);
   })();
 </script>
 
-<script is:inline>
-  (() => {
-    const startButton = document.querySelector('#browser-run-start');
-    const includeMalicious = document.querySelector('#include-malicious-sample');
-    const status = document.querySelector('#browser-run-status');
-    const results = document.querySelector('#browser-run-results');
-
-    if (!(startButton instanceof HTMLButtonElement) || !(includeMalicious instanceof HTMLInputElement) ||
-        !(status instanceof HTMLElement) || !(results instanceof HTMLOListElement)) return;
-
-    const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
-
-    async function runScenario(scenario) {
-      const response = await fetch('/api/client-side-security/browser-run', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ scenario }),
-      });
-
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || !data.success) {
-        const error = typeof data.error === 'string' ? data.error : `Browser Run failed (${response.status}).`;
-        throw new Error(error);
-      }
-
-      const label = scenario === 'baseline' ? 'Baseline' : scenario === 'changed' ? 'Changed script' : 'Malicious test sample';
-      const header = data.reportOnlyHeaderPresent
-        ? 'Report-only CSP header detected'
-        : 'Report-only CSP header not seen';
-      const browserTime = Number.isFinite(data.browserMsUsed) ? ` · ${(data.browserMsUsed / 1000).toFixed(1)}s browser time` : '';
-      const sampleStatus = scenario === 'malicious'
-        ? data.maliciousPayloadLoaded
-          ? 'Cloudflare test script loaded'
-          : data.maliciousPayloadRequested
-            ? 'Cloudflare test script requested; load not confirmed'
-            : 'Cloudflare test script was not found in the page'
-        : null;
-      const detail = [data.signalText || 'The page loaded, but its signal text was not detected.', sampleStatus, header]
-        .filter(Boolean)
-        .join(' · ') + browserTime;
-
-      const item = document.createElement('li');
-      item.className = 'browser-run-result';
-      const summary = document.createElement('div');
-      const heading = document.createElement('strong');
-      heading.textContent = `${label} · HTTP ${data.pageStatus ?? 'unknown'}`;
-      const description = document.createElement('span');
-      description.textContent = detail;
-      summary.append(heading, description);
-      item.append(summary);
-      results.append(item);
-
-      return data;
-    }
-
-    startButton.addEventListener('click', async () => {
-      if (window.location.origin !== 'https://automatic-demo.com' || startButton.disabled) {
-        status.textContent = 'Browser Run controls are available on automatic-demo.com.';
-        return;
-      }
-
-      const scenarios = ['baseline', 'changed'];
-      if (includeMalicious.checked) scenarios.push('malicious');
-      let completed = 0;
-      results.replaceChildren();
-      startButton.disabled = true;
-      startButton.setAttribute('aria-busy', 'true');
-
-      try {
-        for (const scenario of scenarios) {
-          if (completed > 0) {
-            for (let seconds = 11; seconds > 0; seconds -= 1) {
-              status.textContent = `Cooling down for ${seconds}s before the next Browser Run action…`;
-              await wait(1000);
-            }
-          }
-
-          status.textContent = `Running ${scenario} in Cloudflare Browser Run…`;
-          await runScenario(scenario);
-          completed += 1;
-        }
-
-        status.textContent = 'Run complete. Check Client-Side Resources and alert history; detections and notifications can be asynchronous.';
-      } catch (error) {
-        const item = document.createElement('li');
-        item.className = 'browser-run-result';
-        item.dataset.state = 'error';
-        const description = document.createElement('span');
-        description.textContent = error instanceof Error ? error.message : 'Browser Run failed.';
-        item.append(description);
-        results.append(item);
-        status.textContent = 'The sequence stopped. Wait 10 seconds before trying again.';
-      } finally {
-        startButton.disabled = false;
-        startButton.removeAttribute('aria-busy');
-      }
-    });
-  })();
+<script>
+  import { initializeBrowserControls } from '../../../lib/client-side-security/browser-controls';
+  initializeBrowserControls();
 </script>
