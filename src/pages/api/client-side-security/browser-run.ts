@@ -1,12 +1,14 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
+import { readBrowserEvidence } from '../../../lib/client-side-security/browser-evidence';
+import { RUN_ID_PATTERN, CONTROL_TOKEN_PATTERN } from '../../../lib/client-side-security/script-versions';
 
 export const prerender = false;
 
 const DEMO_ORIGIN = 'https://automatic-demo.com';
 const DEMO_PATH = '/demos/security/client-side-security';
 const RATE_LIMIT_SECONDS = 10;
-const MAX_REQUEST_BYTES = 128;
+const MAX_REQUEST_BYTES = 256;
 
 type Scenario = 'baseline' | 'changed' | 'malicious';
 
@@ -77,19 +79,6 @@ function jsonResponse(
   });
 }
 
-function readSignalText(html: string): string {
-  const match = html.match(/id=["']signal-status["'][^>]*>([\s\S]*?)<\/span>/i);
-  return (match?.[1] ?? '')
-    .replace(/<[^>]*>/g, '')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
 export const POST: APIRoute = async ({ request }) => {
   const requestUrl = new URL(request.url);
   const origin = request.headers.get('Origin');
@@ -113,38 +102,66 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const body = bodyResult.value;
-  if (!isRecord(body) || !isScenario(body.scenario) || Object.keys(body).some((key) => key !== 'scenario')) {
+  if (!isRecord(body) || !isScenario(body.scenario) ||
+      Object.keys(body).some((key) => !['scenario', 'runId', 'controlToken'].includes(key))) {
     return jsonResponse({ error: 'Choose baseline, changed, or malicious.' }, 400);
   }
 
   const scenario = body.scenario;
-  const clientIp = request.headers.get('CF-Connecting-IP') ?? 'unknown';
-  const rateLimit = await env.BROWSER_RUN_LIMITER.limit({
-    key: `client-side-security:${clientIp}`,
-  });
-
-  if (!rateLimit.success) {
-    return jsonResponse(
-      { error: 'Please wait a few seconds before the next Browser Run.', retryAfterSeconds: RATE_LIMIT_SECONDS },
-      429,
-      { 'Retry-After': String(RATE_LIMIT_SECONDS) },
-    );
+  if (scenario !== 'baseline' &&
+      (typeof body.runId !== 'string' || !RUN_ID_PATTERN.test(body.runId) ||
+       typeof body.controlToken !== 'string' || !CONTROL_TOKEN_PATTERN.test(body.controlToken))) {
+    return jsonResponse({ error: 'Start a baseline run first.' }, 400);
   }
-
-  const pageUrl = new URL(DEMO_PATH, DEMO_ORIGIN);
-  pageUrl.searchParams.set('pageshieldforcecsp', '');
-  pageUrl.searchParams.set('variant', scenario === 'baseline' ? 'baseline' : 'changed');
-  pageUrl.searchParams.set('run', crypto.randomUUID());
-  if (scenario === 'malicious') pageUrl.searchParams.set('malicious', '1');
-
+  if (scenario === 'baseline' && (body.runId !== undefined || body.controlToken !== undefined)) {
+    return jsonResponse({ error: 'A new baseline creates a new isolated run.' }, 400);
+  }
+  const runId = scenario === 'baseline' ? crypto.randomUUID().replaceAll('-', '') : String(body.runId);
+  const controlToken = scenario === 'baseline' ? crypto.randomUUID() : String(body.controlToken);
+  let phase: 'baseline' | 'changed' | null = null;
   try {
-    const browserResponse = await env.BROWSER.quickAction('content', {
-      url: pageUrl.toString(),
-      gotoOptions: { waitUntil: 'networkidle2', timeout: 30_000 },
-      waitForTimeout: 5_000,
-      actionTimeout: 15_000,
-      cacheTTL: 0,
+    const clientIp = request.headers.get('CF-Connecting-IP') ?? 'unknown';
+    const rateLimit = await env.BROWSER_RUN_LIMITER.limit({
+      key: `client-side-security:${clientIp}`,
     });
+
+    if (!rateLimit.success) {
+      return jsonResponse(
+        { error: 'Please wait a few seconds before the next Browser Run.', retryAfterSeconds: RATE_LIMIT_SECONDS },
+        429,
+        { 'Retry-After': String(RATE_LIMIT_SECONDS) },
+      );
+    }
+
+    const run = env.CLIENT_SIDE_SECURITY_RUNS.getByName(runId);
+    if (scenario === 'baseline') await run.create(controlToken);
+    else if (!await run.authorize(controlToken)) return jsonResponse({ error: 'Run expired or invalid control token.' }, 403);
+    if (scenario === 'changed') await run.publishChanged();
+    phase = await run.phase();
+    const runDetails = {
+      runId, controlToken, phase,
+      scriptUrl: `${DEMO_ORIGIN}${DEMO_PATH}-change-test.js?run=${runId}`,
+      manualUrl: `${DEMO_ORIGIN}${DEMO_PATH}?pageshieldforcecsp&run=${runId}`,
+    };
+    const pageUrl = new URL(DEMO_PATH, DEMO_ORIGIN);
+    pageUrl.searchParams.set('pageshieldforcecsp', '');
+    pageUrl.searchParams.set('run', runId);
+    if (scenario === 'malicious') pageUrl.searchParams.set('malicious', '1');
+
+    // Multiple genuine browser visits establish a resource instead of relying on one sampled report.
+    let browserResponse: Response | undefined;
+    let browserMsUsed = 0;
+    for (let visit = 0; visit < 4; visit += 1) {
+      browserResponse = await env.BROWSER.quickAction('content', {
+        url: pageUrl.toString(), gotoOptions: { waitUntil: 'networkidle2', timeout: 30_000 },
+        waitForTimeout: 5_000, actionTimeout: 15_000, cacheTTL: 0,
+      });
+      const ms = Number(browserResponse.headers.get('X-Browser-Ms-Used'));
+      if (Number.isFinite(ms)) browserMsUsed += ms;
+      if (!browserResponse.ok) break;
+      if (visit < 3) await browserResponse.body?.cancel();
+    }
+    if (!browserResponse) return jsonResponse({ error: 'Browser Run did not start.' }, 502);
 
     if (!browserResponse.ok) {
       const retryAfter = browserResponse.headers.get('Retry-After');
@@ -157,7 +174,7 @@ export const POST: APIRoute = async ({ request }) => {
         : 'Browser Run could not render the demo page.';
 
       return jsonResponse(
-        { error: message, retryAfterSeconds: retryAfter ? Number(retryAfter) : undefined },
+        { ...runDetails, error: message, retryAfterSeconds: retryAfter ? Number(retryAfter) : undefined },
         browserResponse.status === 429 ? 429 : 502,
         retryAfter ? { 'Retry-After': retryAfter } : {},
       );
@@ -165,47 +182,41 @@ export const POST: APIRoute = async ({ request }) => {
 
     const payload: unknown = await browserResponse.json();
     if (!isRecord(payload) || payload.success !== true || typeof payload.result !== 'string') {
-      return jsonResponse({ error: 'Browser Run returned an incomplete result.' }, 502);
+      return jsonResponse({ ...runDetails, error: 'Browser Run returned an incomplete result.' }, 502);
     }
 
     const meta = isRecord(payload.meta) ? payload.meta : {};
     const responseHeaders = isRecord(meta.headers) ? meta.headers : {};
-    const reportOnlyHeader = responseHeaders['content-security-policy-report-only'];
-    const html = payload.result;
-    const signalText = readSignalText(html);
+    const evidence = readBrowserEvidence(payload.result, responseHeaders);
     const pageStatus = typeof meta.status === 'number' ? meta.status : null;
-    const scriptUrlPresent = html.includes('/demos/security/client-side-security-change-test.js');
-    const maliciousPayloadRequested = scenario === 'malicious' && html.includes('examples.page-shield.workers.dev/0002.js');
-    const expectedSignal = scenario === 'baseline'
-      ? signalText.includes('Baseline script loaded')
-      : scenario === 'changed'
-        ? signalText.includes('Changed script loaded')
-        : signalText.includes('Changed script loaded') ||
-          signalText.includes('Cloudflare test payload loaded') ||
-          signalText.includes('optional Cloudflare test payload did not load');
-    const success = pageStatus === 200 && scriptUrlPresent && expectedSignal;
-    const browserMsHeader = browserResponse.headers.get('X-Browser-Ms-Used');
-    const browserMsUsed = browserMsHeader && Number.isFinite(Number(browserMsHeader))
-      ? Number(browserMsHeader)
-      : null;
+    const expectedSignal = phase === 'baseline'
+      ? evidence.signalText.includes('Baseline script loaded')
+      : evidence.signalText.includes('Changed script loaded');
+    const success = pageStatus === 200 && evidence.scriptUrlPresent && expectedSignal &&
+      (scenario !== 'malicious' || evidence.maliciousPayloadLoaded);
 
     return jsonResponse({
       success,
+      ...(!success ? { error: pageStatus !== 200
+        ? 'Browser Run could not open the demo page.'
+        : !evidence.scriptUrlPresent || !expectedSignal
+          ? 'The published test script did not execute. Inspect this run before retrying.'
+          : 'The sandboxed fixture did not confirm loading. Open this run to inspect the frame.' } : {}),
       scenario,
+      ...runDetails,
+      manualUrl: pageUrl.toString(),
+      visits: 4,
       pageStatus,
       title: typeof meta.title === 'string' ? meta.title : 'Client-Side Security',
-      signalText,
-      scriptUrlPresent,
-      reportOnlyHeaderPresent: typeof reportOnlyHeader === 'string' && reportOnlyHeader.length > 0,
-      maliciousPayloadRequested,
-      maliciousPayloadLoaded: signalText.includes('Cloudflare test payload loaded'),
+      ...evidence,
       browserMsUsed,
     }, success ? 200 : 502);
   } catch (error) {
-    console.error('Client-Side Security Browser Run failed', {
+    console.error(JSON.stringify({
+      message: 'Client-Side Security Browser Run failed',
       scenario,
       error: error instanceof Error ? error.message : 'Unknown error',
-    });
-    return jsonResponse({ error: 'Browser Run is temporarily unavailable. Try again shortly.' }, 502);
+    }));
+    return jsonResponse({ ...(phase ? { runId, controlToken, phase } : {}), error: 'Browser Run is temporarily unavailable. Try again shortly.' }, 502);
   }
 };
